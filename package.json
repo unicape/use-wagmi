@@ -25,6 +25,7 @@
     "url": "git+https://github.com/unicape/use-wagmi.git"
   },
   "scripts": {
+    "dev": "nr",
     "watch": "esno scripts/build.ts --watch"
   },
   "main": "./dist/index.js",
