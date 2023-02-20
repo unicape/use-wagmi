@@ -1,0 +1,65 @@
+{
+  "name": "use-wagmi",
+  "version": "0.0.1",
+  "packageManager": "pnpm@7.6.0",
+  "description": "Vue Composition for Ethereum",
+  "keywords": [
+    "vue",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3",
+    "wagmi",
+    "use-wagmi"
+  ],
+  "homepage": "https://github.com/unicape/use-wagmi#readme",
+  "bugs": {
+    "url": "https://github.com/unicape/use-wagmi/issues"
+  },
+  "license": "MIT",
+  "author": "Unic Ape <94770222@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unicape/use-wagmi.git"
+  },
+  "scripts": {
+    "watch": "esno scripts/build.ts --watch"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index/mjs"
+    },
+    "./*": "./*"
+  },
+  "dependencies": {
+    "@wagmi/core": "^0.9.6",
+    "vue-demi": "latest",
+    "vue-query": "^1.26.0"
+  },
+  "devDependencies": {
+    "esbuild-register": "^3.4.2",
+    "esno": "^0.16.3",
+    "rollup": "^3.17.2",
+    "rollup-plugin-dts": "^5.2.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "rollup-plugin-pure": "^0.0.2",
+    "typescript": "^4.9.5",
+    "vue": "^3.2.47"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "vue": "^2.0.0 || >=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
+  }
+}
