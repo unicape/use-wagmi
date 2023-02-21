@@ -25,7 +25,11 @@
     "url": "git+https://github.com/unicape/use-wagmi.git"
   },
   "scripts": {
-    "dev": "nr",
+    "dev": "nr watch",
+    "build": "esno scripts/build.ts",
+    "build:rollup": "cross-env NODE_OPTIONS=\"--max-old-space-size=6144\" rollup -c",
+    "publish:ci": "esno scripts/publish.ts",
+    "clean": "rimraf dist",
     "watch": "esno scripts/build.ts --watch"
   },
   "main": "./dist/index.js",
@@ -45,12 +49,18 @@
     "vue-query": "^1.26.0"
   },
   "devDependencies": {
+    "@antfu/ni": "^0.20.0",
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^18.14.0",
+    "consola": "^2.15.3",
+    "cross-env": "^7.0.3",
     "esbuild-register": "^3.4.2",
     "esno": "^0.16.3",
+    "fs-extra": "^11.1.0",
+    "rimraf": "^4.1.2",
     "rollup": "^3.17.2",
     "rollup-plugin-dts": "^5.2.0",
     "rollup-plugin-esbuild": "^5.0.0",
-    "rollup-plugin-pure": "^0.0.2",
     "typescript": "^4.9.5",
     "vue": "^3.2.47"
   },
