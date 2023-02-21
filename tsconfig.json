@@ -8,8 +8,6 @@
     "strict": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "declaration": true,
-    "declarationDir": "./types",
     "resolveJsonModule": true,
     "rootDir": ".",
     "baseUrl": ".",
@@ -19,7 +17,8 @@
     "noUnusedLocals": true,
     "paths": {
       "use-wagmi": ["src"],
-      "@wagmi/connectors": ["node_modules/@wagmi/core/connectors"]
+      "use-wagmi/core": ["src/core"],
+      "use-wagmi/connectors": ["src/connectors"]
     }
   }
 }

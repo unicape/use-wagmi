@@ -1,3 +1,1 @@
-export {
-  useAccount
-} from './accounts'
+export * from './accounts'
