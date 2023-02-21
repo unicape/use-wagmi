@@ -1,8 +1,8 @@
 import { createClient, } from '@wagmi/core'
-import { shallowRef, triggerRef, markRaw } from 'vue-demi'
+import { shallowRef, triggerRef, markRaw, inject } from 'vue-demi'
 import { QueryClient, VueQueryPlugin } from 'vue-query'
 
-import type { App, Ref, InjectionKey } from 'vue-demi'
+import type { App, Raw, InjectionKey, ShallowRef } from 'vue-demi'
 import type { Client, ClientConfig } from '@wagmi/core'
 
 export type WagmiClient = Client & {
@@ -29,12 +29,12 @@ const defaultQueryClient = new QueryClient({
   }
 })
 
-export const WagmiInjectionKey: InjectionKey<Ref<WagmiClient>> = Symbol('use-wagmi')
+export const WagmiInjectionKey: InjectionKey<Raw<ShallowRef<WagmiClient>>> = Symbol('use-wagmi')
 
 export function createWagmi ({
   queryClient = defaultQueryClient,
   ...config
-}: CreateWagmiConfig): WagmiClient {
+}: CreateWagmiConfig) {
   const wagmi = createClient(config) as WagmiClient
 
   wagmi.install = function (app: App) {
@@ -58,6 +58,18 @@ export function createWagmi ({
 
     app.provide(WagmiInjectionKey, markWagmi)
     app.config.globalProperties.$wagmi = markWagmi
+  }
+
+  return wagmi
+}
+
+export function getWagmi () {
+  const wagmi = inject(WagmiInjectionKey)
+  if (!wagmi) {
+    // TODO
+    throw new Error(
+      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client'
+    )
   }
 
   return wagmi
