@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "ethers": "^5.7.1",
-    "use-wagmi": "workspace:*",
     "vue": "^3.2.45"
   },
   "devDependencies": {

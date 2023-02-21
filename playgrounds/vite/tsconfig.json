@@ -11,7 +11,14 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "use-wagmi": ["../../src/index.ts"],
+      "use-wagmi/core": ["../../src/core/index.ts"],
+      "use-wagmi/chains": ["../../src/chains/index.ts"],
+      "use-wagmi/providers": ["../../src/providers/index.ts"],
+      "use-wagmi/connectors": ["../../src/connectors/index.ts"],
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
