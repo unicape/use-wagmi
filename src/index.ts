@@ -1,4 +1,4 @@
-export { createWagmi } from './create'
+export { createWagmi, getWagmi } from './create'
 export type { CreateWagmiConfig, WagmiClient } from './create'
 
 /* Constants */
