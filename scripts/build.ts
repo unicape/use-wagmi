@@ -9,13 +9,14 @@ async function build () {
   consola.info('Clean up')
   exec('pnpm run clean', { stdio: 'inherit' })
 
-  consola.info('Rollup')
-  exec(`pnpm run build:rollup${watch ? ' --watch' : ''}`, { stdio: 'inherit' })
-
+  await fs.mkdir(path.join(__dirname, '..', 'dist'))
   await fs.copyFile(
     path.join(__dirname, '..' , 'package.json'),
     path.join(__dirname, '..', 'dist', 'package.json')
   )
+
+  consola.info('Rollup')
+  exec(`pnpm run build:rollup${watch ? ' --watch' : ''}`, { stdio: 'inherit' })
 }
 
 async function cli() {

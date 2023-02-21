@@ -12,6 +12,7 @@ const pluginDts = dts()
 const externals = [
   'vue-demi',
   'vue-query',
+  'use-wagmi',
   '@wagmi/core'
 ]
 
