@@ -16,6 +16,10 @@
     "jsx": "preserve",
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "paths": {
+      "use-wagmi": ["src"],
+      "@wagmi/connectors": ["node_modules/@wagmi/core/connectors"]
+    }
   }
 }
