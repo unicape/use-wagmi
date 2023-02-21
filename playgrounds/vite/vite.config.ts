@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      'use-wagmi': resolve(__dirname, '../../src/index.ts'),
-      'use-wagmi/core': resolve(__dirname, '../../src/core/index.ts'),
-      'use-wagmi/chains': resolve(__dirname, '../../src/chains/index.ts'),
-      'use-wagmi/providers': resolve(__dirname, '../../src/providers/index.ts'),
-      'use-wagmi/connectors': resolve(__dirname, '../../src/connectors/index.ts')
+      'use-wagmi': resolve(__dirname, '../../src'),
+      'use-wagmi/core': resolve(__dirname, '../../src/core'),
+      'use-wagmi/chains': resolve(__dirname, '../../src/chains'),
+      'use-wagmi/providers': resolve(__dirname, '../../src/providers'),
+      'use-wagmi/connectors': resolve(__dirname, '../../src/connectors')
     }
   }
 })

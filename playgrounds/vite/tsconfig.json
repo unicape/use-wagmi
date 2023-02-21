@@ -13,11 +13,11 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "use-wagmi": ["../../src/index.ts"],
-      "use-wagmi/core": ["../../src/core/index.ts"],
-      "use-wagmi/chains": ["../../src/chains/index.ts"],
-      "use-wagmi/providers": ["../../src/providers/index.ts"],
-      "use-wagmi/connectors": ["../../src/connectors/index.ts"],
+      "use-wagmi": ["../../src"],
+      "use-wagmi/core": ["../../src/core"],
+      "use-wagmi/chains": ["../../src/chains"],
+      "use-wagmi/providers": ["../../src/providers"],
+      "use-wagmi/connectors": ["../../src/connectors"],
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
