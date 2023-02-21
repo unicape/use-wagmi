@@ -32,16 +32,35 @@
     "clean": "rimraf dist",
     "watch": "esno scripts/build.ts --watch"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index/mjs"
+      "types": "./index.d.ts",
+      "require": "./index.cjs",
+      "import": "./index.mjs"
     },
-    "./*": "./*"
+    "./core": {
+      "types": "./core/index.d.ts",
+      "require": "./core/index.cjs",
+      "import": "./core/index.mjs"
+    },
+    "./chains": {
+      "types": "./chains/index.d.ts",
+      "require": "./chains/index.cjs",
+      "import": "./chains/index.mjs"
+    },
+    "./providers": {
+      "types": "./providers/index.d.ts",
+      "require": "./providers/index.cjs",
+      "import": "./providers/index.mjs"
+    },
+    "./connectors": {
+      "types": "./connectors/index.d.ts",
+      "require": "./connectors/index.cjs",
+      "import": "./connectors/index.mjs"
+    }
   },
   "dependencies": {
     "@wagmi/core": "^0.9.6",
@@ -66,6 +85,7 @@
   },
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
+    "ethers": ">=5.5.1 <6",
     "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
