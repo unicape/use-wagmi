@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import { createWagmi } from 'use-wagmi'
-import { MetaMaskConnector, WalletConnectConnector } from 'use-wagmi/connectors';
+import { MetaMaskConnector, WalletConnectConnector } from 'use-wagmi/connectors'
 import { getDefaultProvider } from 'ethers'
 
 const wagmi = createWagmi({
