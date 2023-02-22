@@ -1,4 +1,22 @@
-import type { UseMutationOptions } from 'vue-query'
+import type { UseMutationOptions, UseQueryOptions } from 'vue-query'
+
+export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
+  UseQueryOptions<TData, TError, TSelectData>,
+  | 'cacheTime'
+  | 'enabled'
+  | 'isDataEqual'
+  | 'keepPreviousData'
+  | 'select'
+  | 'staleTime'
+  | 'structuralSharing'
+  | 'suspense'
+  | 'onError'
+  | 'onSettled'
+  | 'onSuccess'
+> & {
+  /** Scope the cache to a given context. */
+  scopeKey?: string
+}
 
 export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */

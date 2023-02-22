@@ -28,7 +28,19 @@ export function useConnect ({
 }: UseConnectArgs & UseConnectConfig = {}) {
   const wagmi = getWagmi()
 
-  const mutation = useMutation(
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables
+  } = useMutation(
     mutationKey({ chainId: unref(chainId), connector: unref(connector) }),
     mutationFn,
     {
@@ -40,14 +52,14 @@ export function useConnect ({
   )
 
   const connect = (args?: Partial<ConnectArgs>) => {
-    return mutation.mutate({
+    return mutate({
       chainId: unref(args?.chainId) || unref(chainId),
       connector: unref(args?.connector) || unref(connector)
     } as ConnectArgs)
   }
 
   const connectAsync = (args?: Partial<ConnectArgs>) => {
-    return mutation.mutateAsync({
+    return mutateAsync({
       chainId: unref(args?.chainId) || unref(chainId),
       connector: unref(args?.connector) || unref(connector)
     } as ConnectArgs)
@@ -57,7 +69,15 @@ export function useConnect ({
     connect,
     connectAsync,
     connectors: computed(() => wagmi.value.connector),
-    pendingConnector: computed(() => mutation.variables?.value?.connector),
-    ...mutation
-  }
+    pendingConnector: computed(() => variables?.value?.connector),
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
+    status,
+    variables
+  } as const
 }
