@@ -9,7 +9,7 @@ export function useNetwork () {
   })
 
   if (getCurrentScope())
-    onScopeDispose(() => unwatch)
+    onScopeDispose(() => unwatch())
 
   return toRefs(network)
 }
