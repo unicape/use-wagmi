@@ -1,4 +1,3 @@
-export type { Chain } from '@wagmi/core/chains'
 export {
   arbitrum,
   arbitrumGoerli,
@@ -48,3 +47,5 @@ export {
   zkSync,
   zkSyncTestnet
 } from '@wagmi/core/chains'
+
+export type { Chain } from '@wagmi/core/chains'

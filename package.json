@@ -51,6 +51,11 @@
       "require": "./chains/index.cjs",
       "import": "./chains/index.mjs"
     },
+    "./actions": {
+      "types": "./actions/index.d.ts",
+      "require": "./actions/index.cjs",
+      "import": "./actions/index.mjs"
+    },
     "./providers": {
       "types": "./providers/index.d.ts",
       "require": "./providers/index.cjs",

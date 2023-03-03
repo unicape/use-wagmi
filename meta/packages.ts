@@ -16,6 +16,9 @@ export const packages: PackageManifest[] = [
     name: 'core'
   },
   {
+    name: 'actions'
+  },
+  {
     name: 'chains',
     external: [
       '@wagmi/core/chains'
