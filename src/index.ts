@@ -1,3 +1,9 @@
+export * from './core'
+export * from './chains'
+export * from './actions'
+export * from './providers'
+export * from './connectors'
+
 export { createWagmi, getWagmi } from './create'
 export type { CreateWagmiConfig, WagmiClient } from './create'
 
