@@ -1,4 +1,5 @@
 {
+  "name": "playground",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -6,8 +7,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ethers": "^5.7.1",
-    "vue": "^3.2.45"
+    "vue": "^3.2.45",
+    "ethers": "^5.7.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",

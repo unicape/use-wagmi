@@ -8,10 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'use-wagmi': resolve(__dirname, '../../src'),
-      'use-wagmi/core': resolve(__dirname, '../../src/core'),
-      'use-wagmi/chains': resolve(__dirname, '../../src/chains'),
-      'use-wagmi/providers': resolve(__dirname, '../../src/providers'),
-      'use-wagmi/connectors': resolve(__dirname, '../../src/connectors')
-    }
-  }
+      'use-wagmi/*': resolve(__dirname, '../../src/*'),
+    },
+  },
 })
