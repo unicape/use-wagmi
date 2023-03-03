@@ -2,6 +2,5 @@ export {
   useAccount,
   useConnect,
   useDisconnect,
-  useNetwork,
-  useSigner
+  useNetwork
 } from './accounts'

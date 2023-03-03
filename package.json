@@ -25,7 +25,7 @@
     "url": "git+https://github.com/unicape/use-wagmi.git"
   },
   "scripts": {
-    "dev": "nr watch",
+    "dev": "pnpm --filter playground dev",
     "build": "esno scripts/build.ts",
     "build:rollup": "cross-env NODE_OPTIONS=\"--max-old-space-size=6144\" rollup -c",
     "publish:ci": "esno scripts/publish.ts",

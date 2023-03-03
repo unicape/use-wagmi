@@ -14,10 +14,7 @@
     "noEmit": true,
     "paths": {
       "use-wagmi": ["../../src"],
-      "use-wagmi/core": ["../../src/core"],
-      "use-wagmi/chains": ["../../src/chains"],
-      "use-wagmi/providers": ["../../src/providers"],
-      "use-wagmi/connectors": ["../../src/connectors"],
+      "use-wagmi/*": ["../../src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
