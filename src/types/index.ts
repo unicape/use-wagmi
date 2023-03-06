@@ -1,4 +1,13 @@
+import type { Ref } from 'vue-demi'
 import type { UseMutationOptions, UseQueryOptions } from 'vue-query'
+
+declare type MaybeRef<T> = T | Ref<T>
+
+type IgnoreMaybeRef = 'onError' | 'onSettled' | 'onSuccess' | 'onBeforeConnect' | 'onConnect'
+
+export type SetMaybeRef<T extends object> = {
+  [KeyType in keyof T]: KeyType extends IgnoreMaybeRef ? T[KeyType] : MaybeRef<T[KeyType]>
+}
 
 export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   UseQueryOptions<TData, TError, TSelectData>,
