@@ -2,7 +2,7 @@ import { ref, unref, markRaw, readonly, watchEffect } from 'vue-demi'
 import { getProvider, watchProvider } from '@wagmi/core'
 
 import type { GetProviderArgs, Provider } from '@wagmi/core'
-import type { SetMaybeRef } from '../../../types'
+import type { SetMaybeRef } from '../../types'
 
 export type UseProviderArgs = SetMaybeRef<Partial<GetProviderArgs>>
 
