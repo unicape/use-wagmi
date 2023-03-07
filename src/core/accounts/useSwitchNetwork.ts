@@ -1,10 +1,10 @@
-import { computed } from 'vue-demi'
+import { unref, computed } from 'vue-demi'
 import { getWagmi } from 'use-wagmi'
 import { useMutation } from 'vue-query'
 import { switchNetwork } from '@wagmi/core'
 
 import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
-import type { MutationConfig } from '../../types'
+import type { MutationConfig, SetMaybeRef } from '../../types'
 
 export type UseSwitchNetworkArgs = Partial<SwitchNetworkArgs>
 export type UseSwitchNetworkConfig = MutationConfig<
@@ -31,7 +31,7 @@ export function useSwitchNetwork ({
   onMutate,
   onSettled,
   onSuccess
-}: UseSwitchNetworkArgs & UseSwitchNetworkConfig = {}) {
+}: SetMaybeRef<UseSwitchNetworkArgs> & UseSwitchNetworkConfig = {}) {
   const wagmi = getWagmi()
 
   const {
@@ -47,7 +47,7 @@ export function useSwitchNetwork ({
     status,
     variables
   } = useMutation(
-    mutationKey({ chainId }),
+    mutationKey({ chainId: unref(chainId) }),
     mutationFn,
     {
       onError,
