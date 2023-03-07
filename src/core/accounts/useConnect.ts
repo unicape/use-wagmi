@@ -4,7 +4,7 @@ import { getWagmi } from 'use-wagmi'
 import { connect } from '@wagmi/core'
 
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
-import type { MutationConfig } from '../../types'
+import type { MutationConfig, SetMaybeRef } from '../../types'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
@@ -25,7 +25,7 @@ export function useConnect ({
   onMutate,
   onSettled,
   onSuccess
-}: UseConnectArgs & UseConnectConfig = {}) {
+}: SetMaybeRef<UseConnectArgs> & UseConnectConfig = {}) {
   const wagmi = getWagmi()
 
   const {
