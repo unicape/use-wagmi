@@ -17,18 +17,17 @@ const defaultQueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       cacheTime: 1_000 * 60 * 60 * 24,
-      // TODO: uncomment when persistor becomes available
-      // networkMode: 'offlineFirst',
+      networkMode: 'offlineFirst',
       refetchOnWindowFocus: false,
       retry: 0
     },
     mutations: {
-      // TODO: uncomment when persistor becomes available
-      // networkMode: 'offlineFirst',
+      networkMode: 'offlineFirst'
     }
   }
 })
 
+export const WagmiQueryClientKey = 'use-wagmi-query'
 export const WagmiInjectionKey: InjectionKey<Raw<ShallowRef<WagmiClient>>> = Symbol('use-wagmi')
 
 export function createWagmi ({
@@ -38,7 +37,7 @@ export function createWagmi ({
   const wagmi = createClient(config) as WagmiClient
 
   wagmi.install = function (app: App) {
-    app.use(VueQueryPlugin, { queryClient })
+    app.use(VueQueryPlugin, { queryClient, queryClientKey: WagmiQueryClientKey })
 
     const wagmiRef = shallowRef(wagmi)
 
