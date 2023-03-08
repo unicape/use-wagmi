@@ -53,15 +53,15 @@ export function useConnect ({
 
   const connect = (args?: Partial<ConnectArgs>) => {
     return mutate({
-      chainId: unref(args?.chainId) || unref(chainId),
-      connector: unref(args?.connector) || unref(connector)
+      chainId: unref(args?.chainId ?? chainId),
+      connector: unref(args?.connector ?? connector)
     } as ConnectArgs)
   }
 
   const connectAsync = (args?: Partial<ConnectArgs>) => {
     return mutateAsync({
-      chainId: unref(args?.chainId) || unref(chainId),
-      connector: unref(args?.connector) || unref(connector)
+      chainId: unref(args?.chainId ?? chainId),
+      connector: unref(args?.connector ?? connector)
     } as ConnectArgs)
   }
 
