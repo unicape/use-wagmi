@@ -8,6 +8,7 @@ importers:
       '@types/fs-extra': ^11.0.1
       '@types/node': ^18.14.0
       '@wagmi/core': ^0.9.6
+      abitype: ^0.3.0
       consola: ^2.15.3
       cross-env: ^7.0.3
       esbuild-register: ^3.4.2
@@ -23,6 +24,7 @@ importers:
       vue-query: ^2.0.0-beta.12
     dependencies:
       '@wagmi/core': registry.npmmirror.com/@wagmi/core/0.9.6_tncu2ai53lzgmizdedur7lbibe
+      abitype: registry.npmmirror.com/abitype/0.3.0_typescript@4.9.5
       vue-demi: registry.npmmirror.com/vue-demi/0.13.11_vue@3.2.47
       vue-query: registry.npmmirror.com/vue-query/2.0.0-beta.12_vue@3.2.47
     devDependencies:

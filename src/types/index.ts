@@ -1,13 +1,23 @@
 import type { Ref } from 'vue-demi'
-import type { UseMutationOptions, UseQueryOptions } from 'vue-query'
+import type { UseMutationOptions, UseQueryOptions, QueryFunctionContext } from 'vue-query'
 
-declare type MaybeRef<T> = T | Ref<T>
-
-type IgnoreMaybeRef = 'onError' | 'onSettled' | 'onSuccess' | 'onBeforeConnect' | 'onConnect'
-
+type MaybeRef<T> = T | Ref<T>
+type IgnoreMaybeRef = 'onError' | 'onMutate' | 'onSettled' | 'onSuccess' | 'onBlock'
 export type SetMaybeRef<T extends object> = {
   [KeyType in keyof T]: KeyType extends IgnoreMaybeRef ? T[KeyType] : MaybeRef<T[KeyType]>
 }
+
+/**
+ * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
+ */
+// s/o trpc (https://github.com/trpc/trpc/blob/main/packages/server/src/types.ts#L6)
+export type PartialBy<TType, TKeys extends keyof TType> = Partial<
+  Pick<TType, TKeys>
+> &
+  Omit<TType, TKeys>
+
+export type QueryFunctionArgs<T extends (...args: any) => any> =
+  QueryFunctionContext<ReturnType<T>>
 
 export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   UseQueryOptions<TData, TError, TSelectData>,

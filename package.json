@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "@wagmi/core": "^0.9.6",
+    "abitype": "^0.3.0",
     "vue-demi": "latest",
     "vue-query": "^2.0.0-beta.12"
   },
