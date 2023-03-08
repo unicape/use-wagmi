@@ -70,7 +70,7 @@
   "dependencies": {
     "@wagmi/core": "^0.9.6",
     "vue-demi": "latest",
-    "vue-query": "^1.26.0"
+    "vue-query": "^2.0.0-beta.12"
   },
   "devDependencies": {
     "@antfu/ni": "^0.20.0",
