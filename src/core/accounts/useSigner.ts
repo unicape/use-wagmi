@@ -4,21 +4,22 @@ import { useAccount } from './useAccount'
 import { useChainId, useQuery, useQueryClient } from '../../utils'
 
 import type { Signer, FetchSignerResult, FetchSignerArgs } from '@wagmi/core'
-import type { QueryConfig, QueryFunctionArgs, SetMaybeRef } from './../../types'
+import type { QueryConfig, QueryFunctionArgs, DeepMaybeRef } from './../../types'
 
+export type UseSignerArgs = DeepMaybeRef<FetchSignerArgs>
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
   'cacheTime' | 'staleTime' | 'enabled'
-> & SetMaybeRef<FetchSignerArgs>
+>
 
-export function queryKey({ chainId }: FetchSignerArgs) {
+export function queryKey({ chainId }: UseSignerArgs) {
   return [{ entity: 'signer', chainId, persist: false }] as const
 }
 
 function queryFn<TSigner extends Signer>({
   queryKey: [{ chainId }],
 }: QueryFunctionArgs<typeof queryKey>) {
-  return fetchSigner<TSigner>({ chainId })
+  return fetchSigner<TSigner>({ chainId } as FetchSignerArgs)
 }
 
 export function useSigner<TSigner extends Signer> ({
@@ -27,7 +28,7 @@ export function useSigner<TSigner extends Signer> ({
   onError,
   onSettled,
   onSuccess
-}: UseSignerConfig = {}) {
+}: UseSignerArgs & UseSignerConfig = {}) {
   const { connector } = useAccount()
   const chainId = useChainId()
   const signerQuery = useQuery<
@@ -36,7 +37,7 @@ export function useSigner<TSigner extends Signer> ({
     FetchSignerResult<TSigner>,
     ReturnType<typeof queryKey>
   >(
-    queryKey({ chainId: unref(chainId_) }),
+    queryKey({ chainId: chainId_ }),
     queryFn,
     {
       cacheTime: 0,
@@ -52,9 +53,9 @@ export function useSigner<TSigner extends Signer> ({
   const queryClient = useQueryClient()
   const unwatch = watchSigner({ chainId: unref(chainId) }, signer => {
     // If a signer has changed (switch wallet/connector), we want to revalidate.
-    if (signer) queryClient.invalidateQueries(queryKey({ chainId: unref(chainId) }))
+    if (signer) queryClient.invalidateQueries(queryKey({ chainId }))
     // If there is no longer a signer (disconnect), we want to remove the query.
-    else queryClient.removeQueries(queryKey({ chainId: unref(chainId) }))
+    else queryClient.removeQueries(queryKey({ chainId }))
   })
 
   if (getCurrentScope())
