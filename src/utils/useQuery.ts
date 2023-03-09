@@ -14,12 +14,10 @@ export function useQuery<
   queryFn: QueryFunction<TQueryFnData, UnwrapRef<TQueryKey>>,
   options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
 ) {
-  const result = useBaseQuery({
+  return useBaseQuery({
     queryKey,
     queryFn,
     queryClientKey,
     ...options
   })
-
-  return result
 }
