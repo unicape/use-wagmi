@@ -2,7 +2,7 @@ import { useQuery as useBaseQuery } from 'vue-query'
 import { WagmiQueryClientKey as queryClientKey } from '../create'
 
 import type { UnwrapRef } from 'vue-demi'
-import type{ QueryKey, QueryFunction, UseQueryOptions } from 'vue-query'
+import type { QueryKey, QueryFunction, UseQueryOptions } from 'vue-query'
 
 export function useQuery<
   TQueryFnData,

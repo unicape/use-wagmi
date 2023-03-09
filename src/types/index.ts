@@ -1,11 +1,52 @@
-import type { Ref } from 'vue-demi'
+import type { Ref, ComputedRef } from 'vue-demi'
 import type { UseMutationOptions, UseQueryOptions, QueryFunctionContext } from 'vue-query'
 
-type MaybeRef<T> = T | Ref<T>
 type IgnoreMaybeRef = 'onError' | 'onMutate' | 'onSettled' | 'onSuccess' | 'onBlock'
 export type SetMaybeRef<T extends object> = {
   [KeyType in keyof T]: KeyType extends IgnoreMaybeRef ? T[KeyType] : MaybeRef<T[KeyType]>
 }
+
+/**
+ * Maybe it's a ref, or a plain value
+ *
+ * ```ts
+ * type MaybeRef<T> = T | Ref<T>
+ * ```
+ */
+export type MaybeRef<T> = T | Ref<T>
+
+/**
+ * Maybe it's a ref, or a plain value, or a getter function
+ *
+ * ```ts
+ * type MaybeComputedRef<T> = (() => T) | T | Ref<T> | ComputedRef<T>
+ * ```
+ */
+export type MaybeComputedRef<T> = MaybeReadonlyRef<T> | MaybeRef<T>
+
+/**
+ * Maybe it's a computed ref, or a getter function
+ *
+ * ```ts
+ * type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
+ * ```
+ */
+export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
+
+/**
+ * Make all the nested attributes of an object or array to MaybeRef<T>
+ *
+ * Good for accepting options that will be wrapped with `reactive` or `ref`
+ *
+ * ```ts
+ * UnwrapRef<DeepMaybeRef<T>> === T
+ * ```
+ */
+export type DeepMaybeRef<T> = T extends Ref<infer V>
+  ? MaybeRef<V>
+  : T extends Array<any> | object
+    ? { [K in keyof T]: DeepMaybeRef<T[K]> }
+    : MaybeRef<T>
 
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.

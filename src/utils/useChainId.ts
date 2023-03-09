@@ -1,9 +1,9 @@
 import { computed } from 'vue-demi'
 import { useProvider } from 'use-wagmi'
 
-import type { SetMaybeRef } from '../types'
+import type { DeepMaybeRef } from '../types'
 
-export type UseChainIdArgs = SetMaybeRef<{
+export type UseChainIdArgs = DeepMaybeRef<{
   chainId?: number
 }>
 
