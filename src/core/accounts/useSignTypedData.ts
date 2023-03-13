@@ -1,5 +1,5 @@
 import { unref } from 'vue-demi';
-import { useMutation } from 'vue-query';
+import { useMutation } from 'vue-query'
 import { signTypedData } from '@wagmi/core'
 
 import type { TypedData, Address } from 'abitype'

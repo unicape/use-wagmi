@@ -1,5 +1,5 @@
 import { disconnect } from '@wagmi/core'
-import { useMutation } from 'vue-query'
+import { useMutation } from '../../utils'
 
 export type UseDisconnectConfig = {
   /** Function to invoke when an error is thrown while connecting. */
