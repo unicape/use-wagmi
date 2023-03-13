@@ -7,8 +7,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.45",
-    "ethers": "^5.7.1"
+    "buffer": "^6.0.3",
+    "ethers": "^5.7.1",
+    "vue": "^3.2.45"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
