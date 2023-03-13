@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Connect</h1>
+    
     <div>
       <button
         v-for="x in connectors" :key="x.id"
