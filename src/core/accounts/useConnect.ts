@@ -1,18 +1,18 @@
-import { unref, computed } from 'vue-demi'
-import { useMutation } from 'vue-query'
+import { computed } from 'vue-demi'
 import { getWagmi } from 'use-wagmi'
 import { connect } from '@wagmi/core'
+import { useMutation } from '../../utils'
 
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
-import type { MutationConfig, SetMaybeRef } from '../../types'
+import type { MutationConfig, DeepMaybeRef } from '../../types'
 
-export type UseConnectArgs = Partial<ConnectArgs>
+export type UseConnectArgs = DeepMaybeRef<Partial<ConnectArgs>>
 export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
 
 export const mutationKey = (args: UseConnectArgs) =>
   [{ entity: 'connect', ...args }] as const
 
-const mutationFn = (args: UseConnectArgs) => {
+const mutationFn = (args: ConnectArgs) => {
   const { chainId, connector } = args
   if (!connector) throw new Error('connector is required')
   return connect({ chainId, connector })
@@ -25,7 +25,7 @@ export function useConnect ({
   onMutate,
   onSettled,
   onSuccess
-}: SetMaybeRef<UseConnectArgs> & UseConnectConfig = {}) {
+}: UseConnectArgs & UseConnectConfig = {}) {
   const wagmi = getWagmi()
 
   const {
@@ -41,7 +41,7 @@ export function useConnect ({
     status,
     variables
   } = useMutation(
-    mutationKey({ chainId: unref(chainId), connector: unref(connector) }),
+    mutationKey({ chainId, connector }),
     mutationFn,
     {
       onError,
@@ -51,24 +51,24 @@ export function useConnect ({
     }
   )
 
-  const connect = (args?: Partial<ConnectArgs>) => {
+  const connect = (args?: UseConnectArgs) => {
     return mutate({
-      chainId: unref(args?.chainId ?? chainId),
-      connector: unref(args?.connector ?? connector)
+      chainId: args?.chainId ?? chainId,
+      connector: args?.connector ?? connector
     } as ConnectArgs)
   }
 
-  const connectAsync = (args?: Partial<ConnectArgs>) => {
+  const connectAsync = (args?: UseConnectArgs) => {
     return mutateAsync({
-      chainId: unref(args?.chainId ?? chainId),
-      connector: unref(args?.connector ?? connector)
+      chainId: args?.chainId ?? chainId,
+      connector: args?.connector ?? connector
     } as ConnectArgs)
   }
 
   return {
     connect,
     connectAsync,
-    connectors: computed(() => wagmi.value.connector),
+    connectors: computed(() => wagmi.value.connectors),
     pendingConnector: computed(() => variables?.value?.connector),
     data,
     error,
