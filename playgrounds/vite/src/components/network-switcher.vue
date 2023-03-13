@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Network Switcher</h1>
+    
     <div v-if="chain">Useing {{ chain.name }}</div>
 
     <button

@@ -2,17 +2,19 @@ import { unref, computed } from 'vue-demi'
 import { fetchBalance } from '@wagmi/core'
 import { useChainId, useQuery } from '../..//utils'
 
+import type { UnwrapRef } from 'vue-demi'
 import type { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
-import type { QueryConfig, QueryFunctionArgs, SetMaybeRef } from './../../types'
+import type { QueryConfig, QueryFunctionArgs, DeepMaybeRef } from './../../types'
 
-export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
+export type UseBalanceArgs = DeepMaybeRef<Partial<FetchBalanceArgs> & {
   /** Subscribe to changes */
   watch?: boolean
-}
+}>
 
-export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
+type UseBalanceConfig_ = QueryConfig<FetchBalanceResult, Error>
+export type UseBalanceConfig = DeepMaybeRef<Omit<UseBalanceConfig_, 'onError'| 'onSettled' | 'onSuccess'>> & Pick<UseBalanceConfig_, 'onError' | 'onSettled' | 'onSuccess'>
 
-type QueryKeyArgs = Partial<FetchBalanceArgs>
+type QueryKeyArgs = DeepMaybeRef<Partial<FetchBalanceArgs>>
 type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
 
 function queryKey ({
@@ -33,8 +35,8 @@ function queryKey ({
 }
 
 function queryFn ({
-  queryKey: [{ address, chainId, formatUnits, token }],
-}: QueryFunctionArgs<typeof queryKey>) {
+  queryKey: [{ address, chainId, formatUnits, token }]
+}: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) {
   if (!address) throw new Error('address is required')
   return fetchBalance({ address, chainId, formatUnits, token })
 }
@@ -53,24 +55,24 @@ export function useBalance ({
   onError,
   onSettled,
   onSuccess
-}: SetMaybeRef<UseBalanceArgs> & UseBalanceConfig = {}) {
+}: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
   const queryKey_ = computed(() => queryKey({
-    address: unref(address),
-    chainId: unref(chainId),
-    formatUnits: unref(formatUnits),
-    scopeKey: unref(scopeKey),
-    token: unref(token)
-  }))
+    address,
+    chainId,
+    formatUnits,
+    scopeKey,
+    token
+  })) as any
 
   const balanceQuery = useQuery(
-    unref(queryKey_),
+    queryKey_,
     queryFn,
     {
-      cacheTime: unref(cacheTime),
+      cacheTime,
       enabled: Boolean(unref(enabled) && unref(address)),
-      staleTime: unref(staleTime),
-      suspense: unref(suspense),
+      staleTime,
+      suspense,
       onError,
       onSettled,
       onSuccess
