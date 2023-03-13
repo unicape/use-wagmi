@@ -48,6 +48,7 @@ importers:
       '@vitejs/plugin-vue': ^4.0.0
       buffer: ^6.0.3
       ethers: ^5.7.1
+      process: ^0.11.10
       typescript: ^4.9.3
       vite: ^4.1.0
       vue: ^3.2.45
@@ -55,6 +56,7 @@ importers:
     dependencies:
       buffer: registry.npmmirror.com/buffer/6.0.3
       ethers: registry.npmmirror.com/ethers/5.7.2
+      process: registry.npmmirror.com/process/0.11.10
       vue: registry.npmmirror.com/vue/3.2.47
     devDependencies:
       '@vitejs/plugin-vue': registry.npmmirror.com/@vitejs/plugin-vue/4.0.0_vite@4.1.4+vue@3.2.47
@@ -4577,6 +4579,13 @@ packages:
     resolution: {integrity: sha512-du4wfLyj4yCZq1VupnVSZmRsPJsNuxoDQFdCFHLaYiEbFBD7QE0a+I4D7hOxrVnh78QE/YipFAj9lXHiXocV+Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/process-warning/-/process-warning-1.0.0.tgz}
     name: process-warning
     version: 1.0.0
+    dev: false
+
+  registry.npmmirror.com/process/0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/process/-/process-0.11.10.tgz}
+    name: process
+    version: 0.11.10
+    engines: {node: '>= 0.6.0'}
     dev: false
 
   registry.npmmirror.com/proxy-compare/2.4.0:
