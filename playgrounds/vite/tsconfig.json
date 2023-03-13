@@ -12,7 +12,9 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noEmit": true,
+    "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "use-wagmi": ["../../src"],
       "use-wagmi/*": ["../../src/*"]
     }
