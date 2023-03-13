@@ -51,6 +51,9 @@ export function useConnect ({
     }
   )
 
+  const connectors = computed(() => wagmi.value.connectors)
+  const pendingConnector = computed(() => variables?.value?.connector)
+
   const connect = (args?: UseConnectArgs) => {
     return mutate({
       chainId: args?.chainId ?? chainId,
@@ -68,8 +71,8 @@ export function useConnect ({
   return {
     connect,
     connectAsync,
-    connectors: computed(() => wagmi.value.connectors),
-    pendingConnector: computed(() => variables?.value?.connector),
+    connectors,
+    pendingConnector,
     data,
     error,
     isError,

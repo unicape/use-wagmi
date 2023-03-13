@@ -9,6 +9,7 @@
   "dependencies": {
     "buffer": "^6.0.3",
     "ethers": "^5.7.1",
+    "process": "^0.11.10",
     "vue": "^3.2.45"
   },
   "devDependencies": {
