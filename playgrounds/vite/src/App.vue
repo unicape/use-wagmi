@@ -1,7 +1,7 @@
 <template>
   <Connect />
-  <Account />
   <NetworkSwitcher />
+  <Account />
 </template>
 
 <script lang="ts" setup>

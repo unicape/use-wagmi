@@ -60,7 +60,7 @@ export type PartialBy<TType, TKeys extends keyof TType> = Partial<
 export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>
 
-export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
+export type QueryConfig<TData, TError, TSelectData = TData> = DeepMaybeRef<Pick<
   UseQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
@@ -70,13 +70,15 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   | 'staleTime'
   | 'structuralSharing'
   | 'suspense'
-  | 'onError'
-  | 'onSettled'
-  | 'onSuccess'
 > & {
   /** Scope the cache to a given context. */
   scopeKey?: string
-}
+}> & Pick<
+  UseQueryOptions<TData, TError, TSelectData>,
+  | 'onError'
+  | 'onSettled'
+  | 'onSuccess'
+>
 
 export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */
