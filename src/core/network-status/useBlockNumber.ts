@@ -4,19 +4,21 @@ import { debounce } from '@wagmi/core/internal'
 import { useProvider, useWebSocketProvider } from 'use-wagmi'
 import { useChainId, useQuery, useQueryClient } from '../../utils'
 
+import type { UnwrapRef } from 'vue-demi'
 import type { FetchBlockNumberArgs, FetchBlockNumberResult } from '@wagmi/core'
-import type { QueryConfig, QueryFunctionArgs, SetMaybeRef } from './../../types'
+import type { QueryConfig, QueryFunctionArgs, DeepMaybeRef } from './../../types'
 
-export type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
-  /** Function fires when a new block is created */
-  onBlock?: (blockNumber: number) => void
+export type UseBlockNumberArgs = DeepMaybeRef<Partial<FetchBlockNumberArgs> & {
   /** Subscribe to changes */
   watch?: boolean
+}> & {
+  /** Function fires when a new block is created */
+  onBlock?: (blockNumber: number) => void
 }
 
 export type UseBlockNumberConfig = QueryConfig<FetchBlockNumberResult, Error>
 
-type QueryKeyArgs = Partial<FetchBlockNumberArgs>
+type QueryKeyArgs = DeepMaybeRef<Partial<FetchBlockNumberArgs>>
 type QueryKeyConfig = Pick<UseBlockNumberConfig, 'scopeKey'>
 
 function queryKey ({ chainId, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
@@ -25,7 +27,7 @@ function queryKey ({ chainId, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
 
 function queryFn ({
   queryKey: [{ chainId }],
-}: QueryFunctionArgs<typeof queryKey>) {
+}: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) {
   return fetchBlockNumber({ chainId })
 }
 
@@ -41,7 +43,7 @@ export function useBlockNumber ({
   onError,
   onSettled,
   onSuccess
-}: SetMaybeRef<UseBlockNumberArgs> & UseBlockNumberConfig = {}) {
+}: UseBlockNumberArgs & UseBlockNumberConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
   const provider = useProvider({ chainId })
   const websocketProvider = useWebSocketProvider({ chainId })
@@ -61,8 +63,8 @@ export function useBlockNumber ({
       // calls the event callback after .off() has been called
       if (unref(watch))
         queryClient.setQueriesData(queryKey({
-          chainId: unref(chainId),
-          scopeKey: unref(scopeKey)
+          chainId,
+          scopeKey
         }), blockNumber)
       if (onBlock) onBlock(blockNumber)
     }, 1)
@@ -75,15 +77,15 @@ export function useBlockNumber ({
 
   return useQuery(
     queryKey({
-      scopeKey: unref(scopeKey),
-      chainId: unref(chainId)
+      scopeKey,
+      chainId
     }),
     queryFn,
     {
-      cacheTime: unref(cacheTime),
-      enabled: unref(enabled),
-      staleTime: unref(staleTime),
-      suspense: unref(suspense),
+      cacheTime,
+      enabled,
+      staleTime,
+      suspense,
       onError,
       onSettled,
       onSuccess

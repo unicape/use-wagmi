@@ -1,6 +1,6 @@
 import { unref, computed } from 'vue-demi'
 import { fetchBalance } from '@wagmi/core'
-import { useChainId, useQuery } from '../..//utils'
+import { useChainId, useQuery, useInvalidateOnBlock } from '../..//utils'
 
 import type { UnwrapRef } from 'vue-demi'
 import type { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
@@ -11,8 +11,7 @@ export type UseBalanceArgs = DeepMaybeRef<Partial<FetchBalanceArgs> & {
   watch?: boolean
 }>
 
-type UseBalanceConfig_ = QueryConfig<FetchBalanceResult, Error>
-export type UseBalanceConfig = DeepMaybeRef<Omit<UseBalanceConfig_, 'onError'| 'onSettled' | 'onSuccess'>> & Pick<UseBalanceConfig_, 'onError' | 'onSettled' | 'onSuccess'>
+export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 
 type QueryKeyArgs = DeepMaybeRef<Partial<FetchBalanceArgs>>
 type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
@@ -70,7 +69,7 @@ export function useBalance ({
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(unref(enabled) && unref(address)),
+      enabled: computed(() => !!(unref(enabled) && unref(address))),
       staleTime,
       suspense,
       onError,
@@ -78,6 +77,12 @@ export function useBalance ({
       onSuccess
     }
   )
+
+  useInvalidateOnBlock({
+    chainId,
+    enabled: computed(() => !!(unref(enabled) && unref(watch) && unref(address))),
+    queryKey: queryKey_
+  })
 
   return balanceQuery
 }
