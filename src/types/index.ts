@@ -1,10 +1,5 @@
-import type { Ref, ComputedRef } from 'vue-demi'
+import type { Ref, UnwrapRef, ComputedRef } from 'vue-demi'
 import type { UseMutationOptions, UseQueryOptions, QueryFunctionContext } from 'vue-query'
-
-type IgnoreMaybeRef = 'onError' | 'onMutate' | 'onSettled' | 'onSuccess' | 'onBlock'
-export type SetMaybeRef<T extends object> = {
-  [KeyType in keyof T]: KeyType extends IgnoreMaybeRef ? T[KeyType] : MaybeRef<T[KeyType]>
-}
 
 /**
  * Maybe it's a ref, or a plain value
@@ -60,7 +55,7 @@ export type PartialBy<TType, TKeys extends keyof TType> = Partial<
 export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>
 
-export type QueryConfig<TData, TError, TSelectData = TData> = DeepMaybeRef<Pick<
+export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   UseQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
@@ -72,13 +67,13 @@ export type QueryConfig<TData, TError, TSelectData = TData> = DeepMaybeRef<Pick<
   | 'suspense'
 > & {
   /** Scope the cache to a given context. */
-  scopeKey?: string
-}> & Pick<
+  scopeKey?: MaybeRef<string>
+} & UnwrapRef<Pick<
   UseQueryOptions<TData, TError, TSelectData>,
   | 'onError'
   | 'onSettled'
   | 'onSuccess'
->
+>>
 
 export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */

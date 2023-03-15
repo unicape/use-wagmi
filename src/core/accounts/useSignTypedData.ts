@@ -1,14 +1,13 @@
-import { unref } from 'vue-demi';
 import { useMutation } from 'vue-query'
 import { signTypedData } from '@wagmi/core'
 
 import type { TypedData, Address } from 'abitype'
 import type { SignTypedDataArgs, SignMessageResult } from '@wagmi/core'
-import type { MutationConfig, PartialBy, SetMaybeRef } from '../../types'
+import type { MutationConfig, PartialBy, DeepMaybeRef } from '../../types'
 
 export type UseSignTypedDataArgs<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData
-> = PartialBy<SignTypedDataArgs<TTypedData>, 'domain' | 'types' | 'value'>
+> = PartialBy<DeepMaybeRef<SignTypedDataArgs<TTypedData>>, 'domain' | 'types' | 'value'>
 
 export type UseSignTypedDataConfig<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData
@@ -42,7 +41,7 @@ export function useSignTypedData<TTypedData extends TypedData> ({
   onMutate,
   onSettled,
   onSuccess
-}: SetMaybeRef<UseSignTypedDataArgs<TTypedData>> & UseSignTypedDataConfig<TTypedData> = {} as any) {
+}: UseSignTypedDataArgs<TTypedData> & UseSignTypedDataConfig<TTypedData> = {} as any) {
   const {
     data,
     error,
@@ -56,9 +55,9 @@ export function useSignTypedData<TTypedData extends TypedData> ({
     variables
   } = useMutation(
     mutationKey({
-      domain: unref(domain),
-      types: unref(types),
-      value: unref(value)
+      domain,
+      types,
+      value
     } as UseSignTypedDataArgs<TTypedData>),
     mutationFn,
     {
@@ -73,9 +72,9 @@ export function useSignTypedData<TTypedData extends TypedData> ({
     args?: UseSignTypedDataArgs<TTypedDataMutate>
   ) => {
     return mutate({
-      domain: unref(args?.domain ?? domain),
-      types: unref(args?.types ?? types),
-      value: unref(args?.value ?? value)
+      domain: args?.domain ?? domain,
+      types: args?.types ?? types,
+      value: args?.value ?? value
     } as unknown as SignTypedDataArgs<TTypedData>)
   }
 
@@ -83,9 +82,9 @@ export function useSignTypedData<TTypedData extends TypedData> ({
     args?: UseSignTypedDataArgs<TTypedDataMutate>
   ) => {
     return mutateAsync({
-      domain: unref(args?.domain ?? domain),
-      types: unref(args?.types ?? types),
-      value: unref(args?.value ?? value)
+      domain: args?.domain ?? domain,
+      types: args?.types ?? types,
+      value: args?.value ?? value
     } as unknown as SignTypedDataArgs<TTypedData>)
   }
 

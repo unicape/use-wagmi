@@ -1,8 +1,9 @@
-import { unref, getCurrentScope, onScopeDispose } from 'vue-demi'
+import { unref, computed, getCurrentScope, onScopeDispose } from 'vue-demi'
 import { fetchSigner, watchSigner } from '@wagmi/core'
 import { useAccount } from './useAccount'
 import { useChainId, useQuery, useQueryClient } from '../../utils'
 
+import type { UnwrapRef } from 'vue-demi'
 import type { Signer, FetchSignerResult, FetchSignerArgs } from '@wagmi/core'
 import type { QueryConfig, QueryFunctionArgs, DeepMaybeRef } from './../../types'
 
@@ -18,8 +19,8 @@ export function queryKey({ chainId }: UseSignerArgs) {
 
 function queryFn<TSigner extends Signer>({
   queryKey: [{ chainId }],
-}: QueryFunctionArgs<typeof queryKey>) {
-  return fetchSigner<TSigner>({ chainId } as FetchSignerArgs)
+}: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) {
+  return fetchSigner<TSigner>({ chainId })
 }
 
 export function useSigner<TSigner extends Signer> ({
@@ -41,7 +42,7 @@ export function useSigner<TSigner extends Signer> ({
     queryFn,
     {
       cacheTime: 0,
-      enabled: Boolean(connector),
+      enabled: computed(() => !!connector.value),
       staleTime: Infinity,
       suspense,
       onError,
