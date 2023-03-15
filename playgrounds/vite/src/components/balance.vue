@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h3>AccountBalance</h3>
-
     <div>
       {{ data?.formatted }}
       <button @click="() => refetch()">Refetch</button>
@@ -18,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, isRef } from 'vue'
+import { ref } from 'vue'
 import { useAccount, useBalance } from 'use-wagmi'
 
 const { address } = useAccount()
