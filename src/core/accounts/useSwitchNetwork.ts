@@ -3,6 +3,7 @@ import { getWagmi } from 'use-wagmi'
 import { switchNetwork } from '@wagmi/core'
 import { useMutation } from '../../utils'
 
+import type { UnwrapRef } from 'vue-demi'
 import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
 import type { MutationConfig, DeepMaybeRef } from '../../types'
 
@@ -16,7 +17,7 @@ export type UseSwitchNetworkConfig = MutationConfig<
 export const mutationKey = (args: UseSwitchNetworkArgs) =>
   [{ entity: 'switchNetwork', ...args }] as const
 
-const mutationFn = (args: Partial<SwitchNetworkArgs>) => {
+const mutationFn = (args: UnwrapRef<UseSwitchNetworkArgs>) => {
   const { chainId } = args
   if (!chainId) throw new Error('chainId is required')
   return switchNetwork({ chainId })

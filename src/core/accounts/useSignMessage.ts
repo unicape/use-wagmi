@@ -1,11 +1,10 @@
-import { unref } from 'vue-demi'
 import { useMutation } from 'vue-query'
 import { signMessage } from '@wagmi/core'
 
 import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
-import type { MutationConfig, SetMaybeRef } from './../../types'
+import type { MutationConfig, DeepMaybeRef } from './../../types'
 
-export type UseSignMessageArgs = Partial<SignMessageArgs>
+export type UseSignMessageArgs = DeepMaybeRef<Partial<SignMessageArgs>>
 
 export type UseSignMessageConfig = MutationConfig<
   SignMessageResult,
@@ -16,7 +15,7 @@ export type UseSignMessageConfig = MutationConfig<
 export const mutationKey = (args: UseSignMessageArgs) =>
   [{ entity: 'signMessage', ...args }] as const
 
-const mutationFn = (args: UseSignMessageArgs) => {
+const mutationFn = (args: SignMessageArgs) => {
   const { message } = args
   if (!message) throw new Error('message is required')
   return signMessage({ message })
@@ -28,7 +27,7 @@ export function useSignMessage ({
   onMutate,
   onSettled,
   onSuccess
-}: SetMaybeRef<UseSignMessageArgs> & UseSignMessageConfig = {}) {
+}: UseSignMessageArgs & UseSignMessageConfig = {}) {
   const {
     data,
     error,
@@ -42,7 +41,7 @@ export function useSignMessage ({
     status,
     variables
   } = useMutation(
-    mutationKey({ message: unref(message) }),
+    mutationKey({ message }),
     mutationFn,
     {
       onError,
@@ -52,15 +51,15 @@ export function useSignMessage ({
     }
   )
 
-  const signMessage = (args?: SignMessageArgs) => {
+  const signMessage = (args?: UseSignMessageArgs) => {
     return mutate({
-      message: unref(args?.message ?? message)
+      message: args?.message ?? message
     } as SignMessageArgs)
   }
 
-  const signMessageAsync = (args?: SignMessageArgs) => {
+  const signMessageAsync = (args?: UseSignMessageArgs) => {
     return mutateAsync({
-      message: unref(args?.message ?? message)
+      message: args?.message ?? message
     } as SignMessageArgs)
   }
 
