@@ -1,3 +1,4 @@
 export * from './accounts'
-export * from './providers'
+export * from './ens'
 export * from './network-status'
+export * from './providers'
