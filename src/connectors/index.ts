@@ -10,8 +10,11 @@ export type { InjectedConnectorOptions } from '@wagmi/core/connectors/injected'
 export { MetaMaskConnector } from '@wagmi/core/connectors/metaMask'
 export type { MetaMaskConnectorOptions } from '@wagmi/core/connectors/metaMask'
 
-/* WalletConnect */
+/* WalletConnect V2 */
 export { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+
+/* WalletConnect V1 */
+export { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
 
 /* CoinbaseWallet */
 export { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'

@@ -5,6 +5,8 @@ export {
   auroraTestnet,
   avalanche,
   avalancheFuji,
+  baseGoerli,
+  boba,
   bronos,
   bronosTestnet,
   bsc,
@@ -20,11 +22,14 @@ export {
   filecoin,
   filecoinCalibration,
   filecoinHyperspace,
+  flare,
+  flareTestnet,
   foundry,
   gnosis,
   gnosisChiado,
   goerli,
   hardhat,
+  harmonyOne,
   iotex,
   iotexTestnet,
   localhost,
@@ -39,13 +44,18 @@ export {
   optimismGoerli,
   polygon,
   polygonMumbai,
+  polygonZkEvmTestnet,
   sepolia,
+  shardeumSphinx,
+  songbird,
+  songbirdTestnet,
   taraxa,
   taraxaTestnet,
   telos,
   telosTestnet,
+  zhejiang,
   zkSync,
   zkSyncTestnet
-} from '@wagmi/core/chains'
+} from '@wagmi/chains'
 
 export type { Chain } from '@wagmi/core/chains'
