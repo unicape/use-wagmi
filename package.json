@@ -68,7 +68,7 @@
     }
   },
   "dependencies": {
-    "@wagmi/core": "^0.9.6",
+    "@wagmi/core": "^0.10.1",
     "abitype": "^0.3.0",
     "vue-demi": "latest",
     "vue-query": "^2.0.0-beta.12"
@@ -79,6 +79,7 @@
     "@types/node": "^18.14.0",
     "consola": "^2.15.3",
     "cross-env": "^7.0.3",
+    "ethers": "^5.7.1",
     "esbuild-register": "^3.4.2",
     "esno": "^0.16.3",
     "fs-extra": "^11.1.0",
