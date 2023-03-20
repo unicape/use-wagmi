@@ -69,7 +69,7 @@ export type UseSendTransactionConfig = MutationConfig<
  * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
- * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
+ * import { useSendTransaction, usePrepareSendTransaction } from 'use-wagmi'
  *
  * const config = usePrepareSendTransaction({
  *   request: {
