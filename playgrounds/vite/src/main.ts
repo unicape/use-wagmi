@@ -10,6 +10,7 @@ import {
   InjectedConnector,
   MetaMaskConnector,
   WalletConnectConnector,
+  WalletConnectLegacyConnector,
   CoinbaseWalletConnector,
   LedgerConnector,
   SafeConnector
@@ -42,6 +43,13 @@ const wagmi = createWagmi({
       }
     }),
     new WalletConnectConnector({
+      chains,
+      options: {
+        /* Enter Your projectId */
+        projectId: 'a2cdf2f8d7e0ab2cd269962577b3bc41'
+      }
+    }),
+    new WalletConnectLegacyConnector({
       chains,
       options: {
         qrcode: true
