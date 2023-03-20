@@ -37,11 +37,7 @@ export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
  * UnwrapRef<DeepMaybeRef<T>> === T
  * ```
  */
-export type DeepMaybeRef<T> = T extends Ref<infer V>
-  ? MaybeRef<V>
-  : T extends Array<any> | object
-    ? { [K in keyof T]: DeepMaybeRef<T[K]> }
-    : MaybeRef<T>
+export type DeepMaybeRef<T> = T extends Ref<infer V> ? MaybeRef<V> : T extends Array<any> | object ? { [K in keyof T]: DeepMaybeRef<T[K]> } : MaybeRef<T>
 
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.

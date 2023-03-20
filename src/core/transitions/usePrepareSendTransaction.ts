@@ -56,7 +56,7 @@ function queryFn ({ signer }: { signer?: FetchSignerResult }) {
  * Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
  *
  * @example
- * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
+ * import { useSendTransaction, usePrepareSendTransaction } from 'use-wagmi'
  *
  * const { config } = usePrepareSendTransaction({
  *   to: 'moxey.eth',

@@ -1,2 +1,5 @@
 export { usePrepareSendTransaction } from './usePrepareSendTransaction'
 export { useSendTransaction } from './useSendTransaction'
+export { useTransaction } from './useTransaction'
+export { useWaitTranscation } from './useWaitForTransaction'
+export { useWatchPendingTransactions } from './useWatchPendingTransactions'
