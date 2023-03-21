@@ -55,9 +55,7 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   UseQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
-  | 'isDataEqual'
   | 'keepPreviousData'
-  | 'select'
   | 'staleTime'
   | 'structuralSharing'
   | 'suspense'
@@ -66,6 +64,8 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   scopeKey?: MaybeRef<string>
 } & UnwrapRef<Pick<
   UseQueryOptions<TData, TError, TSelectData>,
+  | 'isDataEqual'
+  | 'select'
   | 'onError'
   | 'onSettled'
   | 'onSuccess'
