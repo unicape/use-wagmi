@@ -11,13 +11,13 @@ export function useWebSocketProvider<
 > ({
   chainId
 }: UseWebsocketProviderArgs = {}) {
-  const webSocketProvider = ref(markRaw(getWebSocketProvider<TWebSocketProvider>({ chainId: unref(chainId) }) as TWebSocketProvider))
+  const webSocketProvider = ref(getWebSocketProvider<TWebSocketProvider>({ chainId: unref(chainId) }) as TWebSocketProvider)
 
   watchEffect(onInvalidate => {
     const unwatch = watchWebSocketProvider<TWebSocketProvider>(
       { chainId: unref(chainId) },
       (webSocketProvider_) => {
-        webSocketProvider.value = markRaw(webSocketProvider_ || {})
+        webSocketProvider.value = webSocketProvider_
       }
     )
 
