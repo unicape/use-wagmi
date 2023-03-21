@@ -66,17 +66,6 @@ function queryFn<
   }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) => {
     if (!abi) throw new Error('abi is required')
     if (!address) throw new Error('address is required')
-    console.log({
-      address,
-      args,
-      chainId,
-      // TODO: Remove cast and still support `Narrow<TAbi>`
-      abi: abi as Abi,
-      functionName,
-      // @ts-ignore
-      overrides
-    });
-    
     return ((await readContract({
       address,
       args,
@@ -138,7 +127,7 @@ export function useContractRead<
 
   const enabled = computed(() => {
     let enabled = Boolean(unref(enabled_) && unref(abi) && unref(address) && unref(functionName))
-    if (unref(cacheOnBlock)) enabled = Boolean(enabled && unref(blockNumber))
+    if (unref(cacheOnBlock)) enabled = Boolean(unref(enabled) && unref(blockNumber))
     return enabled
   })
 

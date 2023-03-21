@@ -22,8 +22,13 @@
       <SendTransactionPrepared />
     </template>
 
-    <h4>Read Contract</h4>
-    <ReadContract />
+    <template v-if="true">
+      <h4>Read Contract</h4>
+      <ReadContract />
+
+      <h4>Reads Contract</h4>
+      <ReadsContract />
+    </template>
   </div>
 </template>
 
@@ -34,6 +39,7 @@ import BlockNumber from './block-number.vue'
 import SendTransaction from './send-transaction.vue'
 import SendTransactionPrepared from './send-transaction-prepared.vue'
 import ReadContract from './read-contract.vue'
+import ReadsContract from './reads-contract.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),
