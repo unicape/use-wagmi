@@ -15,17 +15,17 @@ type UseQueryReturnType<TData, TError> = Omit<
   UQRT<TData, TError>,
   "refetch" | "remove"
 > & {
-  refetch: QueryObserverResult<TData, TError>["refetch"];
-  remove: QueryObserverResult<TData, TError>["remove"];
+  refetch: QueryObserverResult<TData, TError>["refetch"]
+  remove: QueryObserverResult<TData, TError>["remove"]
 }
 
 type UseQueryDefinedReturnType<TData, TError> = Omit<
   ToRefs<Readonly<DefinedQueryObserverResult<TData, TError>>>,
   "refetch" | "remove"
 > & {
-  suspense: () => Promise<QueryObserverResult<TData, TError>>;
-  refetch: QueryObserverResult<TData, TError>["refetch"];
-  remove: QueryObserverResult<TData, TError>["remove"];
+  suspense: () => Promise<QueryObserverResult<TData, TError>>
+  refetch: QueryObserverResult<TData, TError>["refetch"]
+  remove: QueryObserverResult<TData, TError>["remove"]
 }
 
 export function useQuery<
