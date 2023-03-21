@@ -1,4 +1,4 @@
-import { ref, unref, readonly, markRaw, watchEffect } from 'vue-demi'
+import { ref, unref, readonly, watchEffect } from 'vue-demi'
 import { getWebSocketProvider, watchWebSocketProvider } from '@wagmi/core'
 
 import type { GetWebSocketProviderArgs, WebSocketProvider } from '@wagmi/core'
