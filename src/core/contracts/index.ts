@@ -1,0 +1,1 @@
+export { useContractRead } from './useContractRead'

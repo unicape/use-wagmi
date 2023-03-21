@@ -20,8 +20,8 @@ const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, goerli, optimism, avalanche],
   [
     /* Enter Your apiKey */
-    alchemyProvider({ apiKey: '' }),
-    infuraProvider({ apiKey: '' }),
+    // alchemyProvider({ apiKey: '' }),
+    // infuraProvider({ apiKey: '' }),
     publicProvider()
   ],
   { targetQuorum: 1 }
