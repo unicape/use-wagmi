@@ -10,13 +10,12 @@ import type {
   InfiniteQueryObserverResult
 } from 'vue-query'
 
-type InfiniteQueryReturnType<TData, TError> = UseQueryReturnType<
-  TData,
-  TError,
-  InfiniteQueryObserverResult<TData, TError>
->
-type UseInfiniteQueryReturnType<TData, TError> = Omit<
-  InfiniteQueryReturnType<TData, TError>,
+export type UseInfiniteQueryResult<TData, TError> = Omit<
+  UseQueryReturnType<
+    TData,
+    TError,
+    InfiniteQueryObserverResult<TData, TError>
+  >,
   "fetchNextPage" | "fetchPreviousPage" | "refetch" | "remove"
 > & {
   fetchNextPage: InfiniteQueryObserverResult<TData, TError>["fetchNextPage"]
@@ -37,7 +36,7 @@ export function useInfiniteQuery<
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, UnwrapRef<TQueryKey>>,
   options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-): UseInfiniteQueryReturnType<TData, TError> {
+): UseInfiniteQueryResult<TData, TError> {
   return useBaseQuery({
     queryKey,
     queryFn,

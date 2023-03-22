@@ -28,6 +28,8 @@ type UseQueryDefinedReturnType<TData, TError> = Omit<
   remove: QueryObserverResult<TData, TError>["remove"]
 }
 
+export type UseQueryResult<TData, TError> = UseQueryReturnType<TData, TError> | UseQueryDefinedReturnType<TData, TError>
+
 export function useQuery<
   TQueryFnData,
   TError,
@@ -37,9 +39,7 @@ export function useQuery<
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, UnwrapRef<TQueryKey>>,
   options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
-):
-| UseQueryReturnType<TData, TError>
-| UseQueryDefinedReturnType<TData, TError> {
+): UseQueryResult<TData, TError> {
   return useBaseQuery({
     queryKey,
     queryFn,
