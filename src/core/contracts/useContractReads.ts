@@ -6,9 +6,9 @@ import { useBlockNumber } from '../network-status'
 
 import type { Abi, Address } from 'abitype'
 import type { UnwrapRef } from 'vue-demi'
-import type { UseQueryReturnType } from 'vue-query'
 import type { Contract } from '@wagmi/core/internal'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
+import type { UseQueryResult } from '../../utils'
 import type { MaybeRef, DeepMaybeRef, DeepPartial, QueryConfig, QueryFunctionArgs } from '../../types'
 
 export type UseContractReadsConfig<
@@ -131,7 +131,7 @@ export function useContractReads<
       : (replaceEqualDeep(oldData, newData) as any),
   suspense,
   watch
-}: UseContractReadsConfig<TContracts, TSelectData> = {} as any): UseQueryReturnType<TSelectData, Error> {
+}: UseContractReadsConfig<TContracts, TSelectData> = {} as any): UseQueryResult<TSelectData, Error> {
   const { data: blockNumber } = useBlockNumber({
     enabled: computed(() => unref(watch) && unref(cacheOnBlock)),
     watch
@@ -188,5 +188,5 @@ export function useContractReads<
       onSettled,
       onSuccess
     }
-  ) as unknown as UseQueryReturnType<TSelectData, Error>
+  )
 }
