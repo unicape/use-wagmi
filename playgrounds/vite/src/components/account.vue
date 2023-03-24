@@ -28,6 +28,12 @@
 
       <h4>Reads Contract</h4>
       <ReadsContract />
+
+      <h4>Read Contracts Infinite</h4>
+      <ReadContractsInfinite />
+
+      <h4>Watch Pending Transactions</h4>
+      <WatchPendingTransactions />
     </template>
   </div>
 </template>
@@ -40,6 +46,8 @@ import SendTransaction from './send-transaction.vue'
 import SendTransactionPrepared from './send-transaction-prepared.vue'
 import ReadContract from './read-contract.vue'
 import ReadsContract from './reads-contract.vue'
+import ReadContractsInfinite from './read-contracts-infinite.vue'
+import WatchPendingTransactions from './watch-pending-transactions.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),
