@@ -1,5 +1,10 @@
 import type { Ref, UnwrapRef, ComputedRef } from 'vue-demi'
-import type { UseMutationOptions, UseQueryOptions, QueryFunctionContext } from 'vue-query'
+import type {
+  UseMutationOptions,
+  UseQueryOptions,
+  QueryFunctionContext,
+  UseInfiniteQueryOptions
+} from 'vue-query'
 
 /**
  * Maybe it's a ref, or a plain value
@@ -37,7 +42,7 @@ export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
  * UnwrapRef<DeepMaybeRef<T>> === T
  * ```
  */
-export type DeepMaybeRef<T> = T extends Ref<infer V> ? MaybeRef<V> : T extends Array<any> | object ? { [K in keyof T]: DeepMaybeRef<T[K]> } : MaybeRef<T>
+export type DeepMaybeRef<T> = T extends Function ? T : T extends Ref<infer V> ? MaybeRef<V> : T extends Array<any> | object ? { [K in keyof T]: DeepMaybeRef<T[K]> } : MaybeRef<T>
 
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
@@ -47,6 +52,11 @@ export type PartialBy<TType, TKeys extends keyof TType> = Partial<
   Pick<TType, TKeys>
 > &
   Omit<TType, TKeys>
+
+export type PartialByDeepMaybeRef<TType, TKeys extends keyof DeepMaybeRef<TType>> = Partial<
+  Pick<DeepMaybeRef<TType>, TKeys>
+> &
+  Omit<DeepMaybeRef<TType>, TKeys>
 
 export type DeepPartial<
   T,
@@ -74,6 +84,27 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   scopeKey?: MaybeRef<string>
 } & UnwrapRef<Pick<
   UseQueryOptions<TData, TError, TSelectData>,
+  | 'isDataEqual'
+  | 'select'
+  | 'onError'
+  | 'onSettled'
+  | 'onSuccess'
+>>
+
+export type InfiniteQueryConfig<TData, TError, TSelectData = TData> = Pick<
+  UseInfiniteQueryOptions<TData, TError, TSelectData>,
+  | 'cacheTime'
+  | 'enabled'
+  | 'keepPreviousData'
+  | 'staleTime'
+  | 'structuralSharing'
+  | 'suspense'
+> & {
+  /** Scope the cache to a given context. */
+  scopeKey?: MaybeRef<string>
+} & UnwrapRef<Pick<
+  UseInfiniteQueryOptions<TData, TError, TSelectData>,
+  | 'getNextPageParam'
   | 'isDataEqual'
   | 'select'
   | 'onError'
