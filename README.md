@@ -1,8 +1,12 @@
-# use-wagmi
-
 [![npm (tag)](https://img.shields.io/npm/v/use-wagmi?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/use-wagmi) ![NPM](https://img.shields.io/npm/l/use-wagmi?style=flat&colorA=000000&colorB=000000)
 
+# use-wagmi
+
 Vue Composition for Ethereum
+
+Support for Vue 2.x via [vue-demi](https://github.com/vueuse/vue-demi)
+
+Based on [wagmi](https://wagmi.sh)
 
 ## Features
 
@@ -16,7 +20,7 @@ Vue Composition for Ethereum
 
 ## Documentation
 
-For full documentation and examples, visit [wagmi](https://wagmi.sh).
+`use-wagmi docs` visit [wagmi docs](https://wagmi.sh) as most of the concepts and APIs are the same.
 
 ## Installation
 
