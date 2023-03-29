@@ -14,6 +14,10 @@ async function build () {
     path.join(__dirname, '..' , 'package.json'),
     path.join(__dirname, '..', 'dist', 'package.json')
   )
+  await fs.copyFile(
+    path.join(__dirname, '..' , 'README.md'),
+    path.join(__dirname, '..', 'dist', 'README.md')
+  )
 
   consola.info('Rollup')
   exec(`pnpm run build:rollup${watch ? ' --watch' : ''}`, { stdio: 'inherit' })
