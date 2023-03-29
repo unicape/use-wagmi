@@ -41,31 +41,27 @@
       "require": "./index.cjs",
       "import": "./index.mjs"
     },
-    "./core": {
-      "types": "./core/index.d.ts",
-      "require": "./core/index.cjs",
-      "import": "./core/index.mjs"
+    "./actions": {
+      "types": "./actions/index.d.ts",
+      "require": "./actions/index.cjs",
+      "import": "./actions/index.mjs"
     },
     "./chains": {
       "types": "./chains/index.d.ts",
       "require": "./chains/index.cjs",
       "import": "./chains/index.mjs"
     },
-    "./actions": {
-      "types": "./actions/index.d.ts",
-      "require": "./actions/index.cjs",
-      "import": "./actions/index.mjs"
+    "./connectors": {
+      "types": "./connectors/index.d.ts",
+      "require": "./connectors/index.cjs",
+      "import": "./connectors/index.mjs"
     },
     "./providers": {
       "types": "./providers/index.d.ts",
       "require": "./providers/index.cjs",
       "import": "./providers/index.mjs"
     },
-    "./connectors": {
-      "types": "./connectors/index.d.ts",
-      "require": "./connectors/index.cjs",
-      "import": "./connectors/index.mjs"
-    }
+    "./package.json": "./package.json"
   },
   "dependencies": {
     "@wagmi/core": "^0.10.7",
