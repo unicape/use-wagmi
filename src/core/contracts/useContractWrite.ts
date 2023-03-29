@@ -179,10 +179,85 @@ export function useContractWrite<
           request
         } as MutationFnConfig)
       }
+
+      return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
+        mutate({
+          address,
+          args:
+            (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
+            args,
+          chainId,
+          abi: abi as Abi,
+          functionName,
+          mode: 'recklesslyUnprepared',
+          overrides:
+            overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
+        } as MutationFnConfig)
+    }).value
+  }
+
+  const writeAsync = () => {
+    return computed(() => {
+      if (unref(mode) === 'prepared') {
+        if (!request) return undefined
+
+        return mutateAsync({
+          address,
+          chainId,
+          abi: abi as Abi,
+          functionName,
+          mode: 'prepared',
+          request
+        } as MutationFnConfig)
+      }
+
+      return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
+        mutateAsync({
+          address,
+          args:
+            (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
+            args,
+          chainId,
+          abi: abi as Abi,
+          functionName,
+          mode: 'recklesslyUnprepared',
+          overrides:
+            overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
+        } as MutationFnConfig)
     }).value
   }
 
   return {
-    write
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
+    status,
+    variables,
+    write,
+    writeAsync
   }
+}
+
+type MutationFnArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = {
+  /**
+   * Recklessly pass through unprepared config. Note: This has
+   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+   * it is highly recommended to not use this and instead prepare the config upfront
+   * using the `usePrepareContractWrite` function.
+   */
+  recklesslySetUnpreparedArgs?: WriteContractUnpreparedArgs<
+    TAbi,
+    TFunctionName
+  >['args']
+  recklesslySetUnpreparedOverrides?: WriteContractUnpreparedArgs<
+    TAbi,
+    TFunctionName
+  >['overrides']
 }
