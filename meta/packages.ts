@@ -9,19 +9,24 @@ interface PackageManifest {
 }
 
 export const packages: PackageManifest[] = [
+  { name: '.' },
+  { name: 'actions' },
   {
-    name: '.'
-  },
-  {
-    name: 'core'
-  },
-  {
-    name: 'actions'
-  },
-  {
-    name: 'chains',
+    name: 'connectors',
     external: [
-      '@wagmi/core/chains'
+      '@wagmi/core/connectors/injected',
+      '@wagmi/core/connectors/metaMask',
+      '@wagmi/core/connectors/walletConnect',
+      '@wagmi/core/connectors/coinbaseWallet',
+      '@wagmi/core/connectors/ledger',
+      '@wagmi/core/connectors/mock',
+      '@wagmi/core/connectors/safe'
+    ]
+  },
+  {
+    name: 'hooks',
+    external: [
+      '@wagmi/core/internal'
     ]
   },
   {
@@ -34,15 +39,9 @@ export const packages: PackageManifest[] = [
     ]
   },
   {
-    name: 'connectors',
+    name: 'chains',
     external: [
-      '@wagmi/core/connectors/injected',
-      '@wagmi/core/connectors/metaMask',
-      '@wagmi/core/connectors/walletConnect',
-      '@wagmi/core/connectors/coinbaseWallet',
-      '@wagmi/core/connectors/ledger',
-      '@wagmi/core/connectors/mock',
-      '@wagmi/core/connectors/safe'
+      '@wagmi/core/chains'
     ]
-  }
+  },
 ]

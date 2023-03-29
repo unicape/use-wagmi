@@ -1,62 +1,90 @@
-export * from './core'
-export * from './chains'
-export * from './actions'
-export * from './providers'
-export * from './connectors'
-
 export { createWagmi, getWagmi } from './create'
 export type { CreateWagmiConfig, WagmiClient } from './create'
 
-/* Constants */
-export { erc20ABI, erc721ABI, erc4626ABI, units } from '@wagmi/core'
-
-/* Storage */
-export { createStorage, noopStorage } from '@wagmi/core'
-export type { Storage } from '@wagmi/core'
-
-/* Utils */
 export {
-  configureChains,
-  deepEqual,
-  deserialize,
-  minimizeContractInterface,
-  normalizeChainId,
-  parseContractResult,
-  serialize,
-} from '@wagmi/core'
-export type { ConfigureChainsConfig } from '@wagmi/core'
+  paginatedIndexesConfig,
+  useAccount,
+  useBalance,
+  useBlockNumber,
+  useChainId,
+  useConnect,
+  useContract,
+  useContractEvent,
+  useContractInfiniteReads,
+  useContractRead,
+  useContractReads,
+  useContractWrite,
+  useDisconnect,
+  useEnsAddress,
+  useEnsAvatar,
+  useEnsName,
+  useEnsResolver,
+  useFeeData,
+  useInfiniteQuery,
+  useMutation,
+  useNetwork,
+  useProvider,
+  useQuery,
+  useQueryClient,
+  useSendTransaction,
+  usePrepareContractWrite,
+  usePrepareSendTransaction,
+  useSignMessage,
+  useSignTypedData,
+  useSigner,
+  useSwitchNetwork,
+  useToken,
+  useTransaction,
+  useWaitForTransaction,
+  useWatchPendingTransactions,
+  useWebSocketProvider,
+  type UseContractConfig,
+  type UseContractEventConfig,
+  type UseContractInfiniteReadsConfig,
+  type UseContractReadConfig,
+  type UseContractReadsConfig,
+  type UseContractWriteConfig,
+  type UsePrepareContractWriteConfig,
+} from './hooks'
 
-/* Types */
-export type {
-  ChainProviderFn,
-  FallbackProviderConfig,
-  Hash,
-  ProviderWithFallbackConfig,
-  Provider,
-  Signer,
-  Unit,
-  WebSocketProvider,
-} from '@wagmi/core'
-
-export type { Ethereum } from '@wagmi/core'
-export type { Address } from '@wagmi/core'
-
-/* Error */
 export {
   AddChainError,
   ChainDoesNotSupportMulticallError,
   ChainMismatchError,
   ChainNotConfiguredError,
+  Connector,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
   ContractMethodNoResultError,
   ContractMethodRevertedError,
   ContractResultDecodeError,
+  ProviderChainsNotFound,
   ProviderRpcError,
   ResourceUnavailableError,
   RpcError,
   SwitchChainError,
   SwitchChainNotSupportedError,
-  UserRejectedRequestError
+  UserRejectedRequestError,
+  configureChains,
+  createStorage,
+  deepEqual,
+  deserialize,
+  erc20ABI,
+  erc721ABI,
+  erc4626ABI,
+  goerli,
+  mainnet,
+  readContracts,
+  serialize
 } from '@wagmi/core'
+export type {
+  Chain,
+  ChainProviderFn,
+  ConnectorData,
+  ConnectorEvents,
+  Storage,
+  Unit,
+} from '@wagmi/core'
+
+export type { Address } from 'abitype'
