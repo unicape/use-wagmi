@@ -1,10 +1,16 @@
-import { unref, computed } from 'vue-demi'
 import { fetchToken } from '@wagmi/core'
-import { useChainId, useQuery } from '../utils'
 
-import type { UnwrapRef } from 'vue-demi'
 import type { FetchTokenArgs, FetchTokenResult } from '@wagmi/core'
-import type { MaybeRef, DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type { UnwrapRef } from 'vue-demi'
+import { computed, unref } from 'vue-demi'
+
+import type {
+  DeepMaybeRef,
+  MaybeRef,
+  QueryConfig,
+  QueryFunctionArgs,
+} from '../../types'
+import { useChainId, useQuery } from '../utils'
 
 export type UseTokenArgs = DeepMaybeRef<Partial<FetchTokenArgs>>
 export type UseTokenConfig = QueryConfig<FetchTokenResult, Error>
@@ -12,28 +18,30 @@ export type UseTokenConfig = QueryConfig<FetchTokenResult, Error>
 type QueryKeyArgs = UseTokenArgs & {
   chainId?: MaybeRef<number>
 }
-type QueryKeyConfig = DeepMaybeRef<Pick<UseTokenConfig, 'scopeKey'> & {
-  activeChainId?: number
-  signerAddress?: string
-}>
+type QueryKeyConfig = DeepMaybeRef<
+  Pick<UseTokenConfig, 'scopeKey'> & {
+    activeChainId?: number
+    signerAddress?: string
+  }
+>
 
-function queryKey ({
+function queryKey({
   address,
   chainId,
   formatUnits,
-  scopeKey
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [{ entity: 'token', address, chainId, formatUnits, scopeKey }] as const
 }
 
-function queryFn ({
-  queryKey: [{ address, chainId, formatUnits }]
+function queryFn({
+  queryKey: [{ address, chainId, formatUnits }],
 }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) {
   if (!address) throw new Error('address is required')
   return fetchToken({ address, chainId, formatUnits })
 }
 
-export function useToken ({
+export function useToken({
   address,
   chainId: chainId_,
   formatUnits = 'ether',
@@ -44,7 +52,7 @@ export function useToken ({
   suspense,
   onError,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseTokenArgs & UseTokenConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
@@ -58,7 +66,7 @@ export function useToken ({
       suspense,
       onError,
       onSettled,
-      onSuccess
-    }
+      onSuccess,
+    },
   )
 }

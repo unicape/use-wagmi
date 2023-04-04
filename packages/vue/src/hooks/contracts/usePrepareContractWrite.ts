@@ -1,44 +1,54 @@
-import { unref, computed } from 'vue-demi'
 import { prepareWriteContract } from '@wagmi/core'
-import { useNetwork, useSigner } from '../accounts'
-import { useQuery } from '../utils'
 
 import type {
   FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
-  Signer
+  Signer,
 } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import type { providers } from 'ethers'
+import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
-import type { PartialBy, DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+
+import type {
+  DeepMaybeRef,
+  PartialBy,
+  QueryConfig,
+  QueryFunctionArgs,
+} from '../../types'
+import { useNetwork, useSigner } from '../accounts'
+import { useQuery } from '../utils'
 
 export type UsePrepareContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TChainId extends number = number,
-  TSigner extends Signer = Signer
-> = 
-  PartialBy<
-    DeepMaybeRef<PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>>,
-    'abi' | 'address' | 'args' | 'functionName'
-  > & QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName, TChainId>, Error>
+  TSigner extends Signer = Signer,
+> = PartialBy<
+  DeepMaybeRef<
+    PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>
+  >,
+  'abi' | 'address' | 'args' | 'functionName'
+> &
+  QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName, TChainId>, Error>
 
 type QueryKeyArgs = DeepMaybeRef<Omit<PrepareWriteContractConfig, 'abi'>>
-type QueryKeyConfig = DeepMaybeRef<Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
-  activeChainId?: number
-  signerAddress?: string
-}>
+type QueryKeyConfig = DeepMaybeRef<
+  Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
+    activeChainId?: number
+    signerAddress?: string
+  }
+>
 
-function queryKey ({
+function queryKey({
   activeChainId,
   args,
   address,
   chainId,
   functionName,
   overrides,
-  signerAddress
+  signerAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -49,12 +59,12 @@ function queryKey ({
       chainId,
       functionName,
       overrides,
-      signerAddress
-    }
+      signerAddress,
+    },
   ] as const
 }
 
-function queryFn ({
+function queryFn({
   abi,
   signer,
 }: {
@@ -74,7 +84,7 @@ function queryFn ({
       functionName,
       // @ts-ignore
       overrides,
-      signer
+      signer,
     })
   }
 }
@@ -98,8 +108,9 @@ function queryFn ({
 export function usePrepareContractWrite<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TChainId extends number
-> ({
+  TChainId extends number,
+>(
+  {
     address,
     abi,
     functionName,
@@ -113,8 +124,9 @@ export function usePrepareContractWrite<
     suspense,
     onError,
     onSettled,
-    onSuccess
-}: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId> = {} as any) {
+    onSuccess,
+  }: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId> = {} as any,
+) {
   const { chain: activeChain } = useNetwork()
   const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
@@ -136,13 +148,22 @@ export function usePrepareContractWrite<
     }),
     {
       cacheTime,
-      enabled: computed(() => !!(unref(enabled) && unref(abi) && unref(address) && unref(functionName) && unref(signer))),
+      enabled: computed(
+        () =>
+          !!(
+            unref(enabled) &&
+            unref(abi) &&
+            unref(address) &&
+            unref(functionName) &&
+            unref(signer)
+          ),
+      ),
       staleTime,
       suspense,
       onError,
       onSettled,
-      onSuccess
-    }
+      onSuccess,
+    },
   )
 
   return Object.assign(prepareContractWriteQuery, {
@@ -156,6 +177,8 @@ export function usePrepareContractWrite<
       overrides,
       request: undefined,
       ...prepareContractWriteQuery.data,
-    }
-  }) as unknown as DeepMaybeRef<PrepareWriteContractResult<TAbi, TFunctionName, TChainId>>
+    },
+  }) as unknown as DeepMaybeRef<
+    PrepareWriteContractResult<TAbi, TFunctionName, TChainId>
+  >
 }

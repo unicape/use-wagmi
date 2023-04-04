@@ -1,8 +1,15 @@
-import { getWagmi } from 'use-wagmi'
-import { reactive, toRefs, getCurrentScope, onScopeDispose, watchEffect } from 'vue-demi'
 import { getAccount, watchAccount } from '@wagmi/core'
 
 import type { GetAccountResult } from '@wagmi/core'
+import {
+  getCurrentScope,
+  onScopeDispose,
+  reactive,
+  toRefs,
+  watchEffect,
+} from 'vue-demi'
+
+import { getWagmi } from 'use-wagmi'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */
@@ -19,24 +26,20 @@ export type UseAccountConfig = {
   onDisconnect?(): void
 }
 
-export function useAccount ({
-  onConnect,
-  onDisconnect
-}: UseAccountConfig = {}) {
+export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const wagmi = getWagmi()
 
   const initialState = getAccount()
   let account = reactive(initialState)
 
-  const unwatch = watchAccount(data => {
+  const unwatch = watchAccount((data) => {
     account = Object.assign(account, data)
   })
 
-  if (getCurrentScope())
-    onScopeDispose(() => unwatch())
+  if (getCurrentScope()) onScopeDispose(() => unwatch())
 
   if (!!onConnect || !!onDisconnect) {
-    watchEffect(onInvalidate => {
+    watchEffect((onInvalidate) => {
       const unsubscribe = wagmi.value.subscribe(
         (state) => ({
           address: state.data?.account,
@@ -61,7 +64,7 @@ export function useAccount ({
             curr.status === 'disconnected'
           )
             onDisconnect()
-        }
+        },
       )
 
       onInvalidate(unsubscribe)

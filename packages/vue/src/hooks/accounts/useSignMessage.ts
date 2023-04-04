@@ -1,8 +1,9 @@
-import { useMutation } from 'vue-query'
 import { signMessage } from '@wagmi/core'
 
 import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
-import type { MutationConfig, DeepMaybeRef } from './../../types'
+import { useMutation } from 'vue-query'
+
+import type { DeepMaybeRef, MutationConfig } from './../../types'
 
 export type UseSignMessageArgs = DeepMaybeRef<Partial<SignMessageArgs>>
 
@@ -21,12 +22,12 @@ const mutationFn = (args: SignMessageArgs) => {
   return signMessage({ message })
 }
 
-export function useSignMessage ({
+export function useSignMessage({
   message,
   onError,
   onMutate,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseSignMessageArgs & UseSignMessageConfig = {}) {
   const {
     data,
@@ -39,27 +40,23 @@ export function useSignMessage ({
     mutateAsync,
     reset,
     status,
-    variables
-  } = useMutation(
-    mutationKey({ message }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess
-    }
-  )
+    variables,
+  } = useMutation(mutationKey({ message }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const signMessage = (args?: UseSignMessageArgs) => {
     return mutate({
-      message: args?.message ?? message
+      message: args?.message ?? message,
     } as SignMessageArgs)
   }
 
   const signMessageAsync = (args?: UseSignMessageArgs) => {
     return mutateAsync({
-      message: args?.message ?? message
+      message: args?.message ?? message,
     } as SignMessageArgs)
   }
 
@@ -74,6 +71,6 @@ export function useSignMessage ({
     signMessage,
     signMessageAsync,
     status,
-    variables
+    variables,
   }
 }

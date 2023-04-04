@@ -1,11 +1,13 @@
-import { computed } from 'vue-demi'
-import { getWagmi } from 'use-wagmi'
 import { switchNetwork } from '@wagmi/core'
-import { useMutation } from '../utils'
+import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { computed } from 'vue-demi'
 
 import type { UnwrapRef } from 'vue-demi'
-import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
-import type { MutationConfig, DeepMaybeRef } from '../../types'
+
+import { getWagmi } from 'use-wagmi'
+
+import type { DeepMaybeRef, MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseSwitchNetworkArgs = DeepMaybeRef<Partial<SwitchNetworkArgs>>
 export type UseSwitchNetworkConfig = MutationConfig<
@@ -23,12 +25,12 @@ const mutationFn = (args: UnwrapRef<UseSwitchNetworkArgs>) => {
   return switchNetwork({ chainId })
 }
 
-export function useSwitchNetwork ({
+export function useSwitchNetwork({
   chainId,
   onError,
   onMutate,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseSwitchNetworkArgs & UseSwitchNetworkConfig = {}) {
   const wagmi = getWagmi()
 
@@ -43,17 +45,13 @@ export function useSwitchNetwork ({
     mutateAsync,
     reset,
     status,
-    variables
-  } = useMutation(
-    mutationKey({ chainId }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess
-    }
-  )
+    variables,
+  } = useMutation(mutationKey({ chainId }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const support = computed<boolean>(() => !!wagmi.value.connector?.switchChain)
   const chains = computed(() => wagmi.value.chains ?? [])
@@ -61,7 +59,7 @@ export function useSwitchNetwork ({
 
   const switchNetwork = (chainId_?: SwitchNetworkArgs['chainId']) =>
     mutate({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs)
-  
+
   const switchNetworkAsync = (chainId_?: SwitchNetworkArgs['chainId']) =>
     mutateAsync({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs)
 
@@ -79,6 +77,6 @@ export function useSwitchNetwork ({
     status,
     switchNetwork,
     switchNetworkAsync,
-    variables
+    variables,
   }
 }

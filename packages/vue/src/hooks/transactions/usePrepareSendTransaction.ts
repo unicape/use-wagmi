@@ -1,27 +1,37 @@
-import { unref, computed } from 'vue-demi'
 import { prepareSendTransaction } from '@wagmi/core'
+import type {
+  FetchSignerResult,
+  PrepareSendTransactionArgs,
+  PrepareSendTransactionResult,
+} from '@wagmi/core'
+import type { providers } from 'ethers'
+import { computed, unref } from 'vue-demi'
+
+import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
 import { useQuery } from '../utils'
 
-import type { providers } from 'ethers'
-import type { FetchSignerResult, PrepareSendTransactionArgs, PrepareSendTransactionResult } from '@wagmi/core'
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
-
-export type UsePrepareSendTransactionArgs = DeepMaybeRef<Partial<PrepareSendTransactionArgs>>
-export type UsePrepareSendTransactionConfig = QueryConfig<PrepareSendTransactionResult, Error>
+export type UsePrepareSendTransactionArgs = DeepMaybeRef<
+  Partial<PrepareSendTransactionArgs>
+>
+export type UsePrepareSendTransactionConfig = QueryConfig<
+  PrepareSendTransactionResult,
+  Error
+>
 
 type QueryKeyArgs = UsePrepareSendTransactionArgs
-type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & DeepMaybeRef<{
-  activeChainId?: number
-  signerAddress?: string
-}>
+type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> &
+  DeepMaybeRef<{
+    activeChainId?: number
+    signerAddress?: string
+  }>
 
-function queryKey ({
+function queryKey({
   activeChainId,
   chainId,
   request,
   scopeKey,
-  signerAddress
+  signerAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -35,9 +45,9 @@ function queryKey ({
   ] as const
 }
 
-function queryFn ({ signer }: { signer?: FetchSignerResult }) {
+function queryFn({ signer }: { signer?: FetchSignerResult }) {
   return ({
-    queryKey: [{ chainId: chainId_, request: request_ }]
+    queryKey: [{ chainId: chainId_, request: request_ }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     const request = unref(request_)
     const chainId = unref(chainId_)
@@ -45,7 +55,7 @@ function queryFn ({ signer }: { signer?: FetchSignerResult }) {
     return prepareSendTransaction({
       chainId,
       request: { ...request, to: request.to },
-      signer
+      signer,
     } as PrepareSendTransactionArgs)
   }
 }
@@ -64,7 +74,7 @@ function queryFn ({ signer }: { signer?: FetchSignerResult }) {
  * })
  * const result = useSendTransaction(config)
  */
-export function usePrepareSendTransaction ({
+export function usePrepareSendTransaction({
   chainId,
   request,
   cacheTime,
@@ -74,7 +84,7 @@ export function usePrepareSendTransaction ({
   suspense,
   onError,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig = {}) {
   const { chain: activeChain } = useNetwork()
   const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
@@ -87,24 +97,34 @@ export function usePrepareSendTransaction ({
       chainId,
       request,
       scopeKey,
-      signerAddress
+      signerAddress,
     }),
     queryFn({ signer: signer.value }),
     {
       cacheTime,
-      enabled: computed(() => !!(unref(enabled) && unref(signer) && unref(request) && unref(request)?.to)),
+      enabled: computed(
+        () =>
+          !!(
+            unref(enabled) &&
+            unref(signer) &&
+            unref(request) &&
+            unref(request)?.to
+          ),
+      ),
       staleTime,
       suspense,
       onError,
       onSettled,
-      onSuccess
-    }
+      onSuccess,
+    },
   )
 
   return Object.assign(prepareSendTransactionQuery, {
     config: {
       request: computed(() => prepareSendTransactionQuery.data.value?.request),
-      mode: computed(() => prepareSendTransactionQuery.data.value?.mode || 'prepared')
-    } as unknown as PrepareSendTransactionResult
+      mode: computed(
+        () => prepareSendTransactionQuery.data.value?.mode || 'prepared',
+      ),
+    } as unknown as PrepareSendTransactionResult,
   })
 }

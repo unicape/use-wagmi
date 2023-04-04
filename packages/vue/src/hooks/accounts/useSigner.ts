@@ -1,11 +1,16 @@
-import { unref, computed, getCurrentScope, onScopeDispose } from 'vue-demi'
 import { fetchSigner, watchSigner } from '@wagmi/core'
-import { useAccount } from './useAccount'
-import { useChainId, useQuery, useQueryClient } from '../utils'
+import type { FetchSignerArgs, FetchSignerResult, Signer } from '@wagmi/core'
+import { computed, getCurrentScope, onScopeDispose, unref } from 'vue-demi'
 
 import type { UnwrapRef } from 'vue-demi'
-import type { Signer, FetchSignerResult, FetchSignerArgs } from '@wagmi/core'
-import type { QueryConfig, QueryFunctionArgs, DeepMaybeRef } from './../../types'
+
+import type {
+  DeepMaybeRef,
+  QueryConfig,
+  QueryFunctionArgs,
+} from './../../types'
+import { useAccount } from './useAccount'
+import { useChainId, useQuery, useQueryClient } from '../utils'
 
 export type UseSignerArgs = DeepMaybeRef<FetchSignerArgs>
 export type UseSignerConfig = Omit<
@@ -23,12 +28,12 @@ function queryFn<TSigner extends Signer>({
   return fetchSigner<TSigner>({ chainId })
 }
 
-export function useSigner<TSigner extends Signer> ({
+export function useSigner<TSigner extends Signer>({
   chainId: chainId_,
   suspense,
   onError,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseSignerArgs & UseSignerConfig = {}) {
   const { connector } = useAccount()
   const chainId = useChainId()
@@ -37,30 +42,25 @@ export function useSigner<TSigner extends Signer> ({
     Error,
     FetchSignerResult<TSigner>,
     ReturnType<typeof queryKey>
-  >(
-    queryKey({ chainId: chainId_ }),
-    queryFn,
-    {
-      cacheTime: 0,
-      enabled: computed(() => !!connector.value),
-      staleTime: Infinity,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    }
-  )
+  >(queryKey({ chainId: chainId_ }), queryFn, {
+    cacheTime: 0,
+    enabled: computed(() => !!connector.value),
+    staleTime: Infinity,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
   const queryClient = useQueryClient()
-  const unwatch = watchSigner({ chainId: unref(chainId) }, signer => {
+  const unwatch = watchSigner({ chainId: unref(chainId) }, (signer) => {
     // If a signer has changed (switch wallet/connector), we want to revalidate.
     if (signer) queryClient.invalidateQueries(queryKey({ chainId }))
     // If there is no longer a signer (disconnect), we want to remove the query.
     else queryClient.removeQueries(queryKey({ chainId }))
   })
 
-  if (getCurrentScope())
-    onScopeDispose(() => unwatch())
+  if (getCurrentScope()) onScopeDispose(() => unwatch())
 
   return signerQuery
 }

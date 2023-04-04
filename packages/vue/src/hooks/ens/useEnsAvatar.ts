@@ -1,10 +1,11 @@
-import { unref, computed } from 'vue-demi'
 import { fetchEnsAvatar } from '@wagmi/core'
-import { useChainId, useQuery } from '../utils'
 
+import type { FetchEnsAddressResult, FetchEnsAvatarArgs } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
-import type { FetchEnsAvatarArgs, FetchEnsAddressResult } from '@wagmi/core'
+import { computed, unref } from 'vue-demi'
+
 import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useQuery } from '../utils'
 
 export type UseEnsAvatarArgs = DeepMaybeRef<Partial<FetchEnsAvatarArgs>>
 export type UseEnsAvatarConfig = QueryConfig<FetchEnsAddressResult, Error>
@@ -12,22 +13,22 @@ export type UseEnsAvatarConfig = QueryConfig<FetchEnsAddressResult, Error>
 type QueryKeyArgs = UseEnsAvatarArgs
 type QueryKeyConfig = Pick<UseEnsAvatarConfig, 'scopeKey'>
 
-function queryKey ({
+function queryKey({
   address,
   chainId,
-  scopeKey
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [{ entity: 'ensAvatar', address, chainId, scopeKey }] as const
 }
 
-function queryFn ({
-  queryKey: [{ address, chainId }]
+function queryFn({
+  queryKey: [{ address, chainId }],
 }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) {
   if (!address) throw new Error('address is required')
   return fetchEnsAvatar({ address, chainId })
 }
 
-export function useEnsAvatar ({
+export function useEnsAvatar({
   address,
   cacheTime,
   chainId: chainId_,
@@ -37,21 +38,19 @@ export function useEnsAvatar ({
   suspense,
   onError,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseEnsAvatarArgs & UseEnsAvatarConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(
-    queryKey({ address, chainId, scopeKey }),
-    queryFn,
-    {
-      cacheTime,
-      enabled: computed(() => !!(unref(enabled) && unref(address) && unref(chainId))),
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess
-    }
-  )
+  return useQuery(queryKey({ address, chainId, scopeKey }), queryFn, {
+    cacheTime,
+    enabled: computed(
+      () => !!(unref(enabled) && unref(address) && unref(chainId)),
+    ),
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

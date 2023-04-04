@@ -1,37 +1,38 @@
-
-import { ref, unref, watchEffect } from 'vue-demi'
-import { useProvider, useWebSocketProvider } from '../providers'
-import { useContract } from './useContract'
-
+import type { WatchContractEventConfig } from '@wagmi/core'
 import type {
   Abi,
   AbiEvent,
   AbiParametersToPrimitiveTypes,
-  ExtractAbiEvent
+  ExtractAbiEvent,
 } from 'abitype'
-import type { WatchContractEventConfig } from '@wagmi/core'
+import { ref, unref, watchEffect } from 'vue-demi'
 
-import type { PartialBy, DeepMaybeRef } from '../../types'
+import { useContract } from './useContract'
+import type { DeepMaybeRef, PartialBy } from '../../types'
+import { useProvider, useWebSocketProvider } from '../providers'
 
 export type UseContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
-  TEventName extends string = string
+  TEventName extends string = string,
 > = PartialBy<
-  DeepMaybeRef<WatchContractEventConfig<TAbi, TEventName>> & GetListener<TAbi, TEventName>,
+  DeepMaybeRef<WatchContractEventConfig<TAbi, TEventName>> &
+    GetListener<TAbi, TEventName>,
   'abi' | 'address' | 'eventName'
 >
 
 export function useContractEvent<
   TAbi extends Abi | readonly unknown[],
-  TEventName extends string
-> ({
-  address,
-  chainId,
-  abi,
-  listener,
-  eventName,
-  once
-}: UseContractEventConfig<TAbi, TEventName> = {} as any) {
+  TEventName extends string,
+>(
+  {
+    address,
+    chainId,
+    abi,
+    listener,
+    eventName,
+    once,
+  }: UseContractEventConfig<TAbi, TEventName> = {} as any,
+) {
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
   const contract = useContract({
@@ -44,7 +45,7 @@ export function useContractEvent<
   const callbackRef = ref(listener)
   callbackRef.value = listener
 
-  watchEffect(onCleanup => {
+  watchEffect((onCleanup) => {
     if (!unref(contract) || !unref(eventName)) return
 
     const handler = (...event: any[]) =>

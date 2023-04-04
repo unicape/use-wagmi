@@ -1,16 +1,20 @@
-import { useMutation } from 'vue-query'
 import { signTypedData } from '@wagmi/core'
 
-import type { TypedData, Address } from 'abitype'
-import type { SignTypedDataArgs, SignMessageResult } from '@wagmi/core'
-import type { MutationConfig, PartialBy, DeepMaybeRef } from '../../types'
+import type { SignMessageResult, SignTypedDataArgs } from '@wagmi/core'
+import type { Address, TypedData } from 'abitype'
+import { useMutation } from 'vue-query'
+
+import type { DeepMaybeRef, MutationConfig, PartialBy } from '../../types'
 
 export type UseSignTypedDataArgs<
-  TTypedData extends TypedData | { [key: string]: unknown } = TypedData
-> = PartialBy<DeepMaybeRef<SignTypedDataArgs<TTypedData>>, 'domain' | 'types' | 'value'>
+  TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
+> = PartialBy<
+  DeepMaybeRef<SignTypedDataArgs<TTypedData>>,
+  'domain' | 'types' | 'value'
+>
 
 export type UseSignTypedDataConfig<
-  TTypedData extends TypedData | { [key: string]: unknown } = TypedData
+  TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
 > = MutationConfig<SignMessageResult, Error, SignTypedDataArgs<TTypedData>>
 
 function mutationKey<
@@ -33,15 +37,18 @@ function mutationFn<TTypedData extends TypedData>(
   } as unknown as SignTypedDataArgs<TTypedData>) as Promise<Address>
 }
 
-export function useSignTypedData<TTypedData extends TypedData> ({
-  domain,
-  types,
-  value,
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess
-}: UseSignTypedDataArgs<TTypedData> & UseSignTypedDataConfig<TTypedData> = {} as any) {
+export function useSignTypedData<TTypedData extends TypedData>(
+  {
+    domain,
+    types,
+    value,
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  }: UseSignTypedDataArgs<TTypedData> &
+    UseSignTypedDataConfig<TTypedData> = {} as any,
+) {
   const {
     data,
     error,
@@ -52,39 +59,39 @@ export function useSignTypedData<TTypedData extends TypedData> ({
     mutate,
     mutateAsync,
     reset,
-    variables
+    variables,
   } = useMutation(
     mutationKey({
       domain,
       types,
-      value
+      value,
     } as UseSignTypedDataArgs<TTypedData>),
     mutationFn,
     {
       onError,
       onMutate,
       onSettled,
-      onSuccess
-    }
+      onSuccess,
+    },
   )
 
   const signTypedData = <TTypedDataMutate extends TypedData = TTypedData>(
-    args?: UseSignTypedDataArgs<TTypedDataMutate>
+    args?: UseSignTypedDataArgs<TTypedDataMutate>,
   ) => {
     return mutate({
       domain: args?.domain ?? domain,
       types: args?.types ?? types,
-      value: args?.value ?? value
+      value: args?.value ?? value,
     } as unknown as SignTypedDataArgs<TTypedData>)
   }
 
   const signTypedDataAsync = <TTypedDataMutate extends TypedData = TTypedData>(
-    args?: UseSignTypedDataArgs<TTypedDataMutate>
+    args?: UseSignTypedDataArgs<TTypedDataMutate>,
   ) => {
     return mutateAsync({
       domain: args?.domain ?? domain,
       types: args?.types ?? types,
-      value: args?.value ?? value
+      value: args?.value ?? value,
     } as unknown as SignTypedDataArgs<TTypedData>)
   }
 
@@ -98,6 +105,6 @@ export function useSignTypedData<TTypedData extends TypedData> ({
     signTypedData,
     signTypedDataAsync,
     reset,
-    variables
+    variables,
   }
 }

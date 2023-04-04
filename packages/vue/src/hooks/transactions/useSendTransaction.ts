@@ -1,39 +1,40 @@
-import { unref } from 'vue-demi'
 import { sendTransaction } from '@wagmi/core'
-import { useMutation } from '../utils'
 
 import type {
   SendTransactionArgs,
   SendTransactionPreparedRequest,
   SendTransactionResult,
-  SendTransactionUnpreparedRequest
+  SendTransactionUnpreparedRequest,
 } from '@wagmi/core'
-import type { DeepMaybeRef, MutationConfig } from '../../types'
+import { unref } from 'vue-demi'
 
-export type UseSendTransactionArgs = DeepMaybeRef<Omit<
-  SendTransactionArgs,
-  'request' | 'type'
-> & (
-  | {
-    /**
-     * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-     * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it
-     * is highly recommended to not use this and instead prepare the request upfront
-     * using the `usePrepareSendTransaction` hook.
-     *
-     * `prepared`: The request has been prepared with parameters required for sending a transaction
-     * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/react/prepare-hooks/usePrepareSendTransaction)
-     * */
-    mode: 'prepared'
-    /** The prepared request to send the transaction. */
-    request: SendTransactionPreparedRequest['request'] | undefined
-  }
-  | {
-    mode: 'recklesslyUnprepared'
-    /** The unprepared request to send the transaction. */
-    request?: SendTransactionUnpreparedRequest['request']
-  }
-)>
+import type { DeepMaybeRef, MutationConfig } from '../../types'
+import { useMutation } from '../utils'
+
+export type UseSendTransactionArgs = DeepMaybeRef<
+  Omit<SendTransactionArgs, 'request' | 'type'> &
+    (
+      | {
+          /**
+           * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
+           * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it
+           * is highly recommended to not use this and instead prepare the request upfront
+           * using the `usePrepareSendTransaction` hook.
+           *
+           * `prepared`: The request has been prepared with parameters required for sending a transaction
+           * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/react/prepare-hooks/usePrepareSendTransaction)
+           * */
+          mode: 'prepared'
+          /** The prepared request to send the transaction. */
+          request: SendTransactionPreparedRequest['request'] | undefined
+        }
+      | {
+          mode: 'recklesslyUnprepared'
+          /** The unprepared request to send the transaction. */
+          request?: SendTransactionUnpreparedRequest['request']
+        }
+    )
+>
 
 export type UseSendTransactionMutationArgs = DeepMaybeRef<{
   /**
@@ -52,7 +53,7 @@ const mutationFn = ({ chainId, mode, request }: UseSendTransactionArgs) => {
   return sendTransaction({
     chainId: unref(chainId),
     mode: unref(mode),
-    request: unref(request)
+    request: unref(request),
   } as SendTransactionArgs)
 }
 
@@ -80,15 +81,15 @@ export type UseSendTransactionConfig = MutationConfig<
  * const result = useSendTransaction(config)
  */
 export function useSendTransaction<
-  Args extends UseSendTransactionArgs = UseSendTransactionArgs
-> ({
+  Args extends UseSendTransactionArgs = UseSendTransactionArgs,
+>({
   chainId,
   mode,
   request,
   onError,
   onMutate,
   onSettled,
-  onSuccess
+  onSuccess,
 }: Args & UseSendTransactionConfig) {
   const {
     data,
@@ -101,27 +102,35 @@ export function useSendTransaction<
     mutateAsync,
     reset,
     status,
-    variables
+    variables,
   } = useMutation(
     mutationKey({
       chainId,
       mode,
-      request
+      request,
     } as SendTransactionArgs),
     mutationFn,
     {
       onError,
       onMutate,
       onSettled,
-      onSuccess
-    }
+      onSuccess,
+    },
   )
 
   const sendTransaction = (args?: UseSendTransactionMutationArgs) =>
-    mutate({ chainId, mode, request: args?.recklesslySetUnpreparedRequest ?? request } as SendTransactionArgs)
+    mutate({
+      chainId,
+      mode,
+      request: args?.recklesslySetUnpreparedRequest ?? request,
+    } as SendTransactionArgs)
 
   const sendTransactionAsync = (args?: UseSendTransactionMutationArgs) =>
-    mutateAsync({ chainId, mode, request: args?.recklesslySetUnpreparedRequest ?? request } as SendTransactionArgs)
+    mutateAsync({
+      chainId,
+      mode,
+      request: args?.recklesslySetUnpreparedRequest ?? request,
+    } as SendTransactionArgs)
 
   return {
     data,
@@ -134,6 +143,6 @@ export function useSendTransaction<
     sendTransaction,
     sendTransactionAsync,
     status,
-    variables
+    variables,
   }
 }

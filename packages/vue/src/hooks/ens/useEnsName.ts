@@ -1,10 +1,11 @@
-import { unref, computed } from 'vue-demi'
 import { fetchEnsName } from '@wagmi/core'
-import { useChainId, useQuery } from '../utils'
 
-import type { UnwrapRef } from 'vue-demi'
 import type { FetchEnsNameArgs, FetchEnsNameResult } from '@wagmi/core'
+import type { UnwrapRef } from 'vue-demi'
+import { computed, unref } from 'vue-demi'
+
 import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useQuery } from '../utils'
 
 export type UseEnsNameArgs = DeepMaybeRef<Partial<FetchEnsNameArgs>>
 export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
@@ -12,22 +13,22 @@ export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
 type QueryKeyArgs = UseEnsNameArgs
 type QueryKeyConfig = Pick<UseEnsNameConfig, 'scopeKey'>
 
-function queryKey ({
+function queryKey({
   address,
   chainId,
-  scopeKey
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [{ entity: 'ensName', address, chainId, scopeKey }] as const
 }
 
-function queryFn ({
-  queryKey: [{ address, chainId }]
+function queryFn({
+  queryKey: [{ address, chainId }],
 }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) {
   if (!address) throw new Error('address is required')
   return fetchEnsName({ address, chainId })
 }
 
-export function useEnsName ({
+export function useEnsName({
   address,
   cacheTime,
   chainId: chainId_,
@@ -37,21 +38,19 @@ export function useEnsName ({
   suspense,
   onError,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseEnsNameArgs & UseEnsNameConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(
-    queryKey({ address, chainId, scopeKey }),
-    queryFn,
-    {
-      cacheTime,
-      enabled: computed(() => !!(unref(enabled) && unref(address) && unref(chainId))),
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess
-    }
-  )
+  return useQuery(queryKey({ address, chainId, scopeKey }), queryFn, {
+    cacheTime,
+    enabled: computed(
+      () => !!(unref(enabled) && unref(address) && unref(chainId)),
+    ),
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

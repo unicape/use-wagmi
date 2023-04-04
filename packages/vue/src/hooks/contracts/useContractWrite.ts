@@ -1,16 +1,17 @@
-import { unref, computed } from 'vue-demi'
 import { writeContract } from '@wagmi/core'
-import { useMutation } from '../utils'
 
-import type { Abi } from 'abitype'
-import type { UnwrapRef } from 'vue-demi'
 import type {
   WriteContractMode,
   WriteContractPreparedArgs,
   WriteContractResult,
-  WriteContractUnpreparedArgs
+  WriteContractUnpreparedArgs,
 } from '@wagmi/core'
-import type { PartialBy, DeepMaybeRef, MutationConfig } from '../../types'
+import type { Abi } from 'abitype'
+import type { UnwrapRef } from 'vue-demi'
+import { computed, unref } from 'vue-demi'
+
+import type { DeepMaybeRef, MutationConfig, PartialBy } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseContractWriteArgs<
   TMode extends WriteContractMode = WriteContractMode,
@@ -18,13 +19,13 @@ export type UseContractWriteArgs<
   TFunctionName extends string = string,
 > = { mode: TMode } & (
   | PartialBy<
-    DeepMaybeRef<WriteContractPreparedArgs<TAbi, TFunctionName>>,
-    'abi' | 'address' | 'functionName' | 'request'
-  >
+      DeepMaybeRef<WriteContractPreparedArgs<TAbi, TFunctionName>>,
+      'abi' | 'address' | 'functionName' | 'request'
+    >
   | PartialBy<
-    DeepMaybeRef<WriteContractUnpreparedArgs<TAbi, TFunctionName>>,
-    'abi' | 'address' | 'args' | 'functionName'
-  >
+      DeepMaybeRef<WriteContractUnpreparedArgs<TAbi, TFunctionName>>,
+      'abi' | 'address' | 'args' | 'functionName'
+    >
 )
 
 export type UseContractWriteConfig<
@@ -39,23 +40,26 @@ export type UseContractWriteConfig<
   UseContractWriteArgs<TMode, TAbi, TFunctionName>
 
 type MutationKeyConfig = UseContractWriteArgs
-type MutationFnConfig = UnwrapRef<UseContractWriteArgs<WriteContractMode, Abi, string>> & {
+type MutationFnConfig = UnwrapRef<
+  UseContractWriteArgs<WriteContractMode, Abi, string>
+> & {
   args?: readonly unknown[]
   overrides: WriteContractUnpreparedArgs<Abi, string>['overrides']
 }
 
-function mutationKey ({
+function mutationKey({
   address,
   chainId,
   abi,
   functionName,
   ...config
 }: MutationKeyConfig) {
-  const { request } = config as DeepMaybeRef<WriteContractPreparedArgs<Abi, string>>
-  const { args, overrides } = config as unknown as DeepMaybeRef<WriteContractUnpreparedArgs<
-    Abi,
-    string
-  >>
+  const { request } = config as DeepMaybeRef<
+    WriteContractPreparedArgs<Abi, string>
+  >
+  const { args, overrides } = config as unknown as DeepMaybeRef<
+    WriteContractUnpreparedArgs<Abi, string>
+  >
   return [
     {
       entity: 'writeContract',
@@ -70,9 +74,7 @@ function mutationKey ({
   ] as const
 }
 
-function mutationFn (
-  config: MutationFnConfig
-) {
+function mutationFn(config: MutationFnConfig) {
   const { address, abi, functionName, chainId, mode, overrides, args } = config
   const { request } = config as WriteContractPreparedArgs<Abi, string>
   if (!address) throw new Error('address is required')
@@ -88,7 +90,7 @@ function mutationFn (
         chainId,
         abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
         functionName,
-        request
+        request,
       })
     }
     case 'recklesslyUnprepared':
@@ -99,7 +101,7 @@ function mutationFn (
         abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
         functionName,
         mode: 'recklesslyUnprepared',
-        overrides
+        overrides,
       })
   }
 }
@@ -127,11 +129,12 @@ export function useContractWrite<
   TFunctionName extends string,
 >(config: UseContractWriteConfig<TMode, TAbi, TFunctionName> = {} as any) {
   const { address, abi, functionName, chainId, mode } = config
-  const { request } = config as DeepMaybeRef<WriteContractPreparedArgs<TAbi, TFunctionName>>
-  const { args, overrides } = config as unknown as DeepMaybeRef<WriteContractUnpreparedArgs<
-    TAbi,
-    TFunctionName
-  >>
+  const { request } = config as DeepMaybeRef<
+    WriteContractPreparedArgs<TAbi, TFunctionName>
+  >
+  const { args, overrides } = config as unknown as DeepMaybeRef<
+    WriteContractUnpreparedArgs<TAbi, TFunctionName>
+  >
 
   const {
     data,
@@ -144,7 +147,7 @@ export function useContractWrite<
     mutateAsync,
     reset,
     status,
-    variables
+    variables,
   } = useMutation(
     mutationKey({
       address,
@@ -154,15 +157,15 @@ export function useContractWrite<
       mode,
       args,
       overrides,
-      request
+      request,
     } as UseContractWriteArgs),
     mutationFn,
     {
       onError: config.onError as UseContractWriteConfig['onError'],
       onMutate: config.onMutate as UseContractWriteConfig['onMutate'],
       onSettled: config.onSettled as UseContractWriteConfig['onSettled'],
-      onSuccess: config.onSuccess as UseContractWriteConfig['onSuccess']
-    }
+      onSuccess: config.onSuccess as UseContractWriteConfig['onSuccess'],
+    },
   )
 
   const write = () => {
@@ -176,7 +179,7 @@ export function useContractWrite<
           abi: abi as Abi,
           functionName,
           mode: 'prepared',
-          request
+          request,
         } as MutationFnConfig)
       }
 
@@ -207,7 +210,7 @@ export function useContractWrite<
           abi: abi as Abi,
           functionName,
           mode: 'prepared',
-          request
+          request,
         } as MutationFnConfig)
       }
 
@@ -238,7 +241,7 @@ export function useContractWrite<
     status,
     variables,
     write,
-    writeAsync
+    writeAsync,
   }
 }
 

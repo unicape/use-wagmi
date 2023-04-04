@@ -1,49 +1,52 @@
-import { useQuery as useBaseQuery } from 'vue-query'
-import { WagmiQueryClientKey as queryClientKey } from '../../create'
-
 import type { ToRefs, UnwrapRef } from 'vue-demi'
+import { useQuery as useBaseQuery } from 'vue-query'
+
 import type {
-  QueryKey,
-  QueryFunction,
-  UseQueryOptions,
-  QueryObserverResult,
   DefinedQueryObserverResult,
-  UseQueryReturnType as UQRT
+  QueryFunction,
+  QueryKey,
+  QueryObserverResult,
+  UseQueryReturnType as UQRT,
+  UseQueryOptions,
 } from 'vue-query'
+
+import { WagmiQueryClientKey as queryClientKey } from '../../create'
 
 type UseQueryReturnType<TData, TError> = Omit<
   UQRT<TData, TError>,
-  "refetch" | "remove"
+  'refetch' | 'remove'
 > & {
-  refetch: QueryObserverResult<TData, TError>["refetch"]
-  remove: QueryObserverResult<TData, TError>["remove"]
+  refetch: QueryObserverResult<TData, TError>['refetch']
+  remove: QueryObserverResult<TData, TError>['remove']
 }
 
 type UseQueryDefinedReturnType<TData, TError> = Omit<
   ToRefs<Readonly<DefinedQueryObserverResult<TData, TError>>>,
-  "refetch" | "remove"
+  'refetch' | 'remove'
 > & {
   suspense: () => Promise<QueryObserverResult<TData, TError>>
-  refetch: QueryObserverResult<TData, TError>["refetch"]
-  remove: QueryObserverResult<TData, TError>["remove"]
+  refetch: QueryObserverResult<TData, TError>['refetch']
+  remove: QueryObserverResult<TData, TError>['remove']
 }
 
-export type UseQueryResult<TData, TError> = UseQueryReturnType<TData, TError> | UseQueryDefinedReturnType<TData, TError>
+export type UseQueryResult<TData, TError> =
+  | UseQueryReturnType<TData, TError>
+  | UseQueryDefinedReturnType<TData, TError>
 
 export function useQuery<
   TQueryFnData,
   TError,
   TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey
-> (
+  TQueryKey extends QueryKey = QueryKey,
+>(
   queryKey: TQueryKey,
   queryFn: QueryFunction<TQueryFnData, UnwrapRef<TQueryKey>>,
-  options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+  options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseQueryResult<TData, TError> {
   return useBaseQuery({
     queryKey,
     queryFn,
     queryClientKey,
-    ...options
+    ...options,
   })
 }

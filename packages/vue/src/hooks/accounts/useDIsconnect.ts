@@ -1,4 +1,5 @@
 import { disconnect } from '@wagmi/core'
+
 import { useMutation } from '../utils'
 
 export type UseDisconnectConfig = {
@@ -19,11 +20,11 @@ export const mutationKey = [{ entity: 'disconnect' }] as const
 
 const mutationFn = () => disconnect()
 
-export function useDisconnect ({
+export function useDisconnect({
   onError,
   onMutate,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseDisconnectConfig = {}) {
   const {
     error,
@@ -34,35 +35,31 @@ export function useDisconnect ({
     mutate: disconnect,
     mutateAsync: disconnectAsync,
     reset,
-    status
-  } = useMutation<void, Error>(
-    mutationKey,
-    mutationFn,
-    {
-      ...(onError
-        ? {
-            onError(error, _variables, context) {
-              onError(error, context)
-            },
-          }
-        : {}),
-      onMutate,
-      ...(onSettled
-        ? {
-            onSettled(_data, error, _variables, context) {
-              onSettled(error, context)
-            },
-          }
-        : {}),
-      ...(onSuccess
-        ? {
-            onSuccess(_data, _variables, context) {
-              onSuccess(context)
-            },
-          }
-        : {})
-    }
-  )
+    status,
+  } = useMutation<void, Error>(mutationKey, mutationFn, {
+    ...(onError
+      ? {
+          onError(error, _variables, context) {
+            onError(error, context)
+          },
+        }
+      : {}),
+    onMutate,
+    ...(onSettled
+      ? {
+          onSettled(_data, error, _variables, context) {
+            onSettled(error, context)
+          },
+        }
+      : {}),
+    ...(onSuccess
+      ? {
+          onSuccess(_data, _variables, context) {
+            onSuccess(context)
+          },
+        }
+      : {}),
+  })
 
   return {
     disconnect,
@@ -73,6 +70,6 @@ export function useDisconnect ({
     isLoading,
     isSuccess,
     reset,
-    status
+    status,
   } as const
 }

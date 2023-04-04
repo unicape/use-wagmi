@@ -1,9 +1,8 @@
-import { createClient, } from '@wagmi/core'
-import { shallowRef, triggerRef, markRaw, inject } from 'vue-demi'
-import { QueryClient, VueQueryPlugin } from 'vue-query'
-
-import type { App, Raw, InjectionKey, ShallowRef } from 'vue-demi'
+import { createClient } from '@wagmi/core'
 import type { Client, ClientConfig } from '@wagmi/core'
+import { inject, markRaw, shallowRef, triggerRef } from 'vue-demi'
+import type { App, InjectionKey, Raw, ShallowRef } from 'vue-demi'
+import { QueryClient, VueQueryPlugin } from 'vue-query'
 
 export type WagmiClient = Client & {
   install(app: App): void
@@ -19,30 +18,33 @@ const defaultQueryClient = new QueryClient({
       cacheTime: 1_000 * 60 * 60 * 24,
       networkMode: 'offlineFirst',
       refetchOnWindowFocus: false,
-      retry: 0
+      retry: 0,
     },
     mutations: {
-      networkMode: 'offlineFirst'
-    }
-  }
+      networkMode: 'offlineFirst',
+    },
+  },
 })
 
 export const WagmiQueryClientKey = 'use-wagmi-query'
-export const WagmiInjectionKey: InjectionKey<Raw<ShallowRef<WagmiClient>>> = Symbol('use-wagmi')
+export const WagmiInjectionKey: InjectionKey<Raw<ShallowRef<WagmiClient>>> =
+  Symbol('use-wagmi')
 
-export function createWagmi ({
+export function createWagmi({
   queryClient = defaultQueryClient,
   ...config
 }: CreateWagmiConfig) {
   const wagmi = createClient(config) as WagmiClient
 
   wagmi.install = function (app: App) {
-    app.use(VueQueryPlugin, { queryClient, queryClientKey: WagmiQueryClientKey })
+    app.use(VueQueryPlugin, {
+      queryClient,
+      queryClientKey: WagmiQueryClientKey,
+    })
 
     const wagmiRef = shallowRef(wagmi)
 
-    if (wagmi.config.autoConnect)
-      wagmi.autoConnect()
+    if (wagmi.config.autoConnect) wagmi.autoConnect()
 
     const markWagmi = markRaw(wagmiRef)
     const unsubscribe = wagmi.subscribe(() => {
@@ -50,7 +52,7 @@ export function createWagmi ({
     })
 
     const orgUnmount = app.unmount
-    app.unmount = function wagmiUnmount () {
+    app.unmount = function wagmiUnmount() {
       unsubscribe()
       orgUnmount()
     }
@@ -62,12 +64,12 @@ export function createWagmi ({
   return wagmi
 }
 
-export function getWagmi () {
+export function getWagmi() {
   const wagmi = inject(WagmiInjectionKey)
   if (!wagmi) {
     // TODO
     throw new Error(
-      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client'
+      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client',
     )
   }
 

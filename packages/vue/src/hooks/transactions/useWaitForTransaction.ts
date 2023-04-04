@@ -1,40 +1,52 @@
-import { unref, computed } from 'vue-demi'
 import { waitForTransaction } from '@wagmi/core'
+
+import type {
+  WaitForTransactionArgs,
+  WaitForTransactionResult,
+} from '@wagmi/core'
+import { computed, unref } from 'vue-demi'
+
+import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-import type { WaitForTransactionArgs, WaitForTransactionResult } from '@wagmi/core'
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
-
-export type UseWaitForTransactionArgs = DeepMaybeRef<Omit<Partial<WaitForTransactionArgs>, 'onSpeedUp'>> & Pick<Partial<WaitForTransactionArgs>, 'onSpeedUp'>
-export type UseWaitForTransactionConfig = QueryConfig<WaitForTransactionResult, Error>
+export type UseWaitForTransactionArgs = DeepMaybeRef<
+  Omit<Partial<WaitForTransactionArgs>, 'onSpeedUp'>
+> &
+  Pick<Partial<WaitForTransactionArgs>, 'onSpeedUp'>
+export type UseWaitForTransactionConfig = QueryConfig<
+  WaitForTransactionResult,
+  Error
+>
 
 type QueryKeyArgs = UseWaitForTransactionArgs
 type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'scopeKey'>
 
-function queryKey ({
+function queryKey({
   confirmations,
   chainId,
   hash,
   scopeKey,
-  timeout
+  timeout,
 }: QueryKeyArgs & QueryKeyConfig) {
-  return [{
-    entity: 'waitForTransaction',
-    confirmations,
-    chainId,
-    hash,
-    scopeKey,
-    timeout
-  }] as const
+  return [
+    {
+      entity: 'waitForTransaction',
+      confirmations,
+      chainId,
+      hash,
+      scopeKey,
+      timeout,
+    },
+  ] as const
 }
 
-function queryFn ({
-  onSpeedUp
+function queryFn({
+  onSpeedUp,
 }: {
   onSpeedUp?: WaitForTransactionArgs['onSpeedUp']
 }) {
   return ({
-    queryKey: [{ chainId, confirmations, hash: hash_, timeout }]
+    queryKey: [{ chainId, confirmations, hash: hash_, timeout }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     const hash = unref(hash_)
     if (!hash) throw new Error('hash is required')
@@ -43,12 +55,12 @@ function queryFn ({
       confirmations: unref(confirmations),
       hash,
       onSpeedUp,
-      timeout: unref(timeout)
+      timeout: unref(timeout),
     })
   }
 }
 
-export function useWaitForTransaction ({
+export function useWaitForTransaction({
   chainId: chainId_,
   confirmations,
   hash,
@@ -61,7 +73,7 @@ export function useWaitForTransaction ({
   onError,
   onSpeedUp,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
@@ -75,7 +87,7 @@ export function useWaitForTransaction ({
       suspense,
       onError,
       onSettled,
-      onSuccess
-    }
+      onSuccess,
+    },
   )
 }

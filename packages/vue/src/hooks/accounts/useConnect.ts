@@ -1,10 +1,11 @@
-import { computed } from 'vue-demi'
-import { getWagmi } from 'use-wagmi'
 import { connect } from '@wagmi/core'
-import { useMutation } from '../utils'
-
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
-import type { MutationConfig, DeepMaybeRef } from '../../types'
+import { computed } from 'vue-demi'
+
+import { getWagmi } from 'use-wagmi'
+
+import type { DeepMaybeRef, MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseConnectArgs = DeepMaybeRef<Partial<ConnectArgs>>
 export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
@@ -18,13 +19,13 @@ const mutationFn = (args: ConnectArgs) => {
   return connect({ chainId, connector })
 }
 
-export function useConnect ({
+export function useConnect({
   chainId,
   connector,
   onError,
   onMutate,
   onSettled,
-  onSuccess
+  onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
   const wagmi = getWagmi()
 
@@ -39,17 +40,13 @@ export function useConnect ({
     mutateAsync,
     reset,
     status,
-    variables
-  } = useMutation(
-    mutationKey({ chainId, connector }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess
-    }
-  )
+    variables,
+  } = useMutation(mutationKey({ chainId, connector }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const connectors = computed(() => wagmi.value.connectors)
   const pendingConnector = computed(() => variables?.value?.connector)
@@ -57,14 +54,14 @@ export function useConnect ({
   const connect = (args?: UseConnectArgs) => {
     return mutate({
       chainId: args?.chainId ?? chainId,
-      connector: args?.connector ?? connector
+      connector: args?.connector ?? connector,
     } as ConnectArgs)
   }
 
   const connectAsync = (args?: UseConnectArgs) => {
     return mutateAsync({
       chainId: args?.chainId ?? chainId,
-      connector: args?.connector ?? connector
+      connector: args?.connector ?? connector,
     } as ConnectArgs)
   }
 
@@ -81,6 +78,6 @@ export function useConnect ({
     isSuccess,
     reset,
     status,
-    variables
+    variables,
   } as const
 }

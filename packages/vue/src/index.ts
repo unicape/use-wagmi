@@ -76,7 +76,7 @@ export {
   goerli,
   mainnet,
   readContracts,
-  serialize
+  serialize,
 } from '@wagmi/core'
 export type {
   Chain,

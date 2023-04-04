@@ -1,9 +1,9 @@
+import type { Transaction } from 'ethers'
 import { unref, watchEffect } from 'vue-demi'
+
+import type { MaybeRef } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId } from '../utils'
-
-import type { Transaction } from 'ethers'
-import type { MaybeRef } from '../../types'
 
 export type UseWatchPendingTransactionsConfig = {
   /** The chain ID to listen on. */
@@ -14,16 +14,16 @@ export type UseWatchPendingTransactionsConfig = {
   listener: (transaction: Transaction) => void
 }
 
-export function useWatchPendingTransactions ({
+export function useWatchPendingTransactions({
   chainId: chainId_,
   enabled = true,
-  listener
+  listener,
 }: UseWatchPendingTransactionsConfig) {
   const chainId = useChainId({ chainId: chainId_ })
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
 
-  watchEffect(onCleanup => {
+  watchEffect((onCleanup) => {
     if (!unref(enabled)) return
 
     const provider_ = webSocketProvider.value ?? provider.value
