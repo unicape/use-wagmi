@@ -8,7 +8,7 @@ importers:
       '@types/fs-extra': ^11.0.1
       '@types/node': ^18.14.0
       '@wagmi/core': ^0.10.8
-      abitype: ^0.3.0
+      abitype: ^0.7.1
       consola: ^2.15.3
       cross-env: ^7.0.3
       esbuild-register: ^3.4.2
@@ -25,7 +25,7 @@ importers:
       vue-query: ^2.0.0-beta.12
     dependencies:
       '@wagmi/core': 0.10.8_bdv4kode4i4g6duislonq5hdkq
-      abitype: 0.3.0_typescript@4.9.5
+      abitype: 0.7.1_typescript@4.9.5
       vue-demi: 0.13.11_vue@3.2.47
       vue-query: 2.0.0-beta.12_vue@3.2.47
     devDependencies:
@@ -1769,6 +1769,18 @@ packages:
     peerDependencies:
       typescript: '>=4.9.4'
       zod: '>=3.19.1'
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      typescript: 4.9.5
+    dev: false
+
+  /abitype/0.7.1_typescript@4.9.5:
+    resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
+    peerDependencies:
+      typescript: '>=4.9.4'
+      zod: ^3 >=3.19.1
     peerDependenciesMeta:
       zod:
         optional: true
