@@ -80,8 +80,7 @@ function queryFn<
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,
       functionName,
-      // @ts-ignore
-      overrides,
+      overrides: overrides as ReadContractConfig_['overrides'],
     })) ?? null) as ReadContractResult<TAbi, TFunctionName>
   }
 }

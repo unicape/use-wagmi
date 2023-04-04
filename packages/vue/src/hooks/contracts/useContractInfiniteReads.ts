@@ -79,8 +79,7 @@ function queryFn<
     return readContracts({
       allowFailure,
       contracts: contracts(pageParam || undefined),
-      // @ts-ignore
-      overrides,
+      overrides: overrides as ReadContractsConfig<TContracts>['overrides'],
     })
   }
 }

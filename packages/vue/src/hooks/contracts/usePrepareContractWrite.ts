@@ -82,8 +82,7 @@ function queryFn({
       address,
       chainId,
       functionName,
-      // @ts-ignore
-      overrides,
+      overrides: overrides as PrepareWriteContractConfig['overrides'],
       signer,
     })
   }

@@ -109,8 +109,7 @@ function queryFn<
     return readContracts({
       allowFailure,
       contracts,
-      // @ts-ignore
-      overrides,
+      overrides: overrides as ReadContractsConfig<TContracts>['overrides'],
     }) as Promise<ReadContractsResult<TContracts>>
   }
 }
