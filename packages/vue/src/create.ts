@@ -1,14 +1,25 @@
 import { createClient } from '@wagmi/core'
-import type { Client, ClientConfig } from '@wagmi/core'
+import type {
+  Client,
+  ClientConfig,
+  Provider,
+  WebSocketProvider,
+} from '@wagmi/core'
 import { inject, markRaw, shallowRef, triggerRef } from 'vue-demi'
-import type { App, InjectionKey, Raw, ShallowRef } from 'vue-demi'
+import type { App, Raw, ShallowRef } from 'vue-demi'
 import { QueryClient, VueQueryPlugin } from 'vue-query'
 
-export type WagmiClient = Client & {
+export type WagmiClient<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = Client<TProvider, TWebSocketProvider> & {
   install(app: App): void
 }
 
-export type CreateWagmiConfig = ClientConfig & {
+export type CreateWagmiConfig<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = ClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
 }
 
@@ -27,14 +38,18 @@ const defaultQueryClient = new QueryClient({
 })
 
 export const WagmiQueryClientKey = 'use-wagmi-query'
-export const WagmiInjectionKey: InjectionKey<Raw<ShallowRef<WagmiClient>>> =
-  Symbol('use-wagmi')
+export const WagmiInjectionKey = Symbol('use-wagmi')
 
-export function createWagmi({
+export function createWagmi<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>({
   queryClient = defaultQueryClient,
   ...config
-}: CreateWagmiConfig) {
-  const wagmi = createClient(config) as WagmiClient
+}: CreateWagmiConfig<TProvider, TWebSocketProvider>) {
+  const wagmi = createClient<TProvider, TWebSocketProvider>(
+    config,
+  ) as WagmiClient<TProvider, TWebSocketProvider>
 
   wagmi.install = function (app: App) {
     app.use(VueQueryPlugin, {
@@ -64,14 +79,20 @@ export function createWagmi({
   return wagmi
 }
 
-export function getWagmi() {
-  const wagmi = inject(WagmiInjectionKey)
-  if (!wagmi) {
-    // TODO
+export function getWagmi<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>() {
+  const wagmi = inject(WagmiInjectionKey) as unknown as Raw<
+    ShallowRef<WagmiClient<TProvider, TWebSocketProvider>>
+  >
+  if (!wagmi)
     throw new Error(
-      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client',
+      [
+        '`getWagmi` must be used within `createWagmi`.\n',
+        'Read more: https://github.com/unicape/use-wagmi',
+      ].join('\n'),
     )
-  }
 
   return wagmi
 }
