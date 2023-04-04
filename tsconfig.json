@@ -1,24 +1,38 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "esnext",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "moduleResolution": "node",
+    "allowJs": true,
+    "baseUrl": ".",
+    "downlevelIteration": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["es2021", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "paths": {
+      "use-wagmi": ["packages/vue/src"],
+      "use-wagmi/*": ["packages/vue/src/*"],
+      // TODO: Remove once issue is fixed
+      // https://github.com/microsoft/TypeScript/issues/48212
+      "abitype": ["node_modules/abitype/dist"]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "resolveJsonModule": true,
-    "rootDir": ".",
-    "baseUrl": ".",
-    "jsx": "preserve",
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "noUnusedLocals": true,
-    "paths": {
-      "use-wagmi": ["src"],
-      "use-wagmi/core": ["src/core"],
-      "use-wagmi/connectors": ["src/connectors"]
-    }
-  }
+    "target": "es2021",
+    "types": ["node"]
+  },
+  "exclude": ["**/node_modules/**", "**/dist/**"],
+  "include": [
+    "examples/**/*",
+    "packages/**/*",
+    "scripts/**/*",
+    "**/vitest.config.ts"
+  ]
 }

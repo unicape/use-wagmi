@@ -1,99 +1,26 @@
 {
-  "name": "use-wagmi",
-  "version": "0.0.2-alpha.1",
-  "packageManager": "pnpm@7.6.0",
-  "description": "Vue Composition for Ethereum",
-  "keywords": [
-    "vue",
-    "hooks",
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3",
-    "wagmi",
-    "use-wagmi"
-  ],
-  "homepage": "https://github.com/unicape/use-wagmi#readme",
-  "bugs": {
-    "url": "https://github.com/unicape/use-wagmi/issues"
-  },
-  "license": "MIT",
-  "author": "Unic Ape <94770222@qq.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/unicape/use-wagmi.git"
-  },
+  "name": "root",
   "scripts": {
-    "dev": "pnpm --filter playground dev",
-    "build": "esno scripts/build.ts",
-    "build:rollup": "cross-env NODE_OPTIONS=\"--max-old-space-size=6144\" rollup -c",
-    "publish:ci": "esno scripts/publish.ts",
-    "clean": "rimraf dist",
-    "watch": "esno scripts/build.ts --watch"
-  },
-  "main": "./index.cjs",
-  "module": "./index.mjs",
-  "types": "./index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "require": "./index.cjs",
-      "import": "./index.mjs"
-    },
-    "./actions": {
-      "types": "./actions/index.d.ts",
-      "require": "./actions/index.cjs",
-      "import": "./actions/index.mjs"
-    },
-    "./chains": {
-      "types": "./chains/index.d.ts",
-      "require": "./chains/index.cjs",
-      "import": "./chains/index.mjs"
-    },
-    "./connectors": {
-      "types": "./connectors/index.d.ts",
-      "require": "./connectors/index.cjs",
-      "import": "./connectors/index.mjs"
-    },
-    "./providers": {
-      "types": "./providers/index.d.ts",
-      "require": "./providers/index.cjs",
-      "import": "./providers/index.mjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "dependencies": {
-    "@wagmi/core": "^0.10.8",
-    "abitype": "^0.7.1",
-    "vue-demi": "latest",
-    "vue-query": "^2.0.0-beta.12"
+    "dev": "pnpm -r --filter './packages/**' dev",
+    "playground:vue": "pnpm dev && pnpm --filter example-dev-vue dev"
   },
   "devDependencies": {
-    "@antfu/ni": "^0.20.0",
+    "@types/dedent": "^0.7.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.14.0",
-    "consola": "^2.15.3",
-    "cross-env": "^7.0.3",
-    "ethers": "^5.7.1",
+    "dedent": "^0.7.0",
+    "esbuild": "0.15.13",
     "esbuild-register": "^3.4.2",
-    "esno": "^0.16.3",
+    "ethers": "^5.7.1",
+    "execa": "^7.1.1",
     "fs-extra": "^11.1.0",
-    "rimraf": "^4.1.2",
-    "rollup": "^3.17.2",
-    "rollup-plugin-dts": "^5.2.0",
-    "rollup-plugin-esbuild": "^5.0.0",
-    "typescript": "^4.9.5",
-    "vue": "^3.2.47"
+    "tsup": "^6.7.0",
+    "typescript": "^4.9.5"
   },
-  "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.1",
-    "ethers": ">=5.5.1 <6",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
+  "packageManager": "pnpm@7.5.0",
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.15.13"
     }
   }
 }

@@ -1,0 +1,140 @@
+{
+  "name": "use-wagmi",
+  "description": "Vue Composition for Ethereum",
+  "license": "MIT",
+  "version": "0.0.2-alpha.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unicape/use-wagmi.git",
+    "directory": "packages/vue"
+  },
+  "contributors": [
+    "unicape <94770222@qq.com>"
+  ],
+  "homepage": "https://wagmi.sh",
+  "funding": [
+    {
+      "type": "gitcoin",
+      "url": "https://wagmi.sh/gitcoin"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/wagmi-dev"
+    }
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./actions": {
+      "types": "./dist/actions.d.ts",
+      "default": "./dist/actions.js"
+    },
+    "./chains": {
+      "types": "./dist/chains.d.ts",
+      "default": "./dist/chains.js"
+    },
+    "./connectors": {
+      "types": "./dist/connectors/index.d.ts",
+      "default": "./dist/connectors/index.js"
+    },
+    "./connectors/coinbaseWallet": {
+      "types": "./dist/connectors/coinbaseWallet.d.ts",
+      "default": "./dist/connectors/coinbaseWallet.js"
+    },
+    "./connectors/injected": {
+      "types": "./dist/connectors/injected.d.ts",
+      "default": "./dist/connectors/injected.js"
+    },
+    "./connectors/ledger": {
+      "types": "./dist/connectors/ledger.d.ts",
+      "default": "./dist/connectors/ledger.js"
+    },
+    "./connectors/metaMask": {
+      "types": "./dist/connectors/metaMask.d.ts",
+      "default": "./dist/connectors/metaMask.js"
+    },
+    "./connectors/mock": {
+      "types": "./dist/connectors/mock.d.ts",
+      "default": "./dist/connectors/mock.js"
+    },
+    "./connectors/safe": {
+      "types": "./dist/connectors/safe.d.ts",
+      "default": "./dist/connectors/safe.js"
+    },
+    "./connectors/walletConnect": {
+      "types": "./dist/connectors/walletConnect.d.ts",
+      "default": "./dist/connectors/walletConnect.js"
+    },
+    "./connectors/walletConnectLegacy": {
+      "types": "./dist/connectors/walletConnectLegacy.d.ts",
+      "default": "./dist/connectors/walletConnectLegacy.js"
+    },
+    "./providers/alchemy": {
+      "types": "./dist/providers/alchemy.d.ts",
+      "default": "./dist/providers/alchemy.js"
+    },
+    "./providers/infura": {
+      "types": "./dist/providers/infura.d.ts",
+      "default": "./dist/providers/infura.js"
+    },
+    "./providers/jsonRpc": {
+      "types": "./dist/providers/jsonRpc.d.ts",
+      "default": "./dist/providers/jsonRpc.js"
+    },
+    "./providers/public": {
+      "types": "./dist/providers/public.d.ts",
+      "default": "./dist/providers/public.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "/actions",
+    "/chains",
+    "/connectors",
+    "/providers",
+    "/dist"
+  ],
+  "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
+    "ethers": ">=5.5.1 <6",
+    "vue": "^2.0.0 || >=3.0.0",
+    "typescript": ">=4.9.4"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    },
+    "@vue/composition-api": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@wagmi/core": "^0.10.8",
+    "abitype": "^0.7.1",
+    "vue-demi": "latest",
+    "vue-query": "^2.0.0-beta.12"
+  },
+  "devDependencies": {
+    "ethers": "^5.7.1",
+    "vue": "^3.2.47"
+  },
+  "keywords": [
+    "vue",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "DEV=true tsup"
+  }
+}
