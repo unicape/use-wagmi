@@ -2,9 +2,10 @@
   "name": "root",
   "scripts": {
     "dev": "pnpm -r --filter './packages/**' dev",
-    "playground:vue": "pnpm dev && pnpm --filter example-dev-vue dev"
+    "playground:vue": "pnpm dev && pnpm --filter example-vue dev"
   },
   "devDependencies": {
+    "@manypkg/get-packages": "^1.1.3",
     "@types/dedent": "^0.7.0",
     "@types/fs-extra": "^11.0.1",
     "@types/node": "^18.14.0",
