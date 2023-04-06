@@ -6,7 +6,7 @@ import type {
   UseMutationOptions,
 } from 'vue-query'
 
-import { WagmiQueryClientKey as queryClientKey } from '../../create'
+import { queryClientKey } from '../../context'
 
 export function useMutation<
   TData = unknown,

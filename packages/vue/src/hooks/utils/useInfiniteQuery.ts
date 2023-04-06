@@ -9,7 +9,7 @@ import type {
   UseQueryReturnType,
 } from 'vue-query'
 
-import { WagmiQueryClientKey as queryClientKey } from '../../create'
+import { queryClientKey } from '../../context'
 
 export type UseInfiniteQueryResult<TData, TError> = Omit<
   UseQueryReturnType<TData, TError, InfiniteQueryObserverResult<TData, TError>>,

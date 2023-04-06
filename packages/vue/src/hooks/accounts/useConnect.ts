@@ -2,7 +2,7 @@ import { connect } from '@wagmi/core'
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
 import { computed } from 'vue-demi'
 
-import { getWagmi } from '../../create'
+import { useClient } from '../../context'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
@@ -27,7 +27,7 @@ export function useConnect({
   onSettled,
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
-  const wagmi = getWagmi()
+  const client = useClient()
 
   const {
     data,
@@ -48,7 +48,7 @@ export function useConnect({
     onSuccess,
   })
 
-  const connectors = computed(() => wagmi.value.connectors)
+  const connectors = computed(() => client.connectors)
   const pendingConnector = computed(() => variables?.value?.connector)
 
   const connect = (args?: UseConnectArgs) => {

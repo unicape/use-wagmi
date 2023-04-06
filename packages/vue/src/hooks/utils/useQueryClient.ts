@@ -1,7 +1,7 @@
 import { useQueryClient as useQueryClient_ } from 'vue-query'
 
-import { WagmiQueryClientKey } from '../../create'
+import { queryClientKey } from '../../context'
 
 export function useQueryClient() {
-  return useQueryClient_(WagmiQueryClientKey)
+  return useQueryClient_(queryClientKey)
 }

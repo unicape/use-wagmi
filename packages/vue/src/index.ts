@@ -1,5 +1,8 @@
-export { createWagmi, getWagmi } from './create'
-export type { CreateWagmiConfig, WagmiClient } from './create'
+export { createClient } from './client'
+export type { Client, CreateClientConfig } from './client'
+
+export { WagmiConfig, useClient } from './context'
+export type { WagmiConfigProps } from './context'
 
 export {
   paginatedIndexesConfig,

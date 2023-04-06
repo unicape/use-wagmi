@@ -9,7 +9,7 @@ import {
   watchEffect,
 } from 'vue-demi'
 
-import { getWagmi } from '../../create'
+import { useClient } from '../../context'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */
@@ -27,7 +27,7 @@ export type UseAccountConfig = {
 }
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
-  const wagmi = getWagmi()
+  const client = useClient()
 
   const initialState = getAccount()
   let account = reactive(initialState)
@@ -40,7 +40,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
 
   if (!!onConnect || !!onDisconnect) {
     watchEffect((onInvalidate) => {
-      const unsubscribe = wagmi.value.subscribe(
+      const unsubscribe = client.subscribe(
         (state) => ({
           address: state.data?.account,
           connector: state.connector,

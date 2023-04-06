@@ -10,7 +10,7 @@ import type {
   UseQueryOptions,
 } from 'vue-query'
 
-import { WagmiQueryClientKey as queryClientKey } from '../../create'
+import { queryClientKey } from '../../context'
 
 type UseQueryReturnType<TData, TError> = Omit<
   UQRT<TData, TError>,

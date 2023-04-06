@@ -4,7 +4,7 @@ import { computed } from 'vue-demi'
 
 import type { UnwrapRef } from 'vue-demi'
 
-import { getWagmi } from '../../create'
+import { useClient } from '../../context'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
@@ -32,7 +32,7 @@ export function useSwitchNetwork({
   onSettled,
   onSuccess,
 }: UseSwitchNetworkArgs & UseSwitchNetworkConfig = {}) {
-  const wagmi = getWagmi()
+  const client = useClient()
 
   const {
     data,
@@ -53,8 +53,8 @@ export function useSwitchNetwork({
     onSuccess,
   })
 
-  const support = computed<boolean>(() => !!wagmi.value.connector?.switchChain)
-  const chains = computed(() => wagmi.value.chains ?? [])
+  const support = computed<boolean>(() => !!client.connector?.switchChain)
+  const chains = computed(() => client.chains ?? [])
   const pendingChainId = computed(() => variables.value?.chainId)
 
   const switchNetwork = (chainId_?: SwitchNetworkArgs['chainId']) =>
