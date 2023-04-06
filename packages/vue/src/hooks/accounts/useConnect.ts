@@ -2,7 +2,7 @@ import { connect } from '@wagmi/core'
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
 import { computed } from 'vue-demi'
 
-import { getWagmi } from 'use-wagmi'
+import { getWagmi } from '../../create'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
 import { useMutation } from '../utils'

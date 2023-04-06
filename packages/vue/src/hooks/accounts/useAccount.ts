@@ -9,7 +9,7 @@ import {
   watchEffect,
 } from 'vue-demi'
 
-import { getWagmi } from 'use-wagmi'
+import { getWagmi } from '../../create'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */

@@ -4,7 +4,7 @@ import { computed } from 'vue-demi'
 
 import type { UnwrapRef } from 'vue-demi'
 
-import { getWagmi } from 'use-wagmi'
+import { getWagmi } from '../../create'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
