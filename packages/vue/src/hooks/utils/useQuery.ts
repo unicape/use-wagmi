@@ -10,7 +10,7 @@ import type {
   UseQueryOptions,
 } from 'vue-query'
 
-import { queryClientKey } from '../../context'
+import { useQueryClient } from './useQueryClient'
 
 type UseQueryReturnType<TData, TError> = Omit<
   UQRT<TData, TError>,
@@ -43,10 +43,11 @@ export function useQuery<
   queryFn: QueryFunction<TQueryFnData, UnwrapRef<TQueryKey>>,
   options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseQueryResult<TData, TError> {
+  const queryClient = useQueryClient()
   return useBaseQuery({
     queryKey,
     queryFn,
-    queryClientKey,
     ...options,
+    queryClient,
   })
 }

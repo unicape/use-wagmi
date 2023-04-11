@@ -2,9 +2,34 @@ import type { Provider, WebSocketProvider } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { Wallet, providers } from 'ethers'
 
-import { createWagmi } from '../src'
-import type { Chain, CreateWagmiConfig } from '../src'
+import type { Chain, CreateClientConfig } from '../src'
+import { createClient } from '../src'
+
 import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
+
+export const foundryMainnet: Chain = {
+  ...mainnet,
+  rpcUrls: foundry.rpcUrls,
+}
+
+export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
+
+type Config = Partial<CreateClientConfig>
+
+export function setupClient(config: Config = {}) {
+  return createClient<Provider, WebSocketProvider>({
+    connectors: [
+      new MockConnector({
+        options: {
+          signer: getSigners()[0]!,
+        },
+      }),
+    ],
+    provider: ({ chainId }) =>
+      getProvider({ chainId, chains: [mainnet, goerli] }),
+    ...config,
+  })
+}
 
 export function getNetwork(chain: Chain) {
   return {
@@ -14,37 +39,18 @@ export function getNetwork(chain: Chain) {
   }
 }
 
-export const foundryMainnet: Chain = {
-  ...mainnet,
-  rpcUrls: foundry.rpcUrls,
-}
-
-export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
-
-class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
-  toJSON() {
-    return `<Provider network={${this.network.chainId}} />`
-  }
-}
-
 export function getProvider({
   chains = testChains,
   chainId,
-}: { chains?: Chain[]; chainId?: number } = {}) {
+}: {
+  chains?: Chain[]
+  chainId?: number
+} = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]
-  const provider = new EthersProviderWrapper(url, getNetwork(chain))
+  const provider = new providers.StaticJsonRpcProvider(url, getNetwork(chain))
   provider.pollingInterval = 1_000
   return Object.assign(provider, { chains })
-}
-
-export class WalletSigner extends Wallet {
-  connectUnchecked(): providers.JsonRpcSigner {
-    const uncheckedSigner = (
-      this.provider as EthersProviderWrapper
-    ).getUncheckedSigner(this.address)
-    return uncheckedSigner
-  }
 }
 
 // Default accounts from Anvil
@@ -151,24 +157,16 @@ export const accounts = [
   },
 ]
 
+export class WalletSigner extends Wallet {
+  connectUnchecked(): providers.JsonRpcSigner {
+    const uncheckedSigner = (
+      this.provider as providers.StaticJsonRpcProvider
+    ).getUncheckedSigner(this.address)
+    return uncheckedSigner
+  }
+}
+
 export function getSigners() {
   const provider = getProvider()
   return accounts.map((x) => new WalletSigner(x.privateKey, provider))
-}
-
-export function setupWagmi(config: CreateWagmiConfig) {
-  return createWagmi<Provider, WebSocketProvider>({
-    connectors: [
-      new MockConnector({
-        options: {
-          signer: getSigners()[0]!,
-        },
-      }),
-    ],
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    provider: ({ chainId }) =>
-      getProvider({ chainId, chains: [mainnet, goerli] }),
-    ...config,
-  })
 }

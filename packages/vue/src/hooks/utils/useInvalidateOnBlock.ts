@@ -1,5 +1,4 @@
 import { unref } from 'vue-demi'
-
 import type { QueryKey } from 'vue-query'
 
 import { useQueryClient } from './useQueryClient'

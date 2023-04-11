@@ -1,7 +1,7 @@
 import { getWebSocketProvider, watchWebSocketProvider } from '@wagmi/core'
 
 import type { GetWebSocketProviderArgs, WebSocketProvider } from '@wagmi/core'
-import { readonly, ref, unref, watchEffect } from 'vue-demi'
+import { shallowRef, unref, watchEffect } from 'vue-demi'
 
 import type { DeepMaybeRef } from '../../types'
 
@@ -12,22 +12,22 @@ export type UseWebsocketProviderArgs = DeepMaybeRef<
 export function useWebSocketProvider<
   TWebSocketProvider extends WebSocketProvider,
 >({ chainId }: UseWebsocketProviderArgs = {}) {
-  const webSocketProvider = ref(
+  const webSocketProvider = shallowRef(
     getWebSocketProvider<TWebSocketProvider>({
       chainId: unref(chainId),
-    }) as TWebSocketProvider,
+    }),
   )
 
-  watchEffect((onInvalidate) => {
+  watchEffect((onCleanup) => {
     const unwatch = watchWebSocketProvider<TWebSocketProvider>(
       { chainId: unref(chainId) },
       (webSocketProvider_) => {
-        webSocketProvider.value = webSocketProvider_
+        webSocketProvider.value = webSocketProvider_ as TWebSocketProvider
       },
     )
 
-    onInvalidate(() => unwatch())
+    onCleanup(() => unwatch())
   })
 
-  return readonly(webSocketProvider)
+  return webSocketProvider
 }

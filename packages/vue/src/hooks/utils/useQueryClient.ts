@@ -1,7 +1,5 @@
-import { useQueryClient as useQueryClient_ } from 'vue-query'
-
-import { queryClientKey } from '../../context'
+import { useClient } from '../../client'
 
 export function useQueryClient() {
-  return useQueryClient_(queryClientKey)
+  return useClient().queryClient
 }

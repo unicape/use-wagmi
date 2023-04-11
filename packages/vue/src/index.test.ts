@@ -5,8 +5,8 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "createWagmi",
-      "getWagmi",
+      "createClient",
+      "useClient",
       "paginatedIndexesConfig",
       "useAccount",
       "useBalance",

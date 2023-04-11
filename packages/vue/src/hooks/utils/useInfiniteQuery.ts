@@ -9,7 +9,7 @@ import type {
   UseQueryReturnType,
 } from 'vue-query'
 
-import { queryClientKey } from '../../context'
+import { useQueryClient } from './useQueryClient'
 
 export type UseInfiniteQueryResult<TData, TError> = Omit<
   UseQueryReturnType<TData, TError, InfiniteQueryObserverResult<TData, TError>>,
@@ -34,10 +34,11 @@ export function useInfiniteQuery<
   queryFn: QueryFunction<TQueryFnData, UnwrapRef<TQueryKey>>,
   options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseInfiniteQueryResult<TData, TError> {
+  const queryClient = useQueryClient()
   return useBaseQuery({
     queryKey,
     queryFn,
-    queryClientKey,
     ...options,
+    queryClient,
   })
 }

@@ -6,7 +6,7 @@ import type {
   UseMutationOptions,
 } from 'vue-query'
 
-import { queryClientKey } from '../../context'
+import { useQueryClient } from './useQueryClient'
 
 export function useMutation<
   TData = unknown,
@@ -18,10 +18,11 @@ export function useMutation<
   mutationFn: MutationFunction<TData, TVariables>,
   options: UseMutationOptions<TData, TError, TVariables, TContext>,
 ) {
+  const queryClient = useQueryClient()
   return useMutation_({
     mutationKey,
     mutationFn,
     ...options,
-    queryClientKey,
+    queryClient,
   })
 }

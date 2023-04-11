@@ -9,7 +9,7 @@ import {
   watchEffect,
 } from 'vue-demi'
 
-import { useClient } from '../../context'
+import { useClient } from '../../client'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */
@@ -39,7 +39,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   if (getCurrentScope()) onScopeDispose(() => unwatch())
 
   if (!!onConnect || !!onDisconnect) {
-    watchEffect((onInvalidate) => {
+    watchEffect((onCleanup) => {
       const unsubscribe = client.subscribe(
         (state) => ({
           address: state.data?.account,
@@ -67,7 +67,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
         },
       )
 
-      onInvalidate(unsubscribe)
+      onCleanup(() => unsubscribe())
     })
   }
 

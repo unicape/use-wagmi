@@ -74,6 +74,7 @@ export function useBalance({
       token,
     }),
   ) as any
+  console.log(computed(() => !!(unref(enabled) && unref(address))).value)
 
   const balanceQuery = useQuery(queryKey_, queryFn, {
     cacheTime,

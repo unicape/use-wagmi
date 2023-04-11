@@ -4,7 +4,7 @@ import { computed } from 'vue-demi'
 
 import type { UnwrapRef } from 'vue-demi'
 
-import { useClient } from '../../context'
+import { useClient } from '../../client'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
