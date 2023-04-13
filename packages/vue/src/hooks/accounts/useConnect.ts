@@ -1,6 +1,6 @@
 import { connect } from '@wagmi/core'
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
-import { computed, toRaw, unref } from 'vue-demi'
+import { computed } from 'vue-demi'
 
 import { useClient } from '../../client'
 import type { DeepMaybeRef, MutationConfig } from '../../types'
@@ -52,15 +52,15 @@ export function useConnect({
 
   const connect = (args?: UseConnectArgs) => {
     return mutate({
-      chainId: unref(args?.chainId ?? chainId),
-      connector: toRaw(unref(args?.connector ?? connector)),
+      chainId: args?.chainId ?? chainId,
+      connector: args?.connector ?? connector,
     } as ConnectArgs)
   }
 
   const connectAsync = (args?: UseConnectArgs) => {
     return mutateAsync({
-      chainId: unref(args?.chainId ?? chainId),
-      connector: toRaw(unref(args?.connector ?? connector)),
+      chainId: args?.chainId ?? chainId,
+      connector: args?.connector ?? connector,
     } as ConnectArgs)
   }
 

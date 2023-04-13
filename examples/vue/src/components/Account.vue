@@ -14,12 +14,20 @@
 
     <h4>Balance</h4>
     <Balance />
+
+    <h4>Block Number</h4>
+    <BlockNumber />
+
+    <h4>Send Transaction</h4>
+    <SendTransaction />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'use-wagmi'
-import Balance from './Balance.vue';
+import Balance from './Balance.vue'
+import BlockNumber from './BlockNumber.vue'
+import SendTransaction from './SendTransaction.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),

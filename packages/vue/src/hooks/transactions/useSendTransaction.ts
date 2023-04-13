@@ -6,7 +6,6 @@ import type {
   SendTransactionResult,
   SendTransactionUnpreparedRequest,
 } from '@wagmi/core'
-import { unref } from 'vue-demi'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
@@ -49,11 +48,11 @@ export type UseSendTransactionMutationArgs = DeepMaybeRef<{
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
-const mutationFn = ({ chainId, mode, request }: UseSendTransactionArgs) => {
+const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
   return sendTransaction({
-    chainId: unref(chainId),
-    mode: unref(mode),
-    request: unref(request),
+    chainId,
+    mode,
+    request,
   } as SendTransactionArgs)
 }
 

@@ -8,8 +8,8 @@
     <div>
       Find balance:
       <input v-model="value" placeholder="wallet address" />
-      <button>
-        {{ isLoading ? 'fetching...' : 'fetch' }}
+      <button @click="() => findRefetch()">
+        {{ isLoading && fetchStatus === 'fetching' ? 'fetching...' : 'fetch' }}
       </button>
       <div>{{ findBalance?.formatted }}</div>
     </div>
@@ -29,8 +29,7 @@ const { data: accountBalance, refetch: accountRefetch } = useBalance({
 })
 
 const value = ref<Address>()
-const { data: findBalance, refetch: findRefetch, isLoading } = useBalance({
-  address: value,
-  watch: false
+const { data: findBalance, refetch: findRefetch, isLoading, fetchStatus } = useBalance({
+  address: value
 })
 </script>
