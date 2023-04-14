@@ -13,13 +13,14 @@
 
 <script lang="ts" setup>
 import { BigNumber } from 'ethers'
-import { useSendTransaction } from 'use-wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'use-wagmi'
 
-const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } = useSendTransaction({
-  mode: 'recklesslyUnprepared',
+const { config } = usePrepareSendTransaction({
   request: {
     to: '0xc961145a54C96E3aE9bAA048c4F4D6b04C13916b',
-    value: BigNumber.from('10000000000000000') // 0.01 ETH
+    value: BigNumber.from('10000000000000000')
   }
 })
+
+const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } = useSendTransaction(config)
 </script>

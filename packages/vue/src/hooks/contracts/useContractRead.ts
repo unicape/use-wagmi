@@ -1,9 +1,6 @@
 import { deepEqual, parseContractResult, readContract } from '@wagmi/core'
 
-import type {
-  ReadContractConfig as ReadContractConfig_,
-  ReadContractResult,
-} from '@wagmi/core'
+import type { ReadContractConfig, ReadContractResult } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
@@ -12,23 +9,21 @@ import { replaceEqualDeep } from 'vue-query'
 import type {
   DeepMaybeRef,
   MaybeRef,
-  PartialBy,
+  PartialByDeepMaybeRef,
   QueryConfig,
   QueryFunctionArgs,
 } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
-type ReadContractConfig<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
-> = DeepMaybeRef<ReadContractConfig_<TAbi, TFunctionName>>
-
 export type UseContractReadConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TSelectData = ReadContractResult<TAbi, TFunctionName>,
-> = PartialBy<ReadContractConfig, 'abi' | 'address' | 'args' | 'functionName'> &
+> = PartialByDeepMaybeRef<
+  ReadContractConfig<TAbi, TFunctionName>,
+  'abi' | 'address' | 'args' | 'functionName'
+> &
   QueryConfig<ReadContractResult<TAbi, TFunctionName>, Error, TSelectData> & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: MaybeRef<boolean>
@@ -80,7 +75,7 @@ function queryFn<
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,
       functionName,
-      overrides: overrides as ReadContractConfig_['overrides'],
+      overrides: overrides as ReadContractConfig['overrides'],
     })) ?? null) as ReadContractResult<TAbi, TFunctionName>
   }
 }

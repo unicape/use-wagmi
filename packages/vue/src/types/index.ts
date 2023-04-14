@@ -60,10 +60,15 @@ export type PartialBy<TType, TKeys extends keyof TType> = Partial<
 > &
   Omit<TType, TKeys>
 
-export type PartialByDeepMaybeRef<
-  TType,
-  TKeys extends keyof DeepMaybeRef<TType>,
-> = Partial<Pick<DeepMaybeRef<TType>, TKeys>> & Omit<DeepMaybeRef<TType>, TKeys>
+export type PartialByDeepMaybeRef<TType, TKeys extends keyof TType> = Partial<
+  DeepMaybeRef<Pick<TType, TKeys>>
+> &
+  Omit<DeepMaybeRef<TType>, TKeys>
+
+// export type PartialByDeepMaybeRef<
+//   TType,
+//   TKeys extends keyof TType,
+// > = DeepMaybeRef<Partial<Pick<TType, TKeys>>> & Omit<DeepMaybeRef<TType>, TKeys>
 
 export type DeepPartial<
   T,

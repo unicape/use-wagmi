@@ -6,6 +6,7 @@ import type {
 } from '@wagmi/core'
 import type { providers } from 'ethers'
 import { computed, unref } from 'vue-demi'
+import type { UnwrapRef } from 'vue-demi'
 
 import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
@@ -47,10 +48,8 @@ function queryKey({
 
 function queryFn({ signer }: { signer?: FetchSignerResult }) {
   return ({
-    queryKey: [{ chainId: chainId_, request: request_ }],
-  }: QueryFunctionArgs<typeof queryKey>) => {
-    const request = unref(request_)
-    const chainId = unref(chainId_)
+    queryKey: [{ chainId, request }],
+  }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) => {
     if (!request?.to) throw new Error('request.to is required')
     return prepareSendTransaction({
       chainId,
@@ -121,10 +120,9 @@ export function usePrepareSendTransaction({
 
   return Object.assign(prepareSendTransactionQuery, {
     config: {
-      request: computed(() => prepareSendTransactionQuery.data.value?.request),
-      mode: computed(
-        () => prepareSendTransactionQuery.data.value?.mode || 'prepared',
-      ),
-    } as unknown as PrepareSendTransactionResult,
+      request: undefined,
+      mode: 'prepared',
+      ...prepareSendTransactionQuery.data.value,
+    } as PrepareSendTransactionResult,
   })
 }
