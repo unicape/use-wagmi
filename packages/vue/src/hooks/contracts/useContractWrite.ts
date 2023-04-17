@@ -168,67 +168,63 @@ export function useContractWrite<
     },
   )
 
-  const write = () => {
-    return computed(() => {
-      if (unref(mode) === 'prepared') {
-        if (!request) return undefined
+  const write = computed(() => {
+    if (unref(mode) === 'prepared') {
+      if (!request) return undefined
 
-        return mutate({
-          address,
-          chainId,
-          abi: abi as Abi,
-          functionName,
-          mode: 'prepared',
-          request,
-        } as MutationFnConfig)
-      }
+      return mutate({
+        address,
+        chainId,
+        abi: abi as Abi,
+        functionName,
+        mode: 'prepared',
+        request,
+      } as MutationFnConfig)
+    }
 
-      return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
-        mutate({
-          address,
-          args:
-            (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
-            args,
-          chainId,
-          abi: abi as Abi,
-          functionName,
-          mode: 'recklesslyUnprepared',
-          overrides:
-            overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
-        } as MutationFnConfig)
-    }).value
-  }
+    return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
+      mutate({
+        address,
+        args:
+          (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
+          args,
+        chainId,
+        abi: abi as Abi,
+        functionName,
+        mode: 'recklesslyUnprepared',
+        overrides:
+          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
+      } as MutationFnConfig)
+  }).value
 
-  const writeAsync = () => {
-    return computed(() => {
-      if (unref(mode) === 'prepared') {
-        if (!request) return undefined
+  const writeAsync = computed(() => {
+    if (unref(mode) === 'prepared') {
+      if (!request) return undefined
 
-        return mutateAsync({
-          address,
-          chainId,
-          abi: abi as Abi,
-          functionName,
-          mode: 'prepared',
-          request,
-        } as MutationFnConfig)
-      }
+      return mutateAsync({
+        address,
+        chainId,
+        abi: abi as Abi,
+        functionName,
+        mode: 'prepared',
+        request,
+      } as MutationFnConfig)
+    }
 
-      return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
-        mutateAsync({
-          address,
-          args:
-            (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
-            args,
-          chainId,
-          abi: abi as Abi,
-          functionName,
-          mode: 'recklesslyUnprepared',
-          overrides:
-            overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
-        } as MutationFnConfig)
-    }).value
-  }
+    return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
+      mutateAsync({
+        address,
+        args:
+          (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
+          args,
+        chainId,
+        abi: abi as Abi,
+        functionName,
+        mode: 'recklesslyUnprepared',
+        overrides:
+          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
+      } as MutationFnConfig)
+  }).value
 
   return {
     data,

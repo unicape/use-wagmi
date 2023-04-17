@@ -5,7 +5,6 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
     "lib": ["es2021", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
@@ -15,18 +14,26 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "@wagmi/core": ["packages/vue/node_modules/@wagmi/core/dist"],
       "use-wagmi": ["packages/vue/src"],
       "use-wagmi/*": ["packages/vue/src/*"],
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
-      "abitype": ["node_modules/abitype/dist"]
+      "abitype": ["packages/vue/node_modules/abitype/dist"],
+      "vue-demi": ["packages/vue/node_modules/vue-demi/lib"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "target": "es2021",
-    "types": ["node"]
+    "types": [
+      "node",
+      // TODO: Remove once issue is fixed
+      // https://github.com/microsoft/TypeScript/issues/42873
+      "@ethersproject/providers",
+      "@ethersproject/abstract-signer"
+    ]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [
