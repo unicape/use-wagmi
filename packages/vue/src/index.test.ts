@@ -71,6 +71,7 @@ it('should expose correct exports', () => {
       "goerli",
       "mainnet",
       "readContracts",
+      "sepolia",
       "serialize",
     ]
   `)
