@@ -28,6 +28,18 @@
     
     <h4>Read Contract</h4>
     <ReadContract />
+
+    <h4>Read Contracts</h4>
+    <ReadContracts />
+
+    <h4>Read Contracts Infinite</h4>
+    <ReadContractsInfinite />
+
+    <h4>Watch Pending Transactions</h4>
+    <WatchPendingTransactions />
+
+    <h4>Write Contract</h4>
+    <WriteContract />
   </div>
 </template>
 
@@ -38,6 +50,10 @@ import BlockNumber from './BlockNumber.vue'
 import SendTransaction from './SendTransaction.vue'
 import SendTransactionPrepared from './SendTransactionPrepared.vue'
 import ReadContract from './read-contract/index.vue'
+import ReadContracts from './ReadContracts.vue'
+import ReadContractsInfinite from './ReadContractsInfinite.vue'
+import WatchPendingTransactions from './WatchPendingTransactions.vue'
+import WriteContract from './WriteContract.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),
