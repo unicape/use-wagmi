@@ -5,11 +5,13 @@ import {
   getCurrentScope,
   onScopeDispose,
   reactive,
+  readonly,
   toRefs,
   watchEffect,
 } from 'vue-demi'
 
 import { useClient } from '../../client'
+import { updateState } from '../../utils'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */
@@ -28,48 +30,44 @@ export type UseAccountConfig = {
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const client = useClient()
-
-  const initialState = getAccount()
-  let account = reactive(initialState)
+  const account = reactive(getAccount())
 
   const unwatch = watchAccount((data) => {
-    account = Object.assign(account, data)
+    updateState(account, data)
   })
 
   if (getCurrentScope()) onScopeDispose(() => unwatch())
 
-  if (!!onConnect || !!onDisconnect) {
-    watchEffect((onCleanup) => {
-      const unsubscribe = client.subscribe(
-        (state) => ({
-          address: state.data?.account,
-          connector: state.connector,
-          status: state.status,
-        }),
-        (curr, prev) => {
-          if (
-            !!onConnect &&
-            prev.status !== 'connected' &&
-            curr.status === 'connected'
-          )
-            onConnect({
-              address: curr.address,
-              connector: curr.connector,
-              isReconnected: prev.status === 'reconnecting',
-            })
+  watchEffect((onCleanup) => {
+    const unsubscribe = client.subscribe(
+      (state) => ({
+        address: state.data?.account,
+        connector: state.connector,
+        status: state.status,
+      }),
+      (curr, prev) => {
+        if (
+          !!onConnect &&
+          prev.status !== 'connected' &&
+          curr.status === 'connected'
+        )
+          onConnect({
+            address: curr.address,
+            connector: curr.connector,
+            isReconnected: prev.status === 'reconnecting',
+          })
 
-          if (
-            !!onDisconnect &&
-            prev.status === 'connected' &&
-            curr.status === 'disconnected'
-          )
-            onDisconnect()
-        },
-      )
+        if (
+          !!onDisconnect &&
+          prev.status === 'connected' &&
+          curr.status === 'disconnected'
+        )
+          onDisconnect()
+      },
+    )
 
-      onCleanup(() => unsubscribe())
-    })
-  }
+    onCleanup(() => unsubscribe())
+  })
 
-  return toRefs(account)
+  return toRefs(readonly(account))
 }
