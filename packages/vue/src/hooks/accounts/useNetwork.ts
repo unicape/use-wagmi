@@ -1,5 +1,13 @@
 import { getNetwork, watchNetwork } from '@wagmi/core'
+import type { Chain } from '@wagmi/core'
 import { getCurrentScope, onScopeDispose, reactive, toRefs } from 'vue-demi'
+
+type GetNetworkResult = {
+  chain?: Chain & {
+    unsupported?: boolean
+  }
+  chains: Chain[]
+}
 
 export function useNetwork() {
   let network = reactive(getNetwork())
@@ -10,5 +18,5 @@ export function useNetwork() {
 
   if (getCurrentScope()) onScopeDispose(() => unwatch())
 
-  return toRefs(network)
+  return toRefs<GetNetworkResult>(network)
 }
