@@ -2,7 +2,7 @@
   "name": "use-wagmi",
   "description": "Vue Composition for Ethereum",
   "license": "MIT",
-  "version": "0.0.2-alpha.1",
+  "version": "0.0.2-alpha.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/unicape/use-wagmi.git",
