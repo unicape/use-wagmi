@@ -30,7 +30,7 @@ export {
   usePrepareContractWrite,
   usePrepareSendTransaction,
   useSignMessage,
-  useSignTypedData,
+  // useSignTypedData,
   useSigner,
   useSwitchNetwork,
   useToken,

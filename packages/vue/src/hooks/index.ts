@@ -6,7 +6,7 @@ export {
   useNetwork,
   useSigner,
   useSignMessage,
-  useSignTypedData,
+  // useSignTypedData,
   useSwitchNetwork,
 } from './accounts'
 

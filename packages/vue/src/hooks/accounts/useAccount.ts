@@ -5,7 +5,6 @@ import {
   getCurrentScope,
   onScopeDispose,
   reactive,
-  readonly,
   toRefs,
   watchEffect,
 } from 'vue-demi'
@@ -69,5 +68,5 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
     onCleanup(() => unsubscribe())
   })
 
-  return toRefs(readonly(account))
+  return toRefs<GetAccountResult>(account)
 }
