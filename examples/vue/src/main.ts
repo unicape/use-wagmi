@@ -1,4 +1,4 @@
-import { configureChains, createClient } from 'use-wagmi'
+import { UseWagmiPlugin, configureChains, createConfig } from 'use-wagmi'
 import { avalanche, goerli, mainnet, optimism } from 'use-wagmi/chains'
 import { MetaMaskConnector } from 'use-wagmi/connectors/metaMask'
 import { publicProvider } from 'use-wagmi/providers/public'
@@ -6,13 +6,12 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, goerli, optimism, avalanche],
   [publicProvider()],
-  { targetQuorum: 1 },
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
@@ -22,10 +21,10 @@ const client = createClient({
       },
     }),
   ],
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
 const app = createApp(App)
-app.use(client)
+app.use(UseWagmiPlugin, config)
 app.mount('#app')

@@ -1,5 +1,7 @@
-export { createClient, useClient } from './client'
-export type { Client, CreateClientConfig } from './client'
+export { createConfig } from './config'
+export type { Config, CreateConfigParameters } from './config'
+
+export { UseWagmiPlugin, useConfig } from './plugin'
 
 export {
   paginatedIndexesConfig,
@@ -8,7 +10,6 @@ export {
   useBlockNumber,
   useChainId,
   useConnect,
-  useContract,
   useContractEvent,
   useContractInfiniteReads,
   useContractRead,
@@ -21,24 +22,22 @@ export {
   useEnsResolver,
   useFeeData,
   useInfiniteQuery,
-  useMutation,
   useNetwork,
-  useProvider,
+  usePublicClient,
   useQuery,
   useQueryClient,
   useSendTransaction,
   usePrepareContractWrite,
   usePrepareSendTransaction,
   useSignMessage,
-  // useSignTypedData,
-  useSigner,
+  useSignTypedData,
   useSwitchNetwork,
   useToken,
   useTransaction,
   useWaitForTransaction,
+  useWalletClient,
   useWatchPendingTransactions,
-  useWebSocketProvider,
-  type UseContractConfig,
+  useWebSocketPublicClient,
   type UseContractEventConfig,
   type UseContractInfiniteReadsConfig,
   type UseContractReadConfig,
@@ -48,24 +47,13 @@ export {
 } from './hooks'
 
 export {
-  AddChainError,
-  ChainDoesNotSupportMulticallError,
   ChainMismatchError,
   ChainNotConfiguredError,
   Connector,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
-  ContractMethodDoesNotExistError,
-  ContractMethodNoResultError,
-  ContractMethodRevertedError,
-  ContractResultDecodeError,
-  ProviderChainsNotFound,
-  ProviderRpcError,
-  ResourceUnavailableError,
-  RpcError,
-  SwitchChainError,
+  ConfigChainsNotFound,
   SwitchChainNotSupportedError,
-  UserRejectedRequestError,
   configureChains,
   createStorage,
   deepEqual,
@@ -73,7 +61,6 @@ export {
   erc20ABI,
   erc721ABI,
   erc4626ABI,
-  goerli,
   mainnet,
   readContracts,
   sepolia,
@@ -84,8 +71,12 @@ export type {
   ChainProviderFn,
   ConnectorData,
   ConnectorEvents,
+  PublicClient,
   Storage,
   Unit,
+  WalletClient,
+  WebSocketPublicClient,
+  WindowProvider,
 } from '@wagmi/core'
 
 export type { Address } from 'abitype'

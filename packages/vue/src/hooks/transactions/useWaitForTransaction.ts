@@ -1,18 +1,17 @@
 import { waitForTransaction } from '@wagmi/core'
-
 import type {
   WaitForTransactionArgs,
   WaitForTransactionResult,
 } from '@wagmi/core'
 import { computed, unref } from 'vue-demi'
+import type { UnwrapRef } from 'vue-demi'
 
 import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseWaitForTransactionArgs = DeepMaybeRef<
-  Omit<Partial<WaitForTransactionArgs>, 'onSpeedUp'>
-> &
-  Pick<Partial<WaitForTransactionArgs>, 'onSpeedUp'>
+  Omit<Partial<WaitForTransactionArgs>, 'onReplaced'>
+> & { onReplaced?: WaitForTransactionArgs['onReplaced'] }
 export type UseWaitForTransactionConfig = QueryConfig<
   WaitForTransactionResult,
   Error
@@ -41,21 +40,21 @@ function queryKey({
 }
 
 function queryFn({
-  onSpeedUp,
+  onReplaced,
 }: {
-  onSpeedUp?: WaitForTransactionArgs['onSpeedUp']
+  onReplaced?: WaitForTransactionArgs['onReplaced']
 }) {
   return ({
     queryKey: [{ chainId, confirmations, hash: hash_, timeout }],
-  }: QueryFunctionArgs<typeof queryKey>) => {
+  }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) => {
     const hash = unref(hash_)
     if (!hash) throw new Error('hash is required')
     return waitForTransaction({
-      chainId: unref(chainId),
-      confirmations: unref(confirmations),
+      chainId,
+      confirmations,
       hash,
-      onSpeedUp,
-      timeout: unref(timeout),
+      onReplaced,
+      timeout,
     })
   }
 }
@@ -71,7 +70,7 @@ export function useWaitForTransaction({
   staleTime,
   suspense,
   onError,
-  onSpeedUp,
+  onReplaced,
   onSettled,
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
@@ -79,7 +78,7 @@ export function useWaitForTransaction({
 
   return useQuery(
     queryKey({ chainId, confirmations, hash, scopeKey, timeout }),
-    queryFn({ onSpeedUp }),
+    queryFn({ onReplaced }),
     {
       cacheTime,
       enabled: computed(() => !!(unref(enabled) && unref(hash))),

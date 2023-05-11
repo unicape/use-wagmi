@@ -1,9 +1,9 @@
+import { useMutation } from '@tanstack/vue-query'
 import { signMessage } from '@wagmi/core'
-
 import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
-import { useMutation } from 'vue-query'
 
 import type { DeepMaybeRef, MutationConfig } from './../../types'
+import { useQueryClient } from '../utils'
 
 export type UseSignMessageArgs = DeepMaybeRef<Partial<SignMessageArgs>>
 
@@ -29,6 +29,8 @@ export function useSignMessage({
   onSettled,
   onSuccess,
 }: UseSignMessageArgs & UseSignMessageConfig = {}) {
+  const queryClient = useQueryClient()
+
   const {
     data,
     error,
@@ -42,6 +44,7 @@ export function useSignMessage({
     status,
     variables,
   } = useMutation(mutationKey({ message }), mutationFn, {
+    queryClient,
     onError,
     onMutate,
     onSettled,

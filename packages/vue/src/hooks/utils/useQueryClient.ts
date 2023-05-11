@@ -1,5 +1,3 @@
-import { useClient } from '../../client'
+import { useConfig } from '../../plugin'
 
-export function useQueryClient() {
-  return useClient().queryClient
-}
+export const useQueryClient = () => useConfig().queryClient

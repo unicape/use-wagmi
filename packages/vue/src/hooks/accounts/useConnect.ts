@@ -1,10 +1,11 @@
+import { useMutation } from '@tanstack/vue-query'
 import { connect } from '@wagmi/core'
 import type { ConnectArgs, ConnectResult } from '@wagmi/core'
 import { computed } from 'vue-demi'
 
-import { useClient } from '../../client'
+import { useConfig } from '../../plugin'
 import type { DeepMaybeRef, MutationConfig } from '../../types'
-import { useMutation } from '../utils'
+import { useQueryClient } from '../utils'
 
 export type UseConnectArgs = DeepMaybeRef<Partial<ConnectArgs>>
 export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
@@ -26,7 +27,8 @@ export function useConnect({
   onSettled,
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
-  const client = useClient()
+  const config = useConfig()
+  const queryClient = useQueryClient()
 
   const {
     data,
@@ -41,13 +43,14 @@ export function useConnect({
     status,
     variables,
   } = useMutation(mutationKey({ chainId, connector }), mutationFn, {
+    queryClient,
     onError,
     onMutate,
     onSettled,
     onSuccess,
   })
 
-  const connectors = computed(() => client.connectors)
+  const connectors = computed(() => config.connectors)
   const pendingConnector = computed(() => variables?.value?.connector)
 
   const connect = (args?: UseConnectArgs) => {

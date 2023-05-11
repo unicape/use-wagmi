@@ -1,16 +1,16 @@
 import { prepareSendTransaction } from '@wagmi/core'
 import type {
-  FetchSignerResult,
+  GetWalletClientResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
 } from '@wagmi/core'
-import type { providers } from 'ethers'
 import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
-import { useNetwork, useSigner } from '../accounts'
+import { useNetwork } from '../accounts'
 import { useQuery } from '../utils'
+import { useWalletClient } from '../viem'
 
 export type UsePrepareSendTransactionArgs = DeepMaybeRef<
   Partial<PrepareSendTransactionArgs>
@@ -24,37 +24,78 @@ type QueryKeyArgs = UsePrepareSendTransactionArgs
 type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> &
   DeepMaybeRef<{
     activeChainId?: number
-    signerAddress?: string
+    walletClientAddress?: string
   }>
 
 function queryKey({
+  accessList,
+  account,
   activeChainId,
   chainId,
-  request,
+  data,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  nonce,
+  to,
+  value,
   scopeKey,
-  signerAddress,
+  walletClientAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'prepareSendTransaction',
       activeChainId,
+      accessList,
+      account,
       chainId,
-      request,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      to,
+      value,
       scopeKey,
-      signerAddress,
+      walletClientAddress,
     },
   ] as const
 }
 
-function queryFn({ signer }: { signer?: FetchSignerResult }) {
+function queryFn({ walletClient }: { walletClient?: GetWalletClientResult }) {
   return ({
-    queryKey: [{ chainId, request }],
+    queryKey: [
+      {
+        accessList,
+        account,
+        chainId,
+        data,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        nonce,
+        to,
+        value,
+      },
+    ],
   }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) => {
-    if (!request?.to) throw new Error('request.to is required')
+    if (!to) throw new Error('to is required')
     return prepareSendTransaction({
+      accessList,
+      account,
       chainId,
-      request: { ...request, to: request.to },
-      signer,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      to,
+      value,
+      walletClient,
     } as PrepareSendTransactionArgs)
   }
 }
@@ -67,48 +108,58 @@ function queryFn({ signer }: { signer?: FetchSignerResult }) {
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'use-wagmi'
  *
- * const { config } = usePrepareSendTransaction({
+ * const { request } = usePrepareSendTransaction({
  *   to: 'moxey.eth',
  *   value: parseEther('1'),
  * })
- * const result = useSendTransaction(config)
+ * const result = useSendTransaction(request)
  */
 export function usePrepareSendTransaction({
+  accessList,
+  account,
   chainId,
-  request,
   cacheTime,
+  data,
   enabled = true,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  nonce,
   scopeKey,
-  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
+  staleTime,
   suspense,
+  to,
+  value,
   onError,
   onSettled,
   onSuccess,
 }: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig = {}) {
   const { chain: activeChain } = useNetwork()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
+  const { data: walletClient } = useWalletClient({ chainId })
 
-  const activeChainId = computed(() => activeChain?.value?.id)
-  const signerAddress = computed(() => signer.value?._address)
   const prepareSendTransactionQuery = useQuery(
     queryKey({
-      activeChainId,
+      accessList,
+      activeChainId: activeChain?.value?.id,
+      account,
       chainId,
-      request,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
       scopeKey,
-      signerAddress,
+      to,
+      value,
+      walletClientAddress: walletClient.value?.account.address,
     }),
-    queryFn({ signer: signer.value }),
+    queryFn({ walletClient: walletClient.value }),
     {
       cacheTime,
       enabled: computed(
-        () =>
-          !!(
-            unref(enabled) &&
-            unref(signer) &&
-            unref(request) &&
-            unref(request)?.to
-          ),
+        () => !!(unref(enabled) && unref(walletClient) && unref(to)),
       ),
       staleTime,
       suspense,
@@ -120,9 +171,10 @@ export function usePrepareSendTransaction({
 
   return Object.assign(prepareSendTransactionQuery, {
     config: {
-      request: undefined,
       mode: 'prepared',
-      ...prepareSendTransactionQuery.data.value,
-    } as PrepareSendTransactionResult,
+      ...(prepareSendTransactionQuery.isSuccess
+        ? prepareSendTransactionQuery.data
+        : undefined),
+    },
   })
 }

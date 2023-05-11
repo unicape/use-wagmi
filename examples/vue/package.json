@@ -9,9 +9,9 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "ethers": "^5.7.1",
     "process": "^0.11.10",
     "use-wagmi": "workspace:*",
+    "viem": "~0.3.18",
     "util": "^0.12.5",
     "vue": "^3.2.47"
   },

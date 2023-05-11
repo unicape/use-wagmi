@@ -1,51 +1,14 @@
-import type { ComputedRef, Ref, UnwrapRef } from 'vue-demi'
 import type {
   QueryFunctionContext,
   UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
-} from 'vue-query'
+} from '@tanstack/vue-query'
+import type { Ref, UnwrapRef } from 'vue-demi'
 
-/**
- * Maybe it's a ref, or a plain value
- *
- * ```ts
- * type MaybeRef<T> = T | Ref<T>
- * ```
- */
 export type MaybeRef<T> = T | Ref<T>
 
-/**
- * Maybe it's a ref, or a plain value, or a getter function
- *
- * ```ts
- * type MaybeComputedRef<T> = (() => T) | T | Ref<T> | ComputedRef<T>
- * ```
- */
-export type MaybeComputedRef<T> = MaybeReadonlyRef<T> | MaybeRef<T>
-
-/**
- * Maybe it's a computed ref, or a getter function
- *
- * ```ts
- * type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
- * ```
- */
-export type MaybeReadonlyRef<T> = (() => T) | ComputedRef<T>
-
-/**
- * Make all the nested attributes of an object or array to MaybeRef<T>
- *
- * Good for accepting options that will be wrapped with `reactive` or `ref`
- *
- * ```ts
- * UnwrapRef<DeepMaybeRef<T>> === T
- * ```
- */
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type DeepMaybeRef<T> = T extends Function
-  ? T
-  : T extends Ref<infer V>
+export type DeepMaybeRef<T> = T extends Ref<infer V>
   ? MaybeRef<V>
   : T extends Array<any> | object
   ? { [K in keyof T]: DeepMaybeRef<T[K]> }
@@ -59,16 +22,6 @@ export type PartialBy<TType, TKeys extends keyof TType> = Partial<
   Pick<TType, TKeys>
 > &
   Omit<TType, TKeys>
-
-export type PartialByDeepMaybeRef<TType, TKeys extends keyof TType> = Partial<
-  DeepMaybeRef<Pick<TType, TKeys>>
-> &
-  Omit<DeepMaybeRef<TType>, TKeys>
-
-// export type PartialByDeepMaybeRef<
-//   TType,
-//   TKeys extends keyof TType,
-// > = DeepMaybeRef<Partial<Pick<TType, TKeys>>> & Omit<DeepMaybeRef<TType>, TKeys>
 
 export type DeepPartial<
   T,
@@ -85,19 +38,27 @@ export type QueryFunctionArgs<T extends (...args: any) => any> =
 
 export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   UseQueryOptions<TData, TError, TSelectData>,
-  | 'cacheTime'
-  | 'enabled'
-  | 'keepPreviousData'
-  | 'staleTime'
-  | 'structuralSharing'
-  | 'suspense'
+  'cacheTime' | 'enabled' | 'staleTime' | 'structuralSharing' | 'suspense'
 > & {
   /** Scope the cache to a given context. */
   scopeKey?: MaybeRef<string>
 } & UnwrapRef<
     Pick<
       UseQueryOptions<TData, TError, TSelectData>,
-      'isDataEqual' | 'select' | 'onError' | 'onSettled' | 'onSuccess'
+      'onError' | 'onSettled' | 'onSuccess' | 'isDataEqual'
+    >
+  >
+
+export type QueryConfigWithSelect<TData, TError, TSelectData = TData> = Pick<
+  UseQueryOptions<TData, TError, TSelectData>,
+  'cacheTime' | 'enabled' | 'staleTime' | 'structuralSharing' | 'suspense'
+> & {
+  /** Scope the cache to a given context. */
+  scopeKey?: MaybeRef<string>
+} & UnwrapRef<
+    Pick<
+      UseQueryOptions<TData, TError, TSelectData>,
+      'onError' | 'onSettled' | 'onSuccess' | 'isDataEqual' | 'select'
     >
   >
 
@@ -115,25 +76,30 @@ export type InfiniteQueryConfig<TData, TError, TSelectData = TData> = Pick<
 } & UnwrapRef<
     Pick<
       UseInfiniteQueryOptions<TData, TError, TSelectData>,
-      | 'getNextPageParam'
-      | 'isDataEqual'
-      | 'select'
       | 'onError'
       | 'onSettled'
       | 'onSuccess'
+      | 'isDataEqual'
+      | 'getNextPageParam'
+      | 'select'
     >
   >
 
-export type MutationConfig<Data, Error, Variables = void> = {
+export type MutationConfig<
+  Data,
+  Error,
+  Variables = void,
+  TContext = unknown,
+> = {
   /** Function fires if mutation encounters error */
-  onError?: UseMutationOptions<Data, Error, Variables, unknown>['onError']
+  onError?: UseMutationOptions<Data, Error, Variables, TContext>['onError']
   /**
    * Function fires before mutation function and is passed same variables mutation function would receive.
    * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
    */
-  onMutate?: UseMutationOptions<Data, Error, Variables, unknown>['onMutate']
+  onMutate?: UseMutationOptions<Data, Error, Variables, TContext>['onMutate']
   /** Function fires when mutation is either successfully fetched or encounters error */
-  onSettled?: UseMutationOptions<Data, Error, Variables, unknown>['onSettled']
+  onSettled?: UseMutationOptions<Data, Error, Variables, TContext>['onSettled']
   /** Function fires when mutation is successful and will be passed the mutation's result */
-  onSuccess?: UseMutationOptions<Data, Error, Variables, unknown>['onSuccess']
+  onSuccess?: UseMutationOptions<Data, Error, Variables, TContext>['onSuccess']
 }

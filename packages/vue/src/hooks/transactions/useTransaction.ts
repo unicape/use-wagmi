@@ -1,5 +1,4 @@
 import { fetchTransaction } from '@wagmi/core'
-
 import type { FetchTransactionArgs, FetchTransactionResult } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'

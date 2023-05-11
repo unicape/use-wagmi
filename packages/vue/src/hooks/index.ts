@@ -4,15 +4,13 @@ export {
   useConnect,
   useDisconnect,
   useNetwork,
-  useSigner,
   useSignMessage,
-  // useSignTypedData,
+  useSignTypedData,
   useSwitchNetwork,
 } from './accounts'
 
 export {
   paginatedIndexesConfig,
-  useContract,
   useContractEvent,
   useContractInfiniteReads,
   useContractRead,
@@ -20,7 +18,6 @@ export {
   useContractWrite,
   usePrepareContractWrite,
   useToken,
-  type UseContractConfig,
   type UseContractEventConfig,
   type UseContractInfiniteReadsConfig,
   type UseContractReadConfig,
@@ -33,7 +30,11 @@ export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 
 export { useBlockNumber, useFeeData } from './network-status'
 
-export { useProvider, useWebSocketProvider } from './providers'
+export {
+  usePublicClient,
+  useWalletClient,
+  useWebSocketPublicClient,
+} from './viem'
 
 export {
   useSendTransaction,
@@ -43,10 +44,4 @@ export {
   useWatchPendingTransactions,
 } from './transactions'
 
-export {
-  useChainId,
-  useQuery,
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from './utils'
+export { useChainId, useQuery, useInfiniteQuery, useQueryClient } from './utils'

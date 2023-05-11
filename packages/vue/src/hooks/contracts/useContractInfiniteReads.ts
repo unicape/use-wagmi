@@ -1,10 +1,10 @@
+import { replaceEqualDeep } from '@tanstack/vue-query'
 import { deepEqual, readContracts } from '@wagmi/core'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
-import type { Contract, ContractsConfig } from '@wagmi/core/internal'
-import type { Abi } from 'abitype'
+import type { Narrow } from 'abitype'
+import type { ContractFunctionConfig, MulticallContracts } from 'viem'
 import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
-import { replaceEqualDeep } from 'vue-query'
 
 import type {
   DeepMaybeRef,
@@ -17,84 +17,111 @@ import { useInfiniteQuery } from '../utils'
 import type { UseInfiniteQueryResult } from '../utils'
 
 export type UseContractInfiniteReadsConfig<
-  TContracts extends Contract[] = Contract[],
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
   TPageParam = unknown,
-  TSelectData = ReadContractsResult<TContracts>,
-> = DeepMaybeRef<
-  Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'>
-> & {
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
+> = DeepMaybeRef<Pick<ReadContractsConfig<TContracts>, 'allowFailure'>> & {
   cacheKey: MaybeRef<string>
-  contracts(pageParam: DeepMaybeRef<TPageParam>): readonly [
-    ...ContractsConfig<
-      TContracts,
-      {
-        /** Chain id to use for provider */
-        chainId?: number
+  contracts(pageParam: TPageParam): /** Contracts to query */
+  Narrow<
+    readonly [
+      ...MulticallContracts<
+        TContracts,
+        {
+          /** Chain id to use for Public Client. */
+          chainId?: number
+        }
+      >,
+    ]
+  >
+} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> &
+  (
+    | {
+        /** Block number to read against. */
+        blockNumber?: ReadContractsConfig<TContracts>['blockNumber']
+        blockTag?: never
+        watch?: never
       }
-    >,
-  ]
-} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData>
+    | {
+        blockNumber?: never
+        /** Block tag to read against. */
+        blockTag?: ReadContractsConfig<TContracts>['blockTag']
+        watch?: never
+      }
+    | {
+        blockNumber?: never
+        blockTag?: never
+        /** Refresh on incoming blocks. */
+        watch?: boolean
+      }
+  )
 
-type QueryKeyArgs = {
-  allowFailure: UseContractInfiniteReadsConfig['allowFailure']
+type QueryKeyArgs<TAllowFailure extends boolean = true> = {
+  allowFailure: UseContractInfiniteReadsConfig<
+    ContractFunctionConfig[],
+    TAllowFailure
+  >['allowFailure']
   cacheKey: UseContractInfiniteReadsConfig['cacheKey']
-  overrides: UseContractInfiniteReadsConfig['overrides']
+  blockNumber: UseContractInfiniteReadsConfig['blockNumber']
+  blockTag: UseContractInfiniteReadsConfig['blockTag']
 }
 type QueryKeyConfig = Pick<UseContractInfiniteReadsConfig, 'scopeKey'>
 
-function queryKey({
+function queryKey<TAllowFailure extends boolean = true>({
   allowFailure,
+  blockNumber,
+  blockTag,
   cacheKey,
-  overrides,
   scopeKey,
-}: QueryKeyArgs & QueryKeyConfig) {
+}: QueryKeyArgs<TAllowFailure> & QueryKeyConfig) {
   return [
     {
       entity: 'readContractsInfinite',
       allowFailure,
+      blockNumber,
+      blockTag,
       cacheKey,
-      overrides,
       scopeKey,
     },
   ] as const
 }
 
 function queryFn<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
   TPageParam = unknown,
 >({
   contracts,
 }: {
-  contracts: UseContractInfiniteReadsConfig<TContracts, TPageParam>['contracts']
+  contracts: UseContractInfiniteReadsConfig<
+    TContracts,
+    TAllowFailure,
+    TPageParam
+  >['contracts']
 }) {
   return ({
-    queryKey: [{ allowFailure, overrides }],
+    queryKey: [{ allowFailure, blockNumber, blockTag }],
     pageParam,
   }: UnwrapRef<QueryFunctionArgs<typeof queryKey>>) => {
     return readContracts({
       allowFailure,
+      blockNumber,
+      blockTag,
       contracts: contracts(pageParam || undefined),
-      overrides: overrides as ReadContractsConfig<TContracts>['overrides'],
     })
   }
 }
 
 export function useContractInfiniteReads<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
   TPageParam = any,
-  TSelectData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
 >({
   allowFailure,
+  blockNumber,
+  blockTag,
   cacheKey,
   cacheTime,
   contracts,
@@ -105,7 +132,6 @@ export function useContractInfiniteReads<
   onError,
   onSettled,
   onSuccess,
-  overrides,
   scopeKey,
   select,
   staleTime,
@@ -116,16 +142,13 @@ export function useContractInfiniteReads<
   suspense,
 }: UseContractInfiniteReadsConfig<
   TContracts,
+  TAllowFailure,
   TPageParam,
   TSelectData
->): UseInfiniteQueryResult<TSelectData, Error> {
+>): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
+UseInfiniteQueryResult<TSelectData, Error> {
   const queryKey_ = computed(() =>
-    queryKey({
-      allowFailure,
-      cacheKey,
-      overrides,
-      scopeKey,
-    }),
+    queryKey({ allowFailure, blockNumber, blockTag, cacheKey, scopeKey }),
   ) as any
 
   const enabled = computed(() => Boolean(unref(enabled_) && contracts))
@@ -148,12 +171,7 @@ export function useContractInfiniteReads<
 
 // TODO: Fix return type inference for `useContractInfiniteReads` when using `paginatedIndexesConfig`
 export function paginatedIndexesConfig<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
   TSelectData = ReadContractsResult<TContracts>,
 >(
   fn: UseContractInfiniteReadsConfig<TContracts>['contracts'],
@@ -161,11 +179,11 @@ export function paginatedIndexesConfig<
     perPage,
     start,
     direction,
-  }: {
-    perPage: MaybeRef<number>
-    start: MaybeRef<number>
-    direction: MaybeRef<'increment' | 'decrement'>
-  },
+  }: DeepMaybeRef<{
+    perPage: number
+    start: number
+    direction: 'increment' | 'decrement'
+  }>,
 ): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 {
   contracts: UseContractInfiniteReadsConfig<TContracts>['contracts']

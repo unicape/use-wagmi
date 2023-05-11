@@ -1,5 +1,4 @@
 import { fetchFeeData } from '@wagmi/core'
-
 import type { FetchFeeDataArgs, FetchFeeDataResult } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'

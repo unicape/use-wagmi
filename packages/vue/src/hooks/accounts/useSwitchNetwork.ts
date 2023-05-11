@@ -1,20 +1,21 @@
+import { useMutation } from '@tanstack/vue-query'
 import { switchNetwork } from '@wagmi/core'
-import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
-import { computed } from 'vue-demi'
-
+import type { Chain, SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { computed, watchEffect } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
-import { useClient } from '../../client'
-
-import type { DeepMaybeRef, MutationConfig } from '../../types'
-import { useMutation } from '../utils'
+import { useConfig } from '../../plugin'
+import type { DeepMaybeRef, MaybeRef, MutationConfig } from '../../types'
+import { useQueryClient } from '../utils'
 
 export type UseSwitchNetworkArgs = DeepMaybeRef<Partial<SwitchNetworkArgs>>
 export type UseSwitchNetworkConfig = MutationConfig<
   SwitchNetworkResult,
   Error,
   SwitchNetworkArgs
->
+> & {
+  throwForSwitchChainNotSupported?: MaybeRef<boolean>
+}
 
 export const mutationKey = (args: UseSwitchNetworkArgs) =>
   [{ entity: 'switchNetwork', ...args }] as const
@@ -27,12 +28,14 @@ const mutationFn = (args: UnwrapRef<UseSwitchNetworkArgs>) => {
 
 export function useSwitchNetwork({
   chainId,
+  throwForSwitchChainNotSupported,
   onError,
   onMutate,
   onSettled,
   onSuccess,
 }: UseSwitchNetworkArgs & UseSwitchNetworkConfig = {}) {
-  const client = useClient()
+  const queryClient = useQueryClient()
+  const config = useConfig()
 
   const {
     data,
@@ -47,24 +50,33 @@ export function useSwitchNetwork({
     status,
     variables,
   } = useMutation(mutationKey({ chainId }), mutationFn, {
+    queryClient,
     onError,
     onMutate,
     onSettled,
     onSuccess,
   })
 
-  const support = computed<boolean>(() => !!client.connector?.switchChain)
-  const chains = computed(() => client.chains ?? [])
+  const chains = computed(() => config.chains ?? [])
   const pendingChainId = computed(() => variables.value?.chainId)
 
-  const switchNetwork = (chainId_?: SwitchNetworkArgs['chainId']) =>
+  const switchNetwork_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
     mutate({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs)
 
-  const switchNetworkAsync = (chainId_?: SwitchNetworkArgs['chainId']) =>
+  const switchNetworkAsync_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
     mutateAsync({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs)
 
+  let switchNetwork
+  let switchNetworkAsync
+  watchEffect(() => {
+    const supportsSwitchChain = !!config.connector?.switchChain
+    if (throwForSwitchChainNotSupported || supportsSwitchChain) {
+      switchNetwork = switchNetwork_
+      switchNetworkAsync = switchNetworkAsync_
+    }
+  })
+
   return {
-    support,
     chains,
     data,
     error,
@@ -75,8 +87,12 @@ export function useSwitchNetwork({
     pendingChainId,
     reset,
     status,
-    switchNetwork,
-    switchNetworkAsync,
+    switchNetwork: switchNetwork as
+      | ((chainId_?: SwitchNetworkArgs['chainId']) => void)
+      | undefined,
+    switchNetworkAsync: switchNetworkAsync as
+      | ((chainId_?: SwitchNetworkArgs['chainId']) => Promise<Chain>)
+      | undefined,
     variables,
-  }
+  } as const
 }

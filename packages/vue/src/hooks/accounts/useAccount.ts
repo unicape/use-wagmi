@@ -1,5 +1,4 @@
-import { getAccount, watchAccount } from '@wagmi/core'
-
+import { getAccount, getConfig, watchAccount } from '@wagmi/core'
 import type { GetAccountResult } from '@wagmi/core'
 import {
   getCurrentScope,
@@ -9,7 +8,6 @@ import {
   watchEffect,
 } from 'vue-demi'
 
-import { useClient } from '../../client'
 import { updateState } from '../../utils'
 
 export type UseAccountConfig = {
@@ -28,7 +26,6 @@ export type UseAccountConfig = {
 }
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
-  const client = useClient()
   const account = reactive(getAccount())
 
   const unwatch = watchAccount((data) => {
@@ -38,7 +35,8 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   if (getCurrentScope()) onScopeDispose(() => unwatch())
 
   watchEffect((onCleanup) => {
-    const unsubscribe = client.subscribe(
+    const config = getConfig()
+    const unsubscribe = config.subscribe(
       (state) => ({
         address: state.data?.account,
         connector: state.connector,
@@ -68,5 +66,5 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
     onCleanup(() => unsubscribe())
   })
 
-  return toRefs<GetAccountResult>(account)
+  return toRefs(account)
 }

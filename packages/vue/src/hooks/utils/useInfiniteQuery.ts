@@ -1,27 +1,21 @@
-import type { UnwrapRef } from 'vue-demi'
-import { useInfiniteQuery as useBaseQuery } from 'vue-query'
-
+import { useInfiniteQuery as useBaseQuery } from '@tanstack/vue-query'
 import type {
-  InfiniteQueryObserverResult,
   QueryFunction,
   QueryKey,
+  UseInfiniteQueryReturnType as UIQRT,
   UseInfiniteQueryOptions,
-  UseQueryReturnType,
-} from 'vue-query'
+} from '@tanstack/vue-query'
+import type { ComputedRef, UnwrapRef } from 'vue-demi'
+import { computed } from 'vue-demi'
 
 import { useQueryClient } from './useQueryClient'
 
 export type UseInfiniteQueryResult<TData, TError> = Omit<
-  UseQueryReturnType<TData, TError, InfiniteQueryObserverResult<TData, TError>>,
-  'fetchNextPage' | 'fetchPreviousPage' | 'refetch' | 'remove'
+  UIQRT<TData, TError>,
+  'status'
 > & {
-  fetchNextPage: InfiniteQueryObserverResult<TData, TError>['fetchNextPage']
-  fetchPreviousPage: InfiniteQueryObserverResult<
-    TData,
-    TError
-  >['fetchPreviousPage']
-  refetch: InfiniteQueryObserverResult<TData, TError>['refetch']
-  remove: InfiniteQueryObserverResult<TData, TError>['remove']
+  status: ComputedRef<'idle' | 'loading' | 'success' | 'error'>
+  isIdle: ComputedRef<boolean>
 }
 
 export function useInfiniteQuery<
@@ -35,10 +29,27 @@ export function useInfiniteQuery<
   options: UseInfiniteQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseInfiniteQueryResult<TData, TError> {
   const queryClient = useQueryClient()
-  return useBaseQuery({
+  const result = useBaseQuery({
     queryKey,
     queryFn,
     ...options,
     queryClient,
   })
+
+  const status = computed(() =>
+    result.status.value === 'loading' && result.fetchStatus.value === 'idle'
+      ? 'idle'
+      : result.status.value,
+  )
+  const isIdle = computed(() => status.value === 'idle')
+  const isLoading = computed(
+    () => status.value === 'loading' && result.fetchStatus.value === 'fetching',
+  )
+
+  return {
+    ...result,
+    status,
+    isIdle,
+    isLoading,
+  }
 }

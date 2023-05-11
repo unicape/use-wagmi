@@ -1,10 +1,8 @@
 import { prepareWriteContract } from '@wagmi/core'
 
 import type {
-  FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
-  Signer,
 } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import type { providers } from 'ethers'
@@ -17,7 +15,7 @@ import type {
   QueryConfig,
   QueryFunctionArgs,
 } from '../../types'
-import { useNetwork, useSigner } from '../accounts'
+import { useNetwork } from '../accounts'
 import { useQuery } from '../utils'
 
 export type UsePrepareContractWriteConfig<

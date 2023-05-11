@@ -1,17 +1,18 @@
-import type { Transaction } from 'ethers'
+import type { WatchPendingTransactionsCallback } from '@wagmi/core'
 import { unref, watchEffect } from 'vue-demi'
 
-import type { MaybeRef } from '../../types'
-import { useProvider, useWebSocketProvider } from '../providers'
+import type { DeepMaybeRef } from '../../types'
 import { useChainId } from '../utils'
+import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
-export type UseWatchPendingTransactionsConfig = {
+export type UseWatchPendingTransactionsConfig = DeepMaybeRef<{
   /** The chain ID to listen on. */
-  chainId?: MaybeRef<number>
+  chainId?: number
   /** Subscribe to changes */
-  enabled?: MaybeRef<boolean>
+  enabled?: boolean
+}> & {
   /** Function fires when a pending transaction enters the mempool. */
-  listener: (transaction: Transaction) => void
+  listener: WatchPendingTransactionsCallback
 }
 
 export function useWatchPendingTransactions({
@@ -20,15 +21,17 @@ export function useWatchPendingTransactions({
   listener,
 }: UseWatchPendingTransactionsConfig) {
   const chainId = useChainId({ chainId: chainId_ })
-  const provider = useProvider({ chainId })
-  const webSocketProvider = useWebSocketProvider({ chainId })
+  const publicClient = usePublicClient({ chainId })
+  const webSocketPublicClient = useWebSocketPublicClient({ chainId })
 
   watchEffect((onCleanup) => {
     if (!unref(enabled)) return
 
-    const provider_ = webSocketProvider.value ?? provider.value
-    provider_.on('pending', listener)
+    const publicClient_ = webSocketPublicClient.value ?? publicClient.value
+    const unwatch = publicClient_.watchPendingTransactions({
+      onTransactions: listener,
+    })
 
-    onCleanup(() => provider_.off('pending', listener))
+    onCleanup(() => unwatch())
   })
 }

@@ -1,6 +1,7 @@
+import { useMutation } from '@tanstack/vue-query'
 import { disconnect } from '@wagmi/core'
 
-import { useMutation } from '../utils'
+import { useQueryClient } from '../utils'
 
 export type UseDisconnectConfig = {
   /** Function to invoke when an error is thrown while connecting. */
@@ -26,6 +27,8 @@ export function useDisconnect({
   onSettled,
   onSuccess,
 }: UseDisconnectConfig = {}) {
+  const queryClient = useQueryClient()
+
   const {
     error,
     isError,
@@ -37,6 +40,7 @@ export function useDisconnect({
     reset,
     status,
   } = useMutation<void, Error>(mutationKey, mutationFn, {
+    queryClient,
     ...(onError
       ? {
           onError(error, _variables, context) {

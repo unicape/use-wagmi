@@ -20,20 +20,16 @@
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
       "abitype": ["packages/vue/node_modules/abitype/dist"],
-      "vue-demi": ["packages/vue/node_modules/vue-demi/lib"]
+      "vue-demi": ["packages/vue/node_modules/vue-demi/lib"],
+      "viem": ["./node_modules/viem/dist/types"],
+      "viem/*": ["./node_modules/viem/dist/types/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "target": "es2021",
-    "types": [
-      "node",
-      // TODO: Remove once issue is fixed
-      // https://github.com/microsoft/TypeScript/issues/42873
-      "@ethersproject/providers",
-      "@ethersproject/abstract-signer"
-    ]
+    "types": ["node"]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [

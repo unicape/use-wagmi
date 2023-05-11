@@ -1,16 +1,15 @@
-import { deepEqual, parseContractResult, readContracts } from '@wagmi/core'
+import { replaceEqualDeep } from '@tanstack/vue-query'
+import { deepEqual, readContracts } from '@wagmi/core'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
-import type { Contract } from '@wagmi/core/internal'
-import type { Abi, Address } from 'abitype'
+import type { Abi } from 'abitype'
+import type { ContractFunctionConfig } from 'viem'
 import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
-import { replaceEqualDeep } from 'vue-query'
 
 import type {
   DeepMaybeRef,
   DeepPartial,
-  MaybeRef,
-  QueryConfig,
+  QueryConfigWithSelect,
   QueryFunctionArgs,
 } from '../../types'
 import { useBlockNumber } from '../network-status'
@@ -19,112 +18,131 @@ import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 import type { UseQueryResult } from '../utils'
 
 export type UseContractReadsConfig<
-  TContracts extends Contract[],
-  TSelectData = ReadContractsResult<TContracts>,
-  Config = DeepMaybeRef<ReadContractsConfig<TContracts>>,
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
+  Config = ReadContractsConfig<TContracts, TAllowFailure>,
 > = {
   [K in keyof Config]?: K extends 'contracts'
     ? DeepPartial<Config[K], 2>
     : Config[K]
-} & QueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> & {
-    /** If set to `true`, the cache will depend on the block number */
-    cacheOnBlock?: MaybeRef<boolean>
-    /** Subscribe to changes */
-    watch?: MaybeRef<boolean>
-  }
+} & QueryConfigWithSelect<
+  ReadContractsResult<TContracts, TAllowFailure>,
+  Error,
+  TSelectData
+> &
+  DeepMaybeRef<
+    {
+      /** If set to `true`, the cache will depend on the block number */
+      cacheOnBlock?: boolean
+      /** Set this to `true` to keep the previous data when fetching based on a new query key. Defaults to `false`. */
+      keepPreviousData?: boolean
+    } & (
+      | {
+          /** Block number to read against. */
+          blockNumber?: ReadContractsConfig<TContracts>['blockNumber']
+          blockTag?: never
+          watch?: never
+        }
+      | {
+          blockNumber?: never
+          /** Block tag to read against. */
+          blockTag?: ReadContractsConfig<TContracts>['blockTag']
+          watch?: never
+        }
+      | {
+          blockNumber?: never
+          blockTag?: never
+          /** Refresh on incoming blocks. */
+          watch?: boolean
+        }
+    )
+  >
 
-type QueryKeyArgs<TContracts extends Contract[]> = DeepMaybeRef<
-  ReadContractsConfig<TContracts>
+type QueryKeyArgs<
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+> = DeepMaybeRef<
+  Omit<
+    ReadContractsConfig<TContracts, TAllowFailure>,
+    'blockNumber' | 'blockTag'
+  > & {
+    blockNumber?: bigint
+    blockTag?: string
+  }
 >
-type QueryKeyConfig<TContracts extends Contract[]> = Pick<
+type QueryKeyConfig<TContracts extends ContractFunctionConfig[]> = Pick<
   UseContractReadsConfig<TContracts>,
   'scopeKey'
-> & {
-  blockNumber?: MaybeRef<number>
-  chainId?: MaybeRef<number>
-}
-
-type ContractConfig = {
-  abi: Abi
-  address: Address
-  args: unknown[]
-  chainId?: number
-  functionName: string
-}
+> &
+  DeepMaybeRef<{
+    chainId?: number
+  }>
 
 function queryKey<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
 >({
   allowFailure,
   blockNumber,
+  blockTag,
   chainId,
   contracts,
-  overrides,
   scopeKey,
-}: QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>) {
+}: QueryKeyArgs<TContracts, TAllowFailure> & QueryKeyConfig<TContracts>) {
   return [
     {
       entity: 'readContracts',
       allowFailure,
       blockNumber,
+      blockTag,
       chainId,
       scopeKey,
-      contracts: ((unref(contracts) ?? []) as unknown as ContractConfig[]).map(
-        ({ address, args, chainId, functionName }) => ({
-          address,
-          args,
-          chainId,
-          functionName,
-        }),
-      ),
-      overrides,
+      contracts: (
+        (contracts ?? []) as unknown as (ContractFunctionConfig & {
+          chainId?: number
+        })[]
+      ).map(({ address, args, chainId, functionName }) => ({
+        address,
+        args,
+        chainId,
+        functionName,
+      })),
     },
   ] as const
 }
 
 function queryFn<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
 >({ abis }: { abis: (Abi | readonly unknown[])[] }) {
   return ({
-    queryKey: [{ allowFailure, contracts: contracts_, overrides }],
-  }: UnwrapRef<
-    QueryFunctionArgs<typeof queryKey<TAbi, TFunctionName, TContracts>>
-  >) => {
-    const contracts = (contracts_ as unknown as ContractConfig[]).map(
-      (contract, i) => ({
-        ...contract,
-        abi: abis[i] as Abi,
-      }),
-    )
+    queryKey: [{ allowFailure, blockNumber, blockTag, contracts: contracts_ }],
+  }: UnwrapRef<QueryFunctionArgs<typeof queryKey<TContracts>>>) => {
+    const contracts = contracts_.map((contract, i) => ({
+      ...contract,
+      abi: abis[i] as Abi,
+    }))
     return readContracts({
       allowFailure,
       contracts,
-      overrides: overrides as ReadContractsConfig<TContracts>['overrides'],
-    }) as Promise<ReadContractsResult<TContracts>>
+      blockNumber,
+      blockTag,
+    } as ReadContractsConfig<TContracts, TAllowFailure>) as Promise<
+      ReadContractsResult<TContracts, TAllowFailure>
+    >
   }
 }
 
 export function useContractReads<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
-  TSelectData = ReadContractsResult<TContracts>,
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
 >(
   {
-    allowFailure = true,
+    allowFailure: allowFailure_,
+    blockNumber: blockNumberOverride,
+    blockTag,
     cacheOnBlock = false,
     cacheTime,
     contracts,
@@ -134,7 +152,6 @@ export function useContractReads<
     onError,
     onSettled,
     onSuccess,
-    overrides,
     scopeKey,
     select,
     staleTime,
@@ -144,29 +161,36 @@ export function useContractReads<
         : (replaceEqualDeep(oldData, newData) as any),
     suspense,
     watch,
-  }: UseContractReadsConfig<TContracts, TSelectData> = {} as any,
+  }: UseContractReadsConfig<TContracts, TAllowFailure, TSelectData> = {} as any,
+  // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 ): UseQueryResult<TSelectData, Error> {
-  const { data: blockNumber } = useBlockNumber({
+  const allowFailure = computed(() => unref(allowFailure_) ?? true)
+
+  const { data: blockNumber_ } = useBlockNumber({
     enabled: computed(() => unref(watch) && unref(cacheOnBlock)),
     watch,
   })
   const chainId = useChainId()
 
+  const blockNumber = computed(
+    () => unref(blockNumberOverride) ?? blockNumber_.value,
+  )
+
   const queryKey_ = computed(() =>
     queryKey({
       allowFailure,
-      blockNumber: unref(cacheOnBlock) ? blockNumber : undefined,
+      blockNumber: cacheOnBlock ? blockNumber : undefined,
+      blockTag,
       chainId,
       contracts,
-      overrides,
       scopeKey,
-    } as QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>),
-  ) as any
+    } as unknown as QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>),
+  )
 
   const enabled = computed(() => {
     let enabled = Boolean(
       unref(enabled_) &&
-        (unref(contracts) as unknown as ContractConfig[])?.every(
+        (unref(contracts) as unknown as ContractFunctionConfig[])?.every(
           (x) => x.abi && x.address && x.functionName,
         ),
     )
@@ -177,12 +201,12 @@ export function useContractReads<
 
   useInvalidateOnBlock({
     enabled: Boolean(unref(enabled) && unref(watch) && !unref(cacheOnBlock)),
-    queryKey: queryKey_,
+    queryKey: queryKey_.value,
   })
 
-  const abis = ((unref(contracts) ?? []) as unknown as ContractConfig[]).map(
-    ({ abi }) => abi,
-  )
+  const abis = (
+    (unref(contracts) ?? []) as unknown as ContractFunctionConfig[]
+  ).map(({ abi }) => abi)
 
   return useQuery(queryKey_, queryFn({ abis: unref(abis) }), {
     cacheTime,
@@ -190,21 +214,7 @@ export function useContractReads<
     isDataEqual,
     keepPreviousData,
     staleTime,
-    select(data) {
-      const result = data.map((data, i) => {
-        const { abi, functionName } = ((
-          unref(contracts) as unknown as ContractConfig[]
-        )?.[i] ?? {}) as ContractConfig
-        return abi && functionName
-          ? parseContractResult({
-              abi: unref(abi),
-              functionName: unref(functionName),
-              data,
-            })
-          : data
-      }) as ReadContractsResult<TContracts>
-      return (select ? select(result) : result) as TSelectData
-    },
+    select,
     structuralSharing,
     suspense,
     onError,

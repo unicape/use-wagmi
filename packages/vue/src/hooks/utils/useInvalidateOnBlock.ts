@@ -1,15 +1,15 @@
+import type { QueryKey } from '@tanstack/vue-query'
 import { unref } from 'vue-demi'
-import type { QueryKey } from 'vue-query'
 
 import { useQueryClient } from './useQueryClient'
-import type { DeepMaybeRef } from '../../types'
+import type { MaybeRef } from '../../types'
 import { useBlockNumber } from '../network-status'
 
-export type UseInvalidateOnBlockArgs = DeepMaybeRef<{
-  chainId?: number
-  enabled?: boolean
+export type UseInvalidateOnBlockArgs = {
+  chainId?: MaybeRef<number>
+  enabled?: MaybeRef<boolean>
   queryKey: QueryKey
-}>
+}
 
 export function useInvalidateOnBlock({
   chainId,

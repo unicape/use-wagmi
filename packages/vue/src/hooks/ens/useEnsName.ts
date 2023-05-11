@@ -1,5 +1,4 @@
 import { fetchEnsName } from '@wagmi/core'
-
 import type { FetchEnsNameArgs, FetchEnsNameResult } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
