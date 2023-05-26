@@ -11,6 +11,7 @@ import { computed } from 'vue-demi'
 
 import { useQueryClient } from './useQueryClient'
 import type { MaybeRef } from '../../types'
+import { isPlainObject } from '../../utils'
 
 type UseQueryReturnType<TData, TError> = Omit<UQRT<TData, TError>, 'status'> & {
   status: ComputedRef<'idle' | 'loading' | 'success' | 'error'>
@@ -45,7 +46,21 @@ export function useQuery<
     queryFn,
     ...options,
     queryClient,
-  })
+    queryKeyHashFn(queryKey) {
+      return JSON.stringify(queryKey, (_, val) =>
+        typeof val === 'bigint'
+          ? val.toString()
+          : isPlainObject(val)
+          ? Object.keys(val as unknown[])
+              .sort()
+              .reduce((result, key) => {
+                result[key] = (val as any)[key]
+                return result
+              }, {} as any)
+          : val,
+      )
+    },
+  } as UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>)
 
   const status = computed(() =>
     result.status.value === 'loading' && result.fetchStatus.value === 'idle'

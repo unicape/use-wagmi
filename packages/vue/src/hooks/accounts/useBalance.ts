@@ -75,7 +75,7 @@ export function useBalance({
     }),
   )
 
-  const balanceQuery = useQuery(queryKey_.value, queryFn, {
+  const balanceQuery = useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled: computed(() => !!(unref(enabled) && unref(address))),
     staleTime,
@@ -90,7 +90,7 @@ export function useBalance({
     enabled: computed(
       () => !!(unref(enabled) && unref(watch) && unref(address)),
     ),
-    queryKey: queryKey_.value,
+    queryKey: queryKey_,
   })
 
   return balanceQuery

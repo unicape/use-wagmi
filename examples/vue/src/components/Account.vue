@@ -12,7 +12,7 @@
       <span v-if="connector?.name">Connected to {{ connector.name }}</span>
     </div>
 
-    <template v-if="false">
+    <template v-if="true">
       <h4>Balance</h4>
       <Balance />
 
@@ -26,45 +26,49 @@
       <SendTransactionPrepared />
     </template>
     
-    <h4>Read Contract</h4>
-    <ReadContract />
+    <!-- <template v-if="false">
+      <h4>Read Contract</h4>
+      <ReadContract />
 
-    <h4>Read Contracts</h4>
-    <ReadContracts />
+      <h4>Read Contracts</h4>
+      <ReadContracts />
 
-    <h4>Read Contracts Infinite</h4>
-    <ReadContractsInfinite />
+      <h4>Read Contracts Infinite</h4>
+      <ReadContractsInfinite />
 
-    <h4>Watch Pending Transactions</h4>
-    <WatchPendingTransactions />
+      <h4>Watch Pending Transactions</h4>
+      <WatchPendingTransactions />
 
-    <h4>Write Contract</h4>
-    <WriteContract />
+      <h4>Write Contract</h4>
+      <WriteContract />
+    </template> -->
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'use-wagmi'
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'use-wagmi'
 import Balance from './Balance.vue'
 import BlockNumber from './BlockNumber.vue'
 import SendTransaction from './SendTransaction.vue'
 import SendTransactionPrepared from './SendTransactionPrepared.vue'
-import ReadContract from './read-contract/index.vue'
-import ReadContracts from './ReadContracts.vue'
-import ReadContractsInfinite from './ReadContractsInfinite.vue'
-import WatchPendingTransactions from './WatchPendingTransactions.vue'
-import WriteContract from './WriteContract.vue'
+// import ReadContract from './read-contract/index.vue'
+// import ReadContracts from './ReadContracts.vue'
+// import ReadContractsInfinite from './ReadContractsInfinite.vue'
+// import WatchPendingTransactions from './WatchPendingTransactions.vue'
+// import WriteContract from './WriteContract.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),
   onDisconnect: () => console.log('disconnected')
 })
-const { data: ensAvatar } = useEnsAvatar({
+
+const { data: ensName } = useEnsName({
   address,
   chainId: 1
 })
-const { data: ensName } = useEnsName({
-  address,
+
+const { data: ensAvatar } = useEnsAvatar({
+  name: ensName,
   chainId: 1
 })
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      {{ accountBalance?.formatted }}
+      {{ accountData?.formatted }}
       <button @click="() => accountRefetch()">fetch</button>
     </div>
 
@@ -9,9 +9,9 @@
       Find balance:
       <input v-model="value" placeholder="wallet address" />
       <button @click="() => findRefetch()">
-        {{ isLoading && fetchStatus === 'fetching' ? 'fetching...' : 'fetch' }}
+        {{ isLoading ? 'fetching...' : 'fetch' }}
       </button>
-      <div>{{ findBalance?.formatted }}</div>
+      <div>{{ findData?.formatted }}</div>
     </div>
   </div>
 </template>
@@ -23,13 +23,13 @@ import { useAccount, useBalance } from 'use-wagmi'
 import type { Address } from 'use-wagmi'
 
 const { address } = useAccount()
-const { data: accountBalance, refetch: accountRefetch } = useBalance({
+const { data: accountData, refetch: accountRefetch } = useBalance({
   address,
   watch: true
 })
 
 const value = ref<Address>()
-const { data: findBalance, refetch: findRefetch, isLoading, fetchStatus } = useBalance({
+const { data: findData, refetch: findRefetch, isLoading } = useBalance({
   address: value
 })
 </script>

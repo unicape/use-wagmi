@@ -8,7 +8,7 @@ import { useBlockNumber } from '../network-status'
 export type UseInvalidateOnBlockArgs = {
   chainId?: MaybeRef<number>
   enabled?: MaybeRef<boolean>
-  queryKey: QueryKey
+  queryKey: MaybeRef<QueryKey>
 }
 
 export function useInvalidateOnBlock({
@@ -21,7 +21,7 @@ export function useInvalidateOnBlock({
     chainId,
     enabled,
     onBlock: unref(enabled)
-      ? () => queryClient.invalidateQueries(queryKey)
+      ? () => queryClient.invalidateQueries(unref(queryKey))
       : undefined,
     scopeKey: unref(enabled) ? undefined : 'idle',
   })

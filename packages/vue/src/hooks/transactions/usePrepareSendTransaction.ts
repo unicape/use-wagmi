@@ -175,6 +175,6 @@ export function usePrepareSendTransaction({
       ...(prepareSendTransactionQuery.isSuccess
         ? prepareSendTransactionQuery.data
         : undefined),
-    },
+    } as PrepareSendTransactionResult,
   })
 }

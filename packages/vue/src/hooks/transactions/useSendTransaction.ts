@@ -1,8 +1,10 @@
 import { useMutation } from '@tanstack/vue-query'
 import { sendTransaction } from '@wagmi/core'
 import type { SendTransactionArgs, SendTransactionResult } from '@wagmi/core'
+import { unref } from 'vue-demi'
 
 import type { DeepMaybeRef, MutationConfig } from '../../types'
+import { cloneDeepUnref } from '../../utils'
 import { useQueryClient } from '../utils'
 
 export type UseSendTransactionArgs<
@@ -137,47 +139,49 @@ export function useSendTransaction<
     },
   )
 
-  const sendTransaction = (args?: UseSendTransactionMutationArgs) =>
-    mutate({
+  const sendTransaction = (args?: UseSendTransactionMutationArgs) => {
+    const _args = cloneDeepUnref({
       chainId,
       mode,
-      ...(args ||
-        ({
-          accessList,
-          account,
-          chainId,
-          data: data_,
-          gas,
-          gasPrice,
-          maxFeePerGas,
-          maxPriorityFeePerGas,
-          mode,
-          nonce,
-          value,
-          to,
-        } as any)),
+      ...(args || {
+        accessList,
+        account,
+        chainId,
+        data: data_,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        mode,
+        nonce,
+        value,
+        to,
+      }),
     })
+    mutate(_args as SendTransactionArgs)
+  }
 
-  const sendTransactionAsync = (args?: UseSendTransactionMutationArgs) =>
-    mutateAsync({
+  const sendTransactionAsync = (args?: UseSendTransactionMutationArgs) => {
+    const _args = cloneDeepUnref({
       chainId,
       mode,
-      ...(args ||
-        ({
-          accessList,
-          account,
-          chainId,
-          data: data_,
-          gas,
-          gasPrice,
-          maxFeePerGas,
-          maxPriorityFeePerGas,
-          mode,
-          nonce,
-          value,
-          to,
-        } as any)),
+      ...(args || {
+        accessList,
+        account,
+        chainId,
+        data: data_,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        mode,
+        nonce,
+        value,
+        to,
+      }),
     })
+    mutateAsync(_args as SendTransactionArgs)
+  }
 
   return {
     data,
@@ -187,10 +191,10 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (mode === 'prepared' && !to
+    sendTransaction: (unref(mode) === 'prepared' && !unref(to)
       ? undefined
       : sendTransaction) as MutateFnReturnValue<TMode, SendTransactionFn>,
-    sendTransactionAsync: (mode === 'prepared' && !to
+    sendTransactionAsync: (unref(mode) === 'prepared' && !unref(to)
       ? undefined
       : sendTransactionAsync) as MutateFnReturnValue<
       TMode,

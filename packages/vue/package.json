@@ -108,7 +108,7 @@
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
     "typescript": ">=4.9.4",
-    "viem": "~0.3.18",
+    "viem": "~0.3.35",
     "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
@@ -122,13 +122,13 @@
   "dependencies": {
     "@tanstack/query-persist-client-core": "^4.29.5",
     "@tanstack/query-sync-storage-persister": "^4.29.5",
-    "@tanstack/vue-query": "^4.29.5",
-    "@wagmi/core": "^1.0.2",
-    "abitype": "^0.8.2",
+    "@tanstack/vue-query": "^4.29.7",
+    "@wagmi/core": "^1.0.7",
+    "abitype": "^0.8.1",
     "vue-demi": "latest"
   },
   "devDependencies": {
-    "viem": "0.3.18",
+    "viem": "0.3.35",
     "vue": "^3.2.47"
   },
   "keywords": [
