@@ -4,15 +4,20 @@ import type {
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
 } from '@wagmi/core'
-import { computed, unref } from 'vue-demi'
+import { computed, reactive, toRefs, unref, watchEffect } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
+import { updateState } from '../../utils'
 import { useNetwork } from '../accounts'
 import { useQuery } from '../utils'
 import { useWalletClient } from '../viem'
 
-export type UsePrepareSendTransactionArgs = DeepMaybeRef<
+export type UsePrepareSendTransactionArgs = ShallowMaybeRef<
   Partial<PrepareSendTransactionArgs>
 >
 export type UsePrepareSendTransactionConfig = QueryConfig<
@@ -22,7 +27,7 @@ export type UsePrepareSendTransactionConfig = QueryConfig<
 
 type QueryKeyArgs = UsePrepareSendTransactionArgs
 type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> &
-  DeepMaybeRef<{
+  ShallowMaybeRef<{
     activeChainId?: number
     walletClientAddress?: string
   }>
@@ -169,12 +174,26 @@ export function usePrepareSendTransaction({
     },
   )
 
+  const config = reactive<PrepareSendTransactionResult>({
+    mode: 'prepared',
+    accessList: undefined,
+    account: undefined,
+    chainId: undefined,
+    data: undefined,
+    gas: undefined,
+    gasPrice: undefined,
+    maxFeePerGas: undefined,
+    maxPriorityFeePerGas: undefined,
+    nonce: undefined,
+    to: undefined,
+    value: undefined,
+  } as unknown as PrepareSendTransactionResult)
+
+  watchEffect(() => {
+    updateState(config, prepareSendTransactionQuery.data.value || {})
+  })
+
   return Object.assign(prepareSendTransactionQuery, {
-    config: {
-      mode: 'prepared',
-      ...(prepareSendTransactionQuery.isSuccess
-        ? prepareSendTransactionQuery.data
-        : undefined),
-    } as PrepareSendTransactionResult,
+    config: { ...toRefs(config) },
   })
 }

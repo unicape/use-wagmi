@@ -4,14 +4,14 @@ import { unref, watchEffect } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   QueryConfig,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from './../../types'
 import { useChainId, useQuery, useQueryClient } from '../utils'
 import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
-export type UseBlockNumberArgs = DeepMaybeRef<
+export type UseBlockNumberArgs = ShallowMaybeRef<
   Partial<FetchBlockNumberArgs> & {
     /** Subscribe to changes */
     watch?: boolean
@@ -23,7 +23,7 @@ export type UseBlockNumberArgs = DeepMaybeRef<
 
 export type UseBlockNumberConfig = QueryConfig<FetchBlockNumberResult, Error>
 
-type QueryKeyArgs = DeepMaybeRef<Partial<FetchBlockNumberArgs>>
+type QueryKeyArgs = ShallowMaybeRef<Partial<FetchBlockNumberArgs>>
 type QueryKeyConfig = Pick<UseBlockNumberConfig, 'scopeKey'>
 
 function queryKey({ chainId, scopeKey }: QueryKeyArgs & QueryKeyConfig) {

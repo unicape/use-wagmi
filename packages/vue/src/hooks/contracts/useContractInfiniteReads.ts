@@ -7,10 +7,10 @@ import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   InfiniteQueryConfig,
   MaybeRef,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from '../../types'
 import { useInfiniteQuery } from '../utils'
 
@@ -21,7 +21,7 @@ export type UseContractInfiniteReadsConfig<
   TAllowFailure extends boolean = true,
   TPageParam = unknown,
   TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
-> = DeepMaybeRef<Pick<ReadContractsConfig<TContracts>, 'allowFailure'>> & {
+> = ShallowMaybeRef<Pick<ReadContractsConfig<TContracts>, 'allowFailure'>> & {
   cacheKey: MaybeRef<string>
   contracts(pageParam: TPageParam): /** Contracts to query */
   Narrow<
@@ -179,7 +179,7 @@ export function paginatedIndexesConfig<
     perPage,
     start,
     direction,
-  }: DeepMaybeRef<{
+  }: ShallowMaybeRef<{
     perPage: number
     start: number
     direction: 'increment' | 'decrement'

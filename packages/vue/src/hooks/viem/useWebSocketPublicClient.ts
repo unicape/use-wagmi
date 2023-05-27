@@ -8,9 +8,9 @@ import {
 } from '@wagmi/core'
 import { readonly, shallowRef, unref, watchEffect } from 'vue-demi'
 
-import type { DeepMaybeRef } from '../../types'
+import type { ShallowMaybeRef } from '../../types'
 
-export type UseWebSocketPublicClientArgs = DeepMaybeRef<
+export type UseWebSocketPublicClientArgs = ShallowMaybeRef<
   Partial<GetWebSocketPublicClientArgs>
 >
 

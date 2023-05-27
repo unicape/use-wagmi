@@ -10,10 +10,10 @@ import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   PartialBy,
   QueryConfig,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from '../../types'
 import { useNetwork } from '../accounts'
 import { useQuery } from '../utils'
@@ -24,15 +24,15 @@ export type UsePrepareContractWriteConfig<
   TChainId extends number = number,
   TSigner extends Signer = Signer,
 > = PartialBy<
-  DeepMaybeRef<
+  ShallowMaybeRef<
     PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>
   >,
   'abi' | 'address' | 'args' | 'functionName'
 > &
   QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName, TChainId>, Error>
 
-type QueryKeyArgs = DeepMaybeRef<Omit<PrepareWriteContractConfig, 'abi'>>
-type QueryKeyConfig = DeepMaybeRef<
+type QueryKeyArgs = ShallowMaybeRef<Omit<PrepareWriteContractConfig, 'abi'>>
+type QueryKeyConfig = ShallowMaybeRef<
   Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
     activeChainId?: number
     signerAddress?: string
@@ -175,7 +175,7 @@ export function usePrepareContractWrite<
       request: undefined,
       ...prepareContractWriteQuery.data,
     },
-  }) as unknown as DeepMaybeRef<
+  }) as unknown as ShallowMaybeRef<
     PrepareWriteContractResult<TAbi, TFunctionName, TChainId>
   >
 }

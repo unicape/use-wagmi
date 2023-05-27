@@ -8,11 +8,10 @@ import type { Ref, UnwrapRef } from 'vue-demi'
 
 export type MaybeRef<T> = T | Ref<T>
 
-export type DeepMaybeRef<T> = T extends Ref<infer V>
-  ? MaybeRef<V>
-  : T extends Array<any> | object
-  ? { [K in keyof T]: DeepMaybeRef<T[K]> }
-  : MaybeRef<T>
+export type ShallowMaybeRef<T> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [K in keyof T]: T[K] extends Function ? T[K] : MaybeRef<T[K]>
+}
 
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.

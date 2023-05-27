@@ -3,7 +3,11 @@ import { getWalletClient, watchWalletClient } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { unref, watchEffect } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
 import { useAccount } from '../accounts'
 import { useChainId, useQuery, useQueryClient } from '../utils'
 
@@ -11,9 +15,9 @@ export type UseWalletClientConfig = Omit<
   QueryConfig<GetWalletClientResult, Error>,
   'cacheTime' | 'staleTime' | 'enabled'
 > &
-  DeepMaybeRef<GetWalletClientArgs>
+  ShallowMaybeRef<GetWalletClientArgs>
 
-export function queryKey({ chainId }: DeepMaybeRef<GetWalletClientArgs>) {
+export function queryKey({ chainId }: ShallowMaybeRef<GetWalletClientArgs>) {
   return [{ entity: 'walletClient', chainId, persist: false }] as const
 }
 

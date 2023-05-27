@@ -7,10 +7,10 @@ import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   PartialBy,
   QueryConfigWithSelect,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
@@ -20,7 +20,7 @@ export type UseContractReadConfig<
   TFunctionName extends string = string,
   TSelectData = ReadContractResult<TAbi, TFunctionName>,
 > = PartialBy<
-  DeepMaybeRef<ReadContractConfig<TAbi, TFunctionName>>,
+  ShallowMaybeRef<ReadContractConfig<TAbi, TFunctionName>>,
   'abi' | 'address' | 'args' | 'blockNumber' | 'blockTag' | 'functionName'
 > &
   QueryConfigWithSelect<
@@ -28,7 +28,7 @@ export type UseContractReadConfig<
     Error,
     TSelectData
   > &
-  DeepMaybeRef<
+  ShallowMaybeRef<
     {
       /** If set to `true`, the cache will depend on the block number */
       cacheOnBlock?: boolean
@@ -54,9 +54,9 @@ export type UseContractReadConfig<
     )
   >
 
-type QueryKeyArgs = DeepMaybeRef<Omit<ReadContractConfig, 'abi'>>
+type QueryKeyArgs = ShallowMaybeRef<Omit<ReadContractConfig, 'abi'>>
 type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> &
-  DeepMaybeRef<{
+  ShallowMaybeRef<{
     blockNumber?: bigint
   }>
 
@@ -162,7 +162,7 @@ export function useContractRead<
       chainId,
       functionName,
       scopeKey,
-    } as DeepMaybeRef<Omit<ReadContractConfig, 'abi'>>),
+    } as ShallowMaybeRef<Omit<ReadContractConfig, 'abi'>>),
   )
 
   const enabled = computed(() => {

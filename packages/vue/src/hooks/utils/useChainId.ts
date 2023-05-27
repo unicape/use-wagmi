@@ -1,9 +1,9 @@
 import { computed } from 'vue-demi'
 
-import type { DeepMaybeRef } from '../../types'
+import type { ShallowMaybeRef } from '../../types'
 import { usePublicClient } from '../viem'
 
-export type UseChainIdArgs = DeepMaybeRef<{
+export type UseChainIdArgs = ShallowMaybeRef<{
   chainId?: number
 }>
 

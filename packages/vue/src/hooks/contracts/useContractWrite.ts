@@ -12,12 +12,12 @@ import type { GetFunctionArgs, SendTransactionParameters } from 'viem'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
-import type { DeepMaybeRef, MutationConfig, PartialBy } from '../../types'
+import type { MutationConfig, PartialBy, ShallowMaybeRef } from '../../types'
 
 export type UseContractWritePreparedArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = DeepMaybeRef<
+> = ShallowMaybeRef<
   Partial<Pick<PrepareWriteContractResult<TAbi, TFunctionName>, 'request'>> & {
     abi?: never
     accessList?: never
@@ -37,7 +37,7 @@ export type UseContractWritePreparedArgs<
 type UseContractWriteUnpreparedArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = DeepMaybeRef<
+> = ShallowMaybeRef<
   PartialBy<
     Omit<WriteContractUnpreparedArgs<TAbi, TFunctionName>, 'args'>,
     'abi' | 'address' | 'functionName'

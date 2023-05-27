@@ -4,10 +4,10 @@ import type { ConnectArgs, ConnectResult } from '@wagmi/core'
 import { computed, toRaw, unref } from 'vue-demi'
 
 import { useConfig } from '../../plugin'
-import type { DeepMaybeRef, MutationConfig } from '../../types'
+import type { MutationConfig, ShallowMaybeRef } from '../../types'
 import { useQueryClient } from '../utils'
 
-export type UseConnectArgs = DeepMaybeRef<Partial<ConnectArgs>>
+export type UseConnectArgs = ShallowMaybeRef<Partial<ConnectArgs>>
 export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
 
 export const mutationKey = (args: UseConnectArgs) =>

@@ -6,10 +6,10 @@ import type {
 import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type { ShallowMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseWaitForTransactionArgs = DeepMaybeRef<
+export type UseWaitForTransactionArgs = ShallowMaybeRef<
   Omit<Partial<WaitForTransactionArgs>, 'onReplaced'>
 > & { onReplaced?: WaitForTransactionArgs['onReplaced'] }
 export type UseWaitForTransactionConfig = QueryConfig<

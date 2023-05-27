@@ -7,10 +7,10 @@ import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   DeepPartial,
   QueryConfigWithSelect,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
@@ -31,7 +31,7 @@ export type UseContractReadsConfig<
   Error,
   TSelectData
 > &
-  DeepMaybeRef<
+  ShallowMaybeRef<
     {
       /** If set to `true`, the cache will depend on the block number */
       cacheOnBlock?: boolean
@@ -62,7 +62,7 @@ export type UseContractReadsConfig<
 type QueryKeyArgs<
   TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
-> = DeepMaybeRef<
+> = ShallowMaybeRef<
   Omit<
     ReadContractsConfig<TContracts, TAllowFailure>,
     'blockNumber' | 'blockTag'
@@ -75,7 +75,7 @@ type QueryKeyConfig<TContracts extends ContractFunctionConfig[]> = Pick<
   UseContractReadsConfig<TContracts>,
   'scopeKey'
 > &
-  DeepMaybeRef<{
+  ShallowMaybeRef<{
     chainId?: number
   }>
 

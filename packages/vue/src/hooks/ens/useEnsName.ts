@@ -3,10 +3,14 @@ import type { FetchEnsNameArgs, FetchEnsNameResult } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsNameArgs = DeepMaybeRef<Partial<FetchEnsNameArgs>>
+export type UseEnsNameArgs = ShallowMaybeRef<Partial<FetchEnsNameArgs>>
 export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
 
 type QueryKeyArgs = UseEnsNameArgs

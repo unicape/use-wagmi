@@ -5,13 +5,13 @@ import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   QueryConfig,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from './../../types'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
-export type UseBalanceArgs = DeepMaybeRef<
+export type UseBalanceArgs = ShallowMaybeRef<
   Partial<FetchBalanceArgs> & {
     /** Subscribe to changes */
     watch?: boolean
@@ -20,7 +20,7 @@ export type UseBalanceArgs = DeepMaybeRef<
 
 export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 
-type QueryKeyArgs = DeepMaybeRef<Partial<FetchBalanceArgs>>
+type QueryKeyArgs = ShallowMaybeRef<Partial<FetchBalanceArgs>>
 type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
 
 function queryKey({

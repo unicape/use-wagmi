@@ -3,10 +3,14 @@ import type { FetchTransactionArgs, FetchTransactionResult } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseTransactionArgs = DeepMaybeRef<Partial<FetchTransactionArgs>>
+export type UseTransactionArgs = ShallowMaybeRef<Partial<FetchTransactionArgs>>
 export type UseTransactionConfig = QueryConfig<FetchTransactionResult, Error>
 
 type QueryKeyArgs = UseTransactionArgs

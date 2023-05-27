@@ -3,10 +3,14 @@ import type { FetchEnsAddressResult, FetchEnsAvatarArgs } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsAvatarArgs = DeepMaybeRef<
+export type UseEnsAvatarArgs = ShallowMaybeRef<
   Omit<Partial<FetchEnsAvatarArgs>, 'name'> & {
     name?: FetchEnsAvatarArgs['name'] | null
   }

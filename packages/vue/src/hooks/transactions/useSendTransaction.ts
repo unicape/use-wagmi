@@ -3,16 +3,17 @@ import { sendTransaction } from '@wagmi/core'
 import type { SendTransactionArgs, SendTransactionResult } from '@wagmi/core'
 import { unref } from 'vue-demi'
 
-import type { DeepMaybeRef, MutationConfig } from '../../types'
+import type { MutationConfig, ShallowMaybeRef } from '../../types'
 import { cloneDeepUnref } from '../../utils'
 import { useQueryClient } from '../utils'
 
 export type UseSendTransactionArgs<
   TMode extends 'prepared' | undefined = 'prepared' | undefined,
-> = DeepMaybeRef<
+> = ShallowMaybeRef<
   Omit<SendTransactionArgs, 'to'> & { mode?: TMode; to?: string }
 >
-export type UseSendTransactionMutationArgs = DeepMaybeRef<SendTransactionArgs>
+export type UseSendTransactionMutationArgs =
+  ShallowMaybeRef<SendTransactionArgs>
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
   Error,

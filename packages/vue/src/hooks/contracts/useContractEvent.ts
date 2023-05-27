@@ -5,14 +5,14 @@ import type {
 import type { Abi } from 'abitype'
 import { ref, unref, watchEffect } from 'vue-demi'
 
-import type { DeepMaybeRef, PartialBy } from '../../types'
+import type { PartialBy, ShallowMaybeRef } from '../../types'
 import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
 export type UseContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
 > = PartialBy<
-  DeepMaybeRef<WatchContractEventConfig<TAbi, TEventName>>,
+  ShallowMaybeRef<WatchContractEventConfig<TAbi, TEventName>>,
   'abi' | 'address' | 'eventName'
 > & {
   listener: WatchContractEventCallback<TAbi, TEventName>

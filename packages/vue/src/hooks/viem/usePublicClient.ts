@@ -2,9 +2,9 @@ import type { GetPublicClientArgs, PublicClient } from '@wagmi/core'
 import { getPublicClient, watchPublicClient } from '@wagmi/core'
 import { readonly, shallowRef, unref, watchEffect } from 'vue-demi'
 
-import type { DeepMaybeRef } from '../../types'
+import type { ShallowMaybeRef } from '../../types'
 
-export type UsePublicClientArgs = DeepMaybeRef<Partial<GetPublicClientArgs>>
+export type UsePublicClientArgs = ShallowMaybeRef<Partial<GetPublicClientArgs>>
 
 export function usePublicClient<TPublicClient extends PublicClient>({
   chainId,

@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/vue-query'
 import { signMessage } from '@wagmi/core'
 import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
 
-import type { DeepMaybeRef, MutationConfig } from './../../types'
+import type { MutationConfig, ShallowMaybeRef } from './../../types'
 import { useQueryClient } from '../utils'
 
-export type UseSignMessageArgs = DeepMaybeRef<Partial<SignMessageArgs>>
+export type UseSignMessageArgs = ShallowMaybeRef<Partial<SignMessageArgs>>
 
 export type UseSignMessageConfig = MutationConfig<
   SignMessageResult,

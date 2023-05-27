@@ -3,10 +3,14 @@ import type { FetchFeeDataArgs, FetchFeeDataResult } from '@wagmi/core'
 import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
-import type { DeepMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
-export type UseFeeDataArgs = DeepMaybeRef<
+export type UseFeeDataArgs = ShallowMaybeRef<
   Partial<FetchFeeDataArgs> & {
     /** Subscribe to changes */
     watch?: boolean

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <!-- <div v-if="isLoading">Check Wallet</div>
-    <button v-else-if="isIdle" :disabled="isLoading" @click="() => sendTransaction()">
+    <div v-if="isLoading">Check Wallet</div>
+    <button v-else-if="isIdle" :disabled="isLoading" @click="() => sendTransaction?.()">
       Send Transaction
     </button>
     <div v-else>
       <div v-if="isSuccess">Transaction: {{ stringify(data) }}</div>
       <div v-if="isError">Error sending transaction</div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -22,5 +22,5 @@ const { config } = usePrepareSendTransaction({
 
 console.log(config);
 
-// const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } = useSendTransaction(config)
+const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } = useSendTransaction(config)
 </script>

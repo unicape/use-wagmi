@@ -1,11 +1,11 @@
 import type { WatchPendingTransactionsCallback } from '@wagmi/core'
 import { unref, watchEffect } from 'vue-demi'
 
-import type { DeepMaybeRef } from '../../types'
+import type { ShallowMaybeRef } from '../../types'
 import { useChainId } from '../utils'
 import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
-export type UseWatchPendingTransactionsConfig = DeepMaybeRef<{
+export type UseWatchPendingTransactionsConfig = ShallowMaybeRef<{
   /** The chain ID to listen on. */
   chainId?: number
   /** Subscribe to changes */

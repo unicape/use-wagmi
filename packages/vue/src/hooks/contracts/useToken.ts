@@ -5,20 +5,20 @@ import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
 import type {
-  DeepMaybeRef,
   MaybeRef,
   QueryConfig,
   QueryFunctionArgs,
+  ShallowMaybeRef,
 } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseTokenArgs = DeepMaybeRef<Partial<FetchTokenArgs>>
+export type UseTokenArgs = ShallowMaybeRef<Partial<FetchTokenArgs>>
 export type UseTokenConfig = QueryConfig<FetchTokenResult, Error>
 
 type QueryKeyArgs = UseTokenArgs & {
   chainId?: MaybeRef<number>
 }
-type QueryKeyConfig = DeepMaybeRef<
+type QueryKeyConfig = ShallowMaybeRef<
   Pick<UseTokenConfig, 'scopeKey'> & {
     activeChainId?: number
     signerAddress?: string

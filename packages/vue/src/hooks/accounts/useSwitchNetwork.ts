@@ -5,10 +5,10 @@ import { computed, watchEffect } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import { useConfig } from '../../plugin'
-import type { DeepMaybeRef, MaybeRef, MutationConfig } from '../../types'
+import type { ShallowMaybeRef, MaybeRef, MutationConfig } from '../../types'
 import { useQueryClient } from '../utils'
 
-export type UseSwitchNetworkArgs = DeepMaybeRef<Partial<SwitchNetworkArgs>>
+export type UseSwitchNetworkArgs = ShallowMaybeRef<Partial<SwitchNetworkArgs>>
 export type UseSwitchNetworkConfig = MutationConfig<
   SwitchNetworkResult,
   Error,

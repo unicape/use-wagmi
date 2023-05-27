@@ -4,15 +4,15 @@ import { signTypedData } from '@wagmi/core'
 import type { Never } from '@wagmi/core/internal'
 import type { TypedData } from 'abitype'
 
-import type { DeepMaybeRef, MutationConfig } from '../../types'
+import type { ShallowMaybeRef, MutationConfig } from '../../types'
 import { useQueryClient } from '../utils'
 
 export type UseSignTypedDataArgs<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
   TPrimaryType extends string = string,
 > =
-  | Partial<Never<DeepMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>>>
-  | DeepMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>
+  | Partial<Never<ShallowMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>>>
+  | ShallowMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>
 
 export type UseSignTypedDataConfig<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
