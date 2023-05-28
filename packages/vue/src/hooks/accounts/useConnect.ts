@@ -50,7 +50,7 @@ export function useConnect({
     onSuccess,
   })
 
-  const connectors = computed(() => config.connectors)
+  const connectors = computed(() => config.value.connectors)
   const pendingConnector = computed(() => variables?.value?.connector)
 
   const connect = (args?: UseConnectArgs) => {

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/vue-query'
 import { switchNetwork } from '@wagmi/core'
-import type { Chain, SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
-import { computed, unref, watchEffect } from 'vue-demi'
+import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import { useConfig } from '../../plugin'
@@ -57,26 +57,21 @@ export function useSwitchNetwork({
     onSuccess,
   })
 
-  const chains = computed(() => config.chains ?? [])
+  const chains = computed(() => config.value.chains ?? [])
   const pendingChainId = computed(() => variables.value?.chainId)
+  const supports = computed(
+    () =>
+      unref(throwForSwitchChainNotSupported) ||
+      !!config.value.connector?.switchChain,
+  )
 
-  const switchNetwork_ = (chainId_?: UseSwitchNetworkArgs['chainId']) =>
+  const switchNetwork = (chainId_?: UseSwitchNetworkArgs['chainId']) =>
     mutate({ chainId: unref(chainId_) ?? unref(chainId) } as SwitchNetworkArgs)
 
-  const switchNetworkAsync_ = (chainId_?: UseSwitchNetworkArgs['chainId']) =>
+  const switchNetworkAsync = (chainId_?: UseSwitchNetworkArgs['chainId']) =>
     mutateAsync({
       chainId: unref(chainId_) ?? unref(chainId),
     } as SwitchNetworkArgs)
-
-  let switchNetwork
-  let switchNetworkAsync
-  watchEffect(() => {
-    const supportsSwitchChain = !!config.connector?.switchChain
-    if (throwForSwitchChainNotSupported || supportsSwitchChain) {
-      switchNetwork = switchNetwork_
-      switchNetworkAsync = switchNetworkAsync_
-    }
-  })
 
   return {
     chains,
@@ -89,12 +84,9 @@ export function useSwitchNetwork({
     pendingChainId,
     reset,
     status,
-    switchNetwork: switchNetwork as
-      | ((chainId_?: UseSwitchNetworkArgs['chainId']) => void)
-      | undefined,
-    switchNetworkAsync: switchNetworkAsync as
-      | ((chainId_?: UseSwitchNetworkArgs['chainId']) => Promise<Chain>)
-      | undefined,
+    supports,
+    switchNetwork,
+    switchNetworkAsync,
     variables,
   } as const
 }

@@ -1,6 +1,7 @@
 import { VueQueryPlugin, type VueQueryPluginOptions } from '@tanstack/vue-query'
 import type { PublicClient, WebSocketPublicClient } from '@wagmi/core'
-import { inject, isVue2 } from 'vue-demi'
+import type { Ref } from 'vue-demi'
+import { inject, isVue2, markRaw, shallowRef, triggerRef } from 'vue-demi'
 
 import type { Config } from './config'
 
@@ -12,16 +13,17 @@ export const UseWagmiPlugin = {
       queryClient: config.queryClient,
     } as VueQueryPluginOptions)
 
-    const cleanup = () => {
-      config.destroy()
-    }
+    const _config = shallowRef(markRaw(config))
+    const unsubscribe = config.subscribe(() => {
+      triggerRef(markRaw(_config))
+    })
 
     if (app.onUnmount) {
-      app.onUnmount(cleanup)
+      app.onUnmount(unsubscribe)
     } else {
       const originalUnmount = app.unmount
       app.unmount = function vueQueryUnmount() {
-        cleanup()
+        unsubscribe()
         originalUnmount()
       }
     }
@@ -38,11 +40,11 @@ export const UseWagmiPlugin = {
             })
           }
 
-          this._provided[USE_WAGMI_KEY] = config
+          this._provided[USE_WAGMI_KEY] = _config
         },
       })
     } else {
-      app.provide(USE_WAGMI_KEY, config)
+      app.provide(USE_WAGMI_KEY, _config)
     }
   },
 }
@@ -52,8 +54,8 @@ export function useConfig<
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 >() {
   const config =
-    inject<Config<TPublicClient, TWebSocketPublicClient>>(USE_WAGMI_KEY)
-  if (!config)
+    inject<Ref<Config<TPublicClient, TWebSocketPublicClient>>>(USE_WAGMI_KEY)
+  if (!config?.value)
     throw new Error(
       [
         '`useConfig` must be used within `UseWagmiPlugin`.\n',
