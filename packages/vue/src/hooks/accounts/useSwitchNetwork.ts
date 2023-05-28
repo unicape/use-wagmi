@@ -1,14 +1,14 @@
 import { useMutation } from '@tanstack/vue-query'
 import { switchNetwork } from '@wagmi/core'
 import type { Chain, SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
-import { computed, watchEffect } from 'vue-demi'
+import { computed, unref, watchEffect } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import { useConfig } from '../../plugin'
-import type { ShallowMaybeRef, MaybeRef, MutationConfig } from '../../types'
+import type { MaybeRef, MutationConfig, ShallowMaybeRef } from '../../types'
 import { useQueryClient } from '../utils'
 
-export type UseSwitchNetworkArgs = ShallowMaybeRef<Partial<SwitchNetworkArgs>>
+export type UseSwitchNetworkArgs = Partial<ShallowMaybeRef<SwitchNetworkArgs>>
 export type UseSwitchNetworkConfig = MutationConfig<
   SwitchNetworkResult,
   Error,
@@ -60,11 +60,13 @@ export function useSwitchNetwork({
   const chains = computed(() => config.chains ?? [])
   const pendingChainId = computed(() => variables.value?.chainId)
 
-  const switchNetwork_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
-    mutate({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs)
+  const switchNetwork_ = (chainId_?: UseSwitchNetworkArgs['chainId']) =>
+    mutate({ chainId: unref(chainId_) ?? unref(chainId) } as SwitchNetworkArgs)
 
-  const switchNetworkAsync_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
-    mutateAsync({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs)
+  const switchNetworkAsync_ = (chainId_?: UseSwitchNetworkArgs['chainId']) =>
+    mutateAsync({
+      chainId: unref(chainId_) ?? unref(chainId),
+    } as SwitchNetworkArgs)
 
   let switchNetwork
   let switchNetworkAsync
@@ -88,10 +90,10 @@ export function useSwitchNetwork({
     reset,
     status,
     switchNetwork: switchNetwork as
-      | ((chainId_?: SwitchNetworkArgs['chainId']) => void)
+      | ((chainId_?: UseSwitchNetworkArgs['chainId']) => void)
       | undefined,
     switchNetworkAsync: switchNetworkAsync as
-      | ((chainId_?: SwitchNetworkArgs['chainId']) => Promise<Chain>)
+      | ((chainId_?: UseSwitchNetworkArgs['chainId']) => Promise<Chain>)
       | undefined,
     variables,
   } as const

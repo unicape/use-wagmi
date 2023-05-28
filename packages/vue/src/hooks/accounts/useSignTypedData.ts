@@ -3,8 +3,9 @@ import type { SignTypedDataArgs, SignTypedDataResult } from '@wagmi/core'
 import { signTypedData } from '@wagmi/core'
 import type { Never } from '@wagmi/core/internal'
 import type { TypedData } from 'abitype'
+import { unref } from 'vue-demi'
 
-import type { ShallowMaybeRef, MutationConfig } from '../../types'
+import type { MutationConfig, ShallowMaybeRef } from '../../types'
 import { useQueryClient } from '../utils'
 
 export type UseSignTypedDataArgs<
@@ -94,10 +95,10 @@ export function useSignTypedData<
     args?: UseSignTypedDataArgs<TTypedDataMutate>,
   ) =>
     mutate({
-      domain: args?.domain ?? domain,
-      types: args?.types ?? types,
-      message: args?.message ?? message,
-      primaryType: args?.primaryType ?? primaryType,
+      domain: unref(args?.domain) ?? unref(domain),
+      types: unref(args?.types) ?? unref(types),
+      message: unref(args?.message) ?? unref(message),
+      primaryType: unref(args?.primaryType) ?? unref(primaryType),
     } as any)
 
   const signTypedDataAsync =
@@ -106,10 +107,10 @@ export function useSignTypedData<
       args?: UseSignTypedDataArgs<TTypedDataMutate>,
     ) =>
       mutateAsync({
-        domain: args?.domain ?? domain,
-        types: args?.types ?? types,
-        message: args?.message ?? message,
-        primaryType: args?.primaryType ?? primaryType,
+        domain: unref(args?.domain) ?? unref(domain),
+        types: unref(args?.types) ?? unref(types),
+        message: unref(args?.message) ?? unref(message),
+        primaryType: unref(args?.primaryType) ?? unref(primaryType),
       } as any)
 
   return {

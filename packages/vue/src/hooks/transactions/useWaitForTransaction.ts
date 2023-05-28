@@ -6,7 +6,11 @@ import type {
 import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
-import type { ShallowMaybeRef, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  QueryConfig,
+  QueryFunctionArgs,
+  ShallowMaybeRef,
+} from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseWaitForTransactionArgs = ShallowMaybeRef<

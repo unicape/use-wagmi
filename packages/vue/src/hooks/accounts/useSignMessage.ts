@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/vue-query'
 import { signMessage } from '@wagmi/core'
 import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
+import { unref } from 'vue-demi'
 
 import type { MutationConfig, ShallowMaybeRef } from './../../types'
 import { useQueryClient } from '../utils'
@@ -53,13 +54,13 @@ export function useSignMessage({
 
   const signMessage = (args?: UseSignMessageArgs) => {
     return mutate({
-      message: args?.message ?? message,
+      message: unref(args?.message) ?? unref(message),
     } as SignMessageArgs)
   }
 
   const signMessageAsync = (args?: UseSignMessageArgs) => {
     return mutateAsync({
-      message: args?.message ?? message,
+      message: unref(args?.message) ?? unref(message),
     } as SignMessageArgs)
   }
 

@@ -12,7 +12,7 @@
       <span v-if="connector?.name">Connected to {{ connector.name }}</span>
     </div>
 
-    <template v-if="true">
+    <template v-if="false">
       <h4>Balance</h4>
       <Balance />
 
@@ -42,6 +42,11 @@
       <h4>Write Contract</h4>
       <WriteContract />
     </template> -->
+
+    <template v-if="true">
+      <h4>Sign Message</h4>
+      <SignMessage />
+    </template>
   </div>
 </template>
 
@@ -56,6 +61,7 @@ import SendTransactionPrepared from './SendTransactionPrepared.vue'
 // import ReadContractsInfinite from './ReadContractsInfinite.vue'
 // import WatchPendingTransactions from './WatchPendingTransactions.vue'
 // import WriteContract from './WriteContract.vue'
+import SignMessage from './SignMessage.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),
