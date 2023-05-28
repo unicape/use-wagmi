@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/vue-query'
 import { sendTransaction } from '@wagmi/core'
 import type { SendTransactionArgs, SendTransactionResult } from '@wagmi/core'
-import { unref } from 'vue-demi'
+import { computed, unref } from 'vue-demi'
 
 import type { MutationConfig, ShallowMaybeRef } from '../../types'
 import { cloneDeepUnref } from '../../utils'
@@ -19,16 +19,6 @@ export type UseSendTransactionConfig = MutationConfig<
   Error,
   UseSendTransactionArgs
 >
-
-type SendTransactionFn = (
-  overrideConfig?: UseSendTransactionMutationArgs,
-) => void
-type SendTransactionAsyncFn = (
-  overrideConfig?: UseSendTransactionMutationArgs,
-) => Promise<SendTransactionResult>
-type MutateFnReturnValue<TMode, TFn> = TMode extends 'prepared'
-  ? TFn | undefined
-  : TFn
 
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
@@ -140,6 +130,8 @@ export function useSendTransaction<
     },
   )
 
+  const disabled = computed(() => unref(mode) === 'prepared' && !unref(to))
+
   const sendTransaction = (args?: UseSendTransactionMutationArgs) => {
     const _args = cloneDeepUnref({
       chainId,
@@ -192,15 +184,9 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (unref(mode) === 'prepared' && !unref(to)
-      ? undefined
-      : sendTransaction) as MutateFnReturnValue<TMode, SendTransactionFn>,
-    sendTransactionAsync: (unref(mode) === 'prepared' && !unref(to)
-      ? undefined
-      : sendTransactionAsync) as MutateFnReturnValue<
-      TMode,
-      SendTransactionAsyncFn
-    >,
+    disabled,
+    sendTransaction,
+    sendTransactionAsync,
     status,
     variables,
   }
