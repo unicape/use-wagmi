@@ -10,6 +10,12 @@ export type MaybeRef<T> = T | Ref<T>
 
 export type ShallowMaybeRef<T> = { [K in keyof T]: MaybeRef<T[K]> }
 
+export type DeepMaybeRef<T> = T extends Ref<infer V>
+  ? MaybeRef<V>
+  : T extends Array<any> | object
+  ? { [K in keyof T]: DeepMaybeRef<T[K]> }
+  : MaybeRef<T>
+
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
  */

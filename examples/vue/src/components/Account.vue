@@ -46,6 +46,9 @@
     <template v-if="true">
       <h4>Sign Message</h4>
       <SignMessage />
+
+      <h4>Sign Typed Data</h4>
+      <SignTypedData />
     </template>
   </div>
 </template>
@@ -62,6 +65,7 @@ import SendTransactionPrepared from './SendTransactionPrepared.vue'
 // import WatchPendingTransactions from './WatchPendingTransactions.vue'
 // import WriteContract from './WriteContract.vue'
 import SignMessage from './SignMessage.vue'
+import SignTypedData from './SignTypedData.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),

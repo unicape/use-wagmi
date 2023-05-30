@@ -3,17 +3,18 @@ import type { SignTypedDataArgs, SignTypedDataResult } from '@wagmi/core'
 import { signTypedData } from '@wagmi/core'
 import type { Never } from '@wagmi/core/internal'
 import type { TypedData } from 'abitype'
-import { unref } from 'vue-demi'
+import type { Ref } from 'vue-demi'
 
-import type { MutationConfig, ShallowMaybeRef } from '../../types'
+import type { DeepMaybeRef, MutationConfig } from '../../types'
+import { cloneDeepUnref } from '../../utils'
 import { useQueryClient } from '../utils'
 
 export type UseSignTypedDataArgs<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
   TPrimaryType extends string = string,
 > =
-  | Partial<Never<ShallowMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>>>
-  | ShallowMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>
+  | Partial<Never<SignTypedDataArgs<TTypedData, TPrimaryType>>>
+  | DeepMaybeRef<SignTypedDataArgs<TTypedData, TPrimaryType>>
 
 export type UseSignTypedDataConfig<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
@@ -88,34 +89,38 @@ export function useSignTypedData<
       onMutate,
       onSettled,
       onSuccess,
-    } as any,
+    } as any, // TODO: type fix
   )
 
   const signTypedData = <TTypedDataMutate extends TypedData = TTypedData>(
     args?: UseSignTypedDataArgs<TTypedDataMutate>,
-  ) =>
-    mutate({
-      domain: unref(args?.domain) ?? unref(domain),
-      types: unref(args?.types) ?? unref(types),
-      message: unref(args?.message) ?? unref(message),
-      primaryType: unref(args?.primaryType) ?? unref(primaryType),
-    } as any)
+  ) => {
+    const _args = cloneDeepUnref({
+      domain: args?.domain ?? domain,
+      types: args?.types ?? types,
+      message: args?.message ?? message,
+      primaryType: args?.primaryType ?? primaryType,
+    })
+    mutate(_args as any) // TODO: type fix
+  }
 
   const signTypedDataAsync =
     () =>
     <TTypedDataMutate extends TypedData = TTypedData>(
       args?: UseSignTypedDataArgs<TTypedDataMutate>,
-    ) =>
-      mutateAsync({
-        domain: unref(args?.domain) ?? unref(domain),
-        types: unref(args?.types) ?? unref(types),
-        message: unref(args?.message) ?? unref(message),
-        primaryType: unref(args?.primaryType) ?? unref(primaryType),
-      } as any)
+    ) => {
+      const _args = cloneDeepUnref({
+        domain: args?.domain ?? domain,
+        types: args?.types ?? types,
+        message: args?.message ?? message,
+        primaryType: args?.primaryType ?? primaryType,
+      })
+      mutateAsync(_args as any) // TODO: type fix
+    }
 
   return {
     data,
-    error,
+    error: error as Ref<Error> | Ref<null>,
     isError,
     isIdle,
     isLoading,

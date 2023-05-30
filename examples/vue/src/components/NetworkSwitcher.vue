@@ -4,7 +4,7 @@
 
     <button v-for="x in chains"
       :key="x.id"
-      :disabled="supports || x.id === chain?.id"
+      :disabled="!supports || x.id === chain?.id"
       @click="() => switchNetwork(x.id)"
     >
       Switch to {{ x.name }}
