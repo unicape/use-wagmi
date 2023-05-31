@@ -58,7 +58,7 @@ export type QueryConfigWithSelect<TData, TError, TSelectData = TData> = Pick<
   'cacheTime' | 'enabled' | 'staleTime' | 'structuralSharing' | 'suspense'
 > & {
   /** Scope the cache to a given context. */
-  scopeKey?: MaybeRef<string>
+  scopeKey?: MaybeRef<string | undefined>
 } & UnwrapRef<
     Pick<
       UseQueryOptions<TData, TError, TSelectData>,
@@ -76,7 +76,7 @@ export type InfiniteQueryConfig<TData, TError, TSelectData = TData> = Pick<
   | 'suspense'
 > & {
   /** Scope the cache to a given context. */
-  scopeKey?: MaybeRef<string>
+  scopeKey?: MaybeRef<string | undefined>
 } & UnwrapRef<
     Pick<
       UseInfiniteQueryOptions<TData, TError, TSelectData>,

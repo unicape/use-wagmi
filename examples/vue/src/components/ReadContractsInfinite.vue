@@ -1,19 +1,18 @@
 <template>
   <div>
-    <!-- <div v-if="isLoading || fetchStatus === 'fetching'">loading...</div>
+    <div v-if="isLoading">loading...</div>
     <div v-if="isSuccess">
-      <div v-for="item in data?.pages" :key="JSON.stringify(item)">{{ JSON.stringify(item) }}</div>
+      <div v-for="item in data?.pages" :key="stringify(item)">{{ stringify(item) }}</div>
       <button @click="() => fetchNextPage()">Fetch more</button>
-    </div> -->
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { stringify } from 'viem'
 import { paginatedIndexesConfig, useContractInfiniteReads } from 'use-wagmi'
 
-export const mlootContractConfig = {
+const mlootContractConfig = {
   address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
   abi: [
     {
@@ -33,7 +32,7 @@ const { data, isLoading, isSuccess, fetchNextPage } =
       (index: number) => [
         {
           ...mlootContractConfig,
-          functionName: ref('tokenURI'),
+          functionName: 'tokenURI',
           args: [BigInt(index)] as const,
         }
       ],

@@ -36,7 +36,7 @@ export type UseContractInfiniteReadsConfig<
     ]
   >
 } & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> &
-  (
+  ShallowMaybeRef<
     | {
         /** Block number to read against. */
         blockNumber?: ReadContractsConfig<TContracts>['blockNumber']
@@ -55,7 +55,7 @@ export type UseContractInfiniteReadsConfig<
         /** Refresh on incoming blocks. */
         watch?: boolean
       }
-  )
+  >
 
 type QueryKeyArgs<TAllowFailure extends boolean = true> = {
   allowFailure: UseContractInfiniteReadsConfig<
