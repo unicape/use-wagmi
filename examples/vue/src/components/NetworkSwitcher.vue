@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{ chain && chain.name }}
+    <h4>Network Switcher</h4>
+
+    <div>{{ chain && chain.name }}</div>
 
     <button v-for="x in chains"
       :key="x.id"

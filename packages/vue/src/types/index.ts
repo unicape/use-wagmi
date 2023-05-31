@@ -8,7 +8,9 @@ import type { Ref, UnwrapRef } from 'vue-demi'
 
 export type MaybeRef<T> = T | Ref<T>
 
-export type ShallowMaybeRef<T> = { [K in keyof T]: MaybeRef<T[K]> }
+export type ShallowMaybeRef<T> = {
+  [K in keyof T]: T extends Ref<infer V> ? MaybeRef<V> : MaybeRef<T[K]>
+}
 
 export type DeepMaybeRef<T> = T extends Ref<infer V>
   ? MaybeRef<V>
@@ -43,7 +45,7 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   'cacheTime' | 'enabled' | 'staleTime' | 'structuralSharing' | 'suspense'
 > & {
   /** Scope the cache to a given context. */
-  scopeKey?: MaybeRef<string>
+  scopeKey?: MaybeRef<string | undefined>
 } & UnwrapRef<
     Pick<
       UseQueryOptions<TData, TError, TSelectData>,

@@ -26,29 +26,30 @@
       <SendTransactionPrepared />
     </template>
     
-    <!-- <template v-if="false">
-      <h4>Read Contract</h4>
-      <ReadContract />
+    <h4>Read Contract</h4>
+    <ReadContract />
 
-      <h4>Read Contracts</h4>
-      <ReadContracts />
+    <h4>Read Contracts</h4>
+    <ReadContracts />
 
-      <h4>Read Contracts Infinite</h4>
-      <ReadContractsInfinite />
+    <h4>Read Contracts Infinite</h4>
+    <ReadContractsInfinite />
 
-      <h4>Watch Pending Transactions</h4>
-      <WatchPendingTransactions />
+    <h4>Watch Pending Transactions</h4>
+    <!-- <WatchPendingTransactions /> -->
 
-      <h4>Write Contract</h4>
-      <WriteContract />
-    </template> -->
+    <h4>Write Contract</h4>
+    <!-- <WriteContract /> -->
 
-    <template v-if="true">
+    <template v-if="false">
       <h4>Sign Message</h4>
       <SignMessage />
 
       <h4>Sign Typed Data</h4>
       <SignTypedData />
+
+      <h4>Token</h4>
+      <Token />
     </template>
   </div>
 </template>
@@ -59,13 +60,14 @@ import Balance from './Balance.vue'
 import BlockNumber from './BlockNumber.vue'
 import SendTransaction from './SendTransaction.vue'
 import SendTransactionPrepared from './SendTransactionPrepared.vue'
-// import ReadContract from './read-contract/index.vue'
-// import ReadContracts from './ReadContracts.vue'
-// import ReadContractsInfinite from './ReadContractsInfinite.vue'
+import ReadContract from './read-contract/index.vue'
+import ReadContracts from './ReadContracts.vue'
+import ReadContractsInfinite from './ReadContractsInfinite.vue'
 // import WatchPendingTransactions from './WatchPendingTransactions.vue'
 // import WriteContract from './WriteContract.vue'
 import SignMessage from './SignMessage.vue'
 import SignTypedData from './SignTypedData.vue'
+import Token from './Token.vue'
 
 const { address, connector } = useAccount({
   onConnect: (data) => console.log('connected', data),

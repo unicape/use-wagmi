@@ -7,7 +7,7 @@ import type { UnwrapRef } from 'vue-demi'
 import { computed, unref } from 'vue-demi'
 
 import type {
-  PartialBy,
+  DeepMaybeRef,
   QueryConfigWithSelect,
   QueryFunctionArgs,
   ShallowMaybeRef,
@@ -19,10 +19,7 @@ export type UseContractReadConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TSelectData = ReadContractResult<TAbi, TFunctionName>,
-> = PartialBy<
-  ShallowMaybeRef<ReadContractConfig<TAbi, TFunctionName>>,
-  'abi' | 'address' | 'args' | 'blockNumber' | 'blockTag' | 'functionName'
-> &
+> = DeepMaybeRef<ReadContractConfig<TAbi, TFunctionName>> &
   QueryConfigWithSelect<
     ReadContractResult<TAbi, TFunctionName>,
     Error,
@@ -140,9 +137,8 @@ export function useContractRead<
   const { data: blockNumber_ } = useBlockNumber({
     chainId,
     enabled: computed(() => unref(watch) || unref(cacheOnBlock)),
-    scopeKey: computed(
-      () =>
-        (unref(watch) || unref(cacheOnBlock) ? undefined : 'idle') as string,
+    scopeKey: computed(() =>
+      unref(watch) || unref(cacheOnBlock) ? undefined : 'idle',
     ),
     watch,
   })

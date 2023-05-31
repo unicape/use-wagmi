@@ -1,15 +1,15 @@
 <template>
   <div>
     <div>Data:</div>
-    <div v-if="isLoading && fetchStatus === 'fetching'">loading...</div>
+    <div v-if="isLoading">loading...</div>
     <div v-if="isSuccess">
-      <div v-for="item in data" :key="JSON.stringify(item)">{{ JSON.stringify(item) }}</div>
+      <div v-for="item in data" :key="stringify(item)">{{ stringify(item) }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { BigNumber } from 'ethers'
+import { stringify } from 'viem'
 import { useContractReads } from 'use-wagmi'
 
 const wagmigotchiContractConfig = {
@@ -48,12 +48,12 @@ const mlootContractConfig = {
   ],
 } as const
 
-const { data, isSuccess, isLoading, fetchStatus } = useContractReads({
+const { data, isSuccess, isLoading } = useContractReads({
   contracts: [
     {
       ...wagmigotchiContractConfig,
       functionName: 'love',
-      args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+      args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c']
     },
     {
       ...wagmigotchiContractConfig,
@@ -64,8 +64,8 @@ const { data, isSuccess, isLoading, fetchStatus } = useContractReads({
     {
       ...mlootContractConfig,
       functionName: 'tokenOfOwnerByIndex',
-      args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
-    },
-  ] as const,
+      args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
+    }
+  ]
 })
 </script>

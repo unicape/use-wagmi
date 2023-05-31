@@ -1,18 +1,19 @@
 <template>
   <div>
-    <div v-if="isLoading || fetchStatus === 'fetching'">loading...</div>
+    <!-- <div v-if="isLoading || fetchStatus === 'fetching'">loading...</div>
     <div v-if="isSuccess">
       <div v-for="item in data?.pages" :key="JSON.stringify(item)">{{ JSON.stringify(item) }}</div>
       <button @click="() => fetchNextPage()">Fetch more</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts" setup>
-import { BigNumber } from 'ethers'
+import { ref } from 'vue'
+import { stringify } from 'viem'
 import { paginatedIndexesConfig, useContractInfiniteReads } from 'use-wagmi'
 
-const mlootContractConfig = {
+export const mlootContractConfig = {
   address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
   abi: [
     {
@@ -25,18 +26,18 @@ const mlootContractConfig = {
   ],
 } as const
 
-const { data, isLoading, fetchStatus, isSuccess, fetchNextPage } =
+const { data, isLoading, isSuccess, fetchNextPage } =
   useContractInfiniteReads({
     cacheKey: 'lootTokenURIs',
     ...paginatedIndexesConfig(
-      (index) => [
+      (index: number) => [
         {
           ...mlootContractConfig,
-          functionName: 'tokenURI',
-          args: [BigNumber.from(index)] as const,
-        },
+          functionName: ref('tokenURI'),
+          args: [BigInt(index)] as const,
+        }
       ],
-      { start: 0, perPage: 10, direction: 'increment' },
-    ),
+      { start: 0, perPage: 10, direction: 'increment' }
+    )
   })
 </script>

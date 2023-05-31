@@ -7,6 +7,7 @@ import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type {
+  DeepMaybeRef,
   DeepPartial,
   QueryConfigWithSelect,
   QueryFunctionArgs,
@@ -21,7 +22,7 @@ export type UseContractReadsConfig<
   TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
   TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
-  Config = ReadContractsConfig<TContracts, TAllowFailure>,
+  Config = DeepMaybeRef<ReadContractsConfig<TContracts, TAllowFailure>>,
 > = {
   [K in keyof Config]?: K extends 'contracts'
     ? DeepPartial<Config[K], 2>
