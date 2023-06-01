@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div>watching...</div>
-    <div v-for="item in list" :key="JSON.stringify(item)">{{ JSON.stringify(item) }}</div>
+    <details>
+      <summary>{{ list.length }} hashes logged</summary>
+      {{ list.reverse().join('\n') }}
+    </details>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import type { Transaction } from 'ethers'
 import { useWatchPendingTransactions } from 'use-wagmi'
 
-const list = ref<Transaction[]>([])
+import type { Hex } from 'viem'
+
+const list = ref<Hex[]>([])
 
 useWatchPendingTransactions({
-  listener: (tx) => {
-    console.log(tx)
-    list.value.push(tx)
-  }
+  listener: (hashes) => list.value.push(...hashes)
 })
 </script>

@@ -9,43 +9,54 @@ import type {
 import { getSendTransactionParameters } from '@wagmi/core/internal'
 import type { Abi } from 'abitype'
 import type { GetFunctionArgs, SendTransactionParameters } from 'viem'
-import type { UnwrapRef } from 'vue-demi'
-import { computed, unref } from 'vue-demi'
+import type { Ref, UnwrapRef } from 'vue-demi'
+import { unref, watchEffect } from 'vue-demi'
 
-import type { MutationConfig, PartialBy, ShallowMaybeRef } from '../../types'
+import type {
+  DeepMaybeRef,
+  MutationConfig,
+  PartialBy,
+  ShallowMaybeRef,
+} from '../../types'
+import { cloneDeepUnref } from '../../utils'
 
-export type UseContractWritePreparedArgs<
+type UseContractWritePreparedArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = ShallowMaybeRef<
-  Partial<Pick<PrepareWriteContractResult<TAbi, TFunctionName>, 'request'>> & {
-    abi?: never
-    accessList?: never
-    address?: never
-    args?: never
-    chainId?: never
-    functionName?: never
-    gas?: never
-    gasPrice?: never
-    maxFeePerGas?: never
-    maxPriorityFeePerGas?: never
-    nonce?: never
-    value?: never
-  }
->
+> = Partial<
+  Pick<
+    ShallowMaybeRef<PrepareWriteContractResult<TAbi, TFunctionName>>,
+    'request'
+  >
+> & {
+  abi?: never
+  accessList?: never
+  account?: never
+  address?: never
+  args?: never
+  chainId?: never
+  functionName?: never
+  gas?: never
+  gasPrice?: never
+  maxFeePerGas?: never
+  maxPriorityFeePerGas?: never
+  nonce?: never
+  value?: never
+}
 
 type UseContractWriteUnpreparedArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = ShallowMaybeRef<
-  PartialBy<
-    Omit<WriteContractUnpreparedArgs<TAbi, TFunctionName>, 'args'>,
-    'abi' | 'address' | 'functionName'
-  > &
-    Partial<GetFunctionArgs<TAbi, TFunctionName>> & {
-      request?: never
-    }
->
+> = PartialBy<
+  Omit<
+    ShallowMaybeRef<WriteContractUnpreparedArgs<TAbi, TFunctionName>>,
+    'args'
+  >,
+  'abi' | 'address' | 'functionName'
+> &
+  Partial<DeepMaybeRef<GetFunctionArgs<TAbi, TFunctionName>>> & {
+    request?: never
+  }
 
 export type UseContractWriteArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -75,6 +86,7 @@ function mutationKey({
   const {
     args,
     accessList,
+    account,
     gas,
     gasPrice,
     maxFeePerGas,
@@ -90,6 +102,7 @@ function mutationKey({
       args,
       abi,
       accessList,
+      account,
       functionName,
       gas,
       gasPrice,
@@ -110,7 +123,7 @@ function mutationFn(
     return writeContract({
       mode: 'prepared',
       ...config.request,
-    } as any)
+    })
   }
 
   if (!config.address) throw new Error('address is required')
@@ -124,13 +137,14 @@ function mutationFn(
     abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     functionName: config.functionName,
     accessList: config.accessList,
+    account: config.account,
     gas: config.gas,
     gasPrice: config.gasPrice,
     maxFeePerGas: config.maxFeePerGas,
     maxPriorityFeePerGas: config.maxPriorityFeePerGas,
     nonce: config.nonce,
     value: config.value,
-  } as any)
+  })
 }
 
 /**
@@ -155,17 +169,21 @@ export function useContractWrite<
   TFunctionName extends string,
   TMode extends WriteContractMode = undefined,
 >(config: UseContractWriteConfig<TAbi, TFunctionName, TMode>) {
-  const { address, abi, args, chainId, functionName, mode, request } =
-    config as any
+  const { address, abi, args, chainId, functionName, mode, request } = config
+
+  const _config = cloneDeepUnref(config)
   const {
     accessList,
+    account,
     gas,
     gasPrice,
     maxFeePerGas,
     maxPriorityFeePerGas,
     nonce,
     value,
-  } = getSendTransactionParameters(config as any)
+  } = getSendTransactionParameters(
+    _config as PartialBy<Omit<SendTransactionParameters, 'chain'>, 'account'>,
+  )
 
   const {
     data,
@@ -188,6 +206,7 @@ export function useContractWrite<
       mode,
       args,
       accessList,
+      account,
       gas,
       gasPrice,
       maxFeePerGas,
@@ -205,25 +224,29 @@ export function useContractWrite<
     },
   )
 
-  const write = computed(() => {
+  let write
+  watchEffect(() => {
     if (unref(mode) === 'prepared') {
-      if (!request) return undefined
-
-      return mutate({
-        mode: 'prepared',
-        request: config.request,
-        chainId: config.chainId,
-      } as any)
+      if (!unref(request)) return
+      write = () => {
+        const mutateKey = cloneDeepUnref({
+          mode: 'prepared',
+          request: config.request,
+          chainId: config.chainId,
+        }) as unknown as UnwrapRef<UseContractWriteArgs>
+        return mutate(mutateKey)
+      }
     }
 
-    return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
-      mutate({
+    write = (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) => {
+      const mutateKey = cloneDeepUnref({
         address,
         args,
         abi: abi as Abi,
         functionName,
         chainId,
         accessList,
+        account,
         gas,
         gasPrice,
         maxFeePerGas,
@@ -231,41 +254,48 @@ export function useContractWrite<
         nonce,
         value,
         ...overrideConfig,
-      } as any)
-  }).value
+      }) as unknown as UnwrapRef<UseContractWriteArgs>
+      return mutate(mutateKey)
+    }
+  })
 
-  const writeAsync = computed(() => {
+  let writeAsync
+  watchEffect(() => {
     if (unref(mode) === 'prepared') {
-      if (!request) return undefined
-
-      return mutateAsync({
-        address,
-        chainId,
-        abi: abi as Abi,
-        functionName,
-        mode: 'prepared',
-        request,
-      } as MutationFnConfig)
+      if (!unref(request)) return
+      writeAsync = () => {
+        const mutateKey = cloneDeepUnref({
+          mode: 'prepared',
+          request: config.request,
+        }) as unknown as UnwrapRef<UseContractWriteArgs>
+        return mutateAsync(mutateKey)
+      }
     }
 
-    return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
-      mutateAsync({
+    writeAsync = (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) => {
+      const mutateKey = cloneDeepUnref({
         address,
-        args:
-          (overrideConfig?.recklesslySetUnpreparedArgs as readonly unknown[]) ??
-          args,
-        chainId,
+        args,
         abi: abi as Abi,
+        chainId,
         functionName,
-        mode: 'recklesslyUnprepared',
-        overrides:
-          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
-      } as MutationFnConfig)
-  }).value
+        accessList,
+        account,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        nonce,
+        value,
+        ...overrideConfig,
+      }) as unknown as UnwrapRef<UseContractWriteArgs>
+      return mutateAsync(mutateKey)
+    }
+  })
 
   return {
     data,
-    error,
+    error: error as Ref<Error> | Ref<null>,
     isError,
     isIdle,
     isLoading,
@@ -273,27 +303,33 @@ export function useContractWrite<
     reset,
     status,
     variables,
-    write,
-    writeAsync,
+    write: write as MutationFn<TMode, TAbi, TFunctionName, void>,
+    writeAsync: writeAsync as MutationFn<
+      TMode,
+      TAbi,
+      TFunctionName,
+      Promise<WriteContractResult>
+    >,
   }
 }
 
 type MutationFnArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = {
-  /**
-   * Recklessly pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
-   * it is highly recommended to not use this and instead prepare the config upfront
-   * using the `usePrepareContractWrite` function.
-   */
-  recklesslySetUnpreparedArgs?: WriteContractUnpreparedArgs<
-    TAbi,
-    TFunctionName
-  >['args']
-  recklesslySetUnpreparedOverrides?: WriteContractUnpreparedArgs<
-    TAbi,
-    TFunctionName
-  >['overrides']
-}
+> = Omit<DeepMaybeRef<SendTransactionParameters>, 'account' | 'chain'> &
+  DeepMaybeRef<{
+    args?: WriteContractUnpreparedArgs<TAbi, TFunctionName> extends {
+      args: unknown
+    }
+      ? WriteContractUnpreparedArgs<TAbi, TFunctionName>['args']
+      : unknown
+  }>
+
+type MutationFn<
+  TMode extends WriteContractMode,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TReturnType,
+> = TMode extends 'prepared'
+  ? (() => TReturnType) | undefined
+  : (config?: MutationFnArgs<TAbi, TFunctionName>) => TReturnType

@@ -36,10 +36,10 @@
     <ReadContractsInfinite />
 
     <h4>Watch Pending Transactions</h4>
-    <!-- <WatchPendingTransactions /> -->
+    <WatchPendingTransactions />
 
     <h4>Write Contract</h4>
-    <!-- <WriteContract /> -->
+    <WriteContract />
 
     <template v-if="false">
       <h4>Sign Message</h4>
@@ -63,8 +63,8 @@ import SendTransactionPrepared from './SendTransactionPrepared.vue'
 import ReadContract from './read-contract/index.vue'
 import ReadContracts from './ReadContracts.vue'
 import ReadContractsInfinite from './ReadContractsInfinite.vue'
-// import WatchPendingTransactions from './WatchPendingTransactions.vue'
-// import WriteContract from './WriteContract.vue'
+import WatchPendingTransactions from './WatchPendingTransactions.vue'
+import WriteContract from './WriteContract.vue'
 import SignMessage from './SignMessage.vue'
 import SignTypedData from './SignTypedData.vue'
 import Token from './Token.vue'
