@@ -2,7 +2,7 @@
   "name": "use-wagmi",
   "description": "Vue Composition for Ethereum",
   "license": "MIT",
-  "version": "0.0.2-alpha.5",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/unicape/use-wagmi.git",
@@ -107,7 +107,7 @@
   ],
   "peerDependencies": {
     "@vue/composition-api": "^1.0.0-rc.1",
-    "typescript": ">=4.9.4",
+    "typescript": ">=5.0.4",
     "viem": "~0.3.35",
     "vue": "^2.0.0 || >=3.0.0"
   },
@@ -120,11 +120,14 @@
     }
   },
   "dependencies": {
-    "@tanstack/query-persist-client-core": "^4.29.5",
-    "@tanstack/query-sync-storage-persister": "^4.29.5",
-    "@tanstack/vue-query": "^4.29.7",
+    "@tanstack/query-persist-client-core": "^4.29.11",
+    "@tanstack/query-sync-storage-persister": "^4.29.11",
+    "@tanstack/vue-query": "^4.29.11",
     "@wagmi/core": "^1.1.0",
-    "abitype": "^0.8.1",
+    "@wagmi/chains": "latest",
+    "@wagmi/connectors": "latest",
+    "eventemitter3": "^4.0.7",
+    "abitype": "0.8.7",
     "vue-demi": "latest"
   },
   "devDependencies": {

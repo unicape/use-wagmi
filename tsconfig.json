@@ -15,6 +15,9 @@
     "noUnusedParameters": true,
     "paths": {
       "@wagmi/core": ["packages/vue/node_modules/@wagmi/core/dist"],
+      "@wagmi/chains": ["packages/vue/node_modules/@wagmi/chains/dist"],
+      "@wagmi/connectors": ["packages/vue/node_modules/@wagmi/connectors/dist"],
+      "eventemitter3": ["packages/vue/node_modules/eventemitter3"],
       "use-wagmi": ["packages/vue/src"],
       "use-wagmi/*": ["packages/vue/src/*"],
       // TODO: Remove once issue is fixed
