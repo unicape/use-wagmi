@@ -10,7 +10,7 @@ import { getSendTransactionParameters } from '@wagmi/core/internal'
 import type { Abi } from 'abitype'
 import type { GetFunctionArgs, SendTransactionParameters } from 'viem'
 import type { Ref, UnwrapRef } from 'vue-demi'
-import { unref, watchEffect } from 'vue-demi'
+import { unref } from 'vue-demi'
 
 import type {
   DeepMaybeRef,
@@ -224,74 +224,65 @@ export function useContractWrite<
     },
   )
 
-  let write
-  watchEffect(() => {
+  const write = (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) => {
     if (unref(mode) === 'prepared') {
-      if (!unref(request)) return
-      write = () => {
-        const mutateKey = cloneDeepUnref({
-          mode: 'prepared',
-          request: config.request,
-          chainId: config.chainId,
-        }) as unknown as UnwrapRef<UseContractWriteArgs>
-        return mutate(mutateKey)
-      }
-    }
-
-    write = (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) => {
+      if (!unref(request)) return undefined
       const mutateKey = cloneDeepUnref({
-        address,
-        args,
-        abi: abi as Abi,
-        functionName,
-        chainId,
-        accessList,
-        account,
-        gas,
-        gasPrice,
-        maxFeePerGas,
-        maxPriorityFeePerGas,
-        nonce,
-        value,
-        ...overrideConfig,
+        mode: 'prepared',
+        request: config.request,
+        chainId: config.chainId,
       }) as unknown as UnwrapRef<UseContractWriteArgs>
+
       return mutate(mutateKey)
     }
-  })
 
-  let writeAsync
-  watchEffect(() => {
+    const mutateKey = cloneDeepUnref({
+      address,
+      args,
+      abi: abi as Abi,
+      functionName,
+      chainId,
+      accessList,
+      account,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      value,
+      ...overrideConfig,
+    }) as unknown as UnwrapRef<UseContractWriteArgs>
+    return mutate(mutateKey)
+  }
+
+  const writeAsync = (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) => {
     if (unref(mode) === 'prepared') {
-      if (!unref(request)) return
-      writeAsync = () => {
-        const mutateKey = cloneDeepUnref({
-          mode: 'prepared',
-          request: config.request,
-        }) as unknown as UnwrapRef<UseContractWriteArgs>
-        return mutateAsync(mutateKey)
-      }
-    }
-
-    writeAsync = (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) => {
+      if (!unref(request)) return undefined
       const mutateKey = cloneDeepUnref({
-        address,
-        args,
-        abi: abi as Abi,
-        chainId,
-        functionName,
-        accessList,
-        account,
-        gas,
-        gasPrice,
-        maxFeePerGas,
-        maxPriorityFeePerGas,
-        nonce,
-        value,
-        ...overrideConfig,
+        mode: 'prepared',
+        request: config.request,
       }) as unknown as UnwrapRef<UseContractWriteArgs>
       return mutateAsync(mutateKey)
     }
-  })
+
+    const mutateKey = cloneDeepUnref({
+      address,
+      args,
+      abi: abi as Abi,
+      chainId,
+      functionName,
+      accessList,
+      account,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      value,
+      ...overrideConfig,
+    }) as unknown as UnwrapRef<UseContractWriteArgs>
+    return mutateAsync(mutateKey)
+  }
 
   return {
     data,

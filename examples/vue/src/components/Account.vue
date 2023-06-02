@@ -41,6 +41,9 @@
     <h4>Write Contract</h4>
     <WriteContract />
 
+    <h4>Write Contract Prepared</h4>
+    <WriteContractPrepared />
+
     <template v-if="false">
       <h4>Sign Message</h4>
       <SignMessage />
@@ -65,6 +68,7 @@ import ReadContracts from './ReadContracts.vue'
 import ReadContractsInfinite from './ReadContractsInfinite.vue'
 import WatchPendingTransactions from './WatchPendingTransactions.vue'
 import WriteContract from './WriteContract.vue'
+import WriteContractPrepared from './WriteContractPrepared.vue'
 import SignMessage from './SignMessage.vue'
 import SignTypedData from './SignTypedData.vue'
 import Token from './Token.vue'
