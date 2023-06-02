@@ -4,7 +4,7 @@
     "dev": "pnpm -r --filter './packages/**' dev",
     "build": "pnpm -r --filter './packages/**' build",
     "changeset:release": "pnpm build && changeset publish",
-    "playground": "pnpm dev && pnpm --filter example-vue dev",
+    "playground": "pnpm dev && pnpm --filter vite dev",
     "lint": "eslint . --cache",
     "lint:fix": "pnpm lint --fix",
     "test": "vitest",
