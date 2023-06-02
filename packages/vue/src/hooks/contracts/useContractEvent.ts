@@ -3,7 +3,7 @@ import type {
   WatchContractEventConfig,
 } from '@wagmi/core'
 import type { Abi } from 'abitype'
-import { ref, unref, watchEffect } from 'vue-demi'
+import { unref, watchEffect } from 'vue-demi'
 
 import type { PartialBy, ShallowMaybeRef } from '../../types'
 import { usePublicClient, useWebSocketPublicClient } from '../viem'
@@ -33,21 +33,19 @@ export function useContractEvent<
   const publicClient = usePublicClient({ chainId })
   const webSocketPublicClient = useWebSocketPublicClient({ chainId })
 
-  const unwatch = ref<() => void>()
-
-  watchEffect((onCleanup) => {
+  const unwatch = watchEffect((onCleanup) => {
     if (!unref(abi) || !unref(address) || !unref(eventName)) return
 
     const publicClient_ = webSocketPublicClient.value || publicClient.value
-    unwatch.value = publicClient_.watchContractEvent({
+    const _unwatch = publicClient_.watchContractEvent({
       abi: unref(abi),
       address: unref(address),
       eventName: unref(eventName),
       onLogs: listener,
     } as any)
 
-    onCleanup(() => unwatch.value?.())
+    onCleanup(() => _unwatch())
   })
 
-  return unwatch.value
+  return unwatch
 }
