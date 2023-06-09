@@ -35,7 +35,7 @@ npm install use-wagmi viem
 Connect a wallet in under 60 seconds.
 
 ```ts
-import { UseWagmiPlugin, WagmiConfig, createConfig, mainnet } from 'use-wagmi'
+import { UseWagmiPlugin, createConfig, mainnet } from 'use-wagmi'
 import { createPublicClient, http } from 'viem'
 import App from './App.vue'
 
