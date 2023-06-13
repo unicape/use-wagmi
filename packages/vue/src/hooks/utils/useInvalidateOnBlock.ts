@@ -20,9 +20,7 @@ export function useInvalidateOnBlock({
   useBlockNumber({
     chainId,
     enabled,
-    onBlock: unref(enabled)
-      ? () => queryClient.invalidateQueries(unref(queryKey))
-      : undefined,
+    onBlock: () => unref(enabled) && queryClient.invalidateQueries({ queryKey: unref(queryKey) }, { cancelRefetch: false }),
     scopeKey: unref(enabled) ? undefined : 'idle',
   })
 }
