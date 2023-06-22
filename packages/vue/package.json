@@ -2,7 +2,7 @@
   "name": "use-wagmi",
   "description": "Vue Composition for Ethereum",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/unicape/use-wagmi.git",
@@ -135,6 +135,7 @@
     "vue": "^3.2.47"
   },
   "keywords": [
+    "wagmi",
     "vue",
     "hooks",
     "eth",
