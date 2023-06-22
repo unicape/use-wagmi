@@ -122,7 +122,7 @@ function mutationFn(
     if (!config.request) throw new Error('request is required')
     return writeContract({
       mode: 'prepared',
-      ...config.request,
+      request: config.request,
     })
   }
 
