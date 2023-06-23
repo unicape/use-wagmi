@@ -55,7 +55,7 @@ app.mount('#app');
 ```html
 <script setup>
 import { useAccount, useConnect, useDisconnect } from 'use-wagmi'
-import { InjectedConnector } from 'use-wagmi/connectors'
+import { InjectedConnector } from 'use-wagmi/connectors/injected'
 
 const { address, isConnected } = useAccount()
 const { connect } = useConnect({
