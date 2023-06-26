@@ -52,6 +52,9 @@ export default defineNuxtPlugin(nuxtApp => {
       }),
       new LedgerConnector({
         chains,
+        options: {
+          projectId: '', //TODO: your project ID
+        },
       }),
       new InjectedConnector({
         chains,
