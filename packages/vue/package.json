@@ -11,17 +11,7 @@
   "contributors": [
     "Unic Ape <94770222@qq.com>"
   ],
-  "homepage": "https://wagmi.sh",
-  "funding": [
-    {
-      "type": "gitcoin",
-      "url": "https://wagmi.sh/gitcoin"
-    },
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
+  "homepage": "https://github.com/unicape/use-wagmi",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
