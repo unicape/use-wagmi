@@ -144,11 +144,11 @@ importers:
         specifier: ^1.3.0
         version: 1.3.0(typescript@5.0.4)
       '@wagmi/connectors':
-        specifier: ^2.6.1
-        version: 2.6.1(@wagmi/chains@1.3.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
+        specifier: ^2.6.2
+        version: 2.6.2(@wagmi/chains@1.3.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
       '@wagmi/core':
-        specifier: ^1.3.2
-        version: 1.3.2(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
+        specifier: ^1.3.3
+        version: 1.3.3(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
       abitype:
         specifier: 0.8.7
         version: 0.8.7(typescript@5.0.4)
@@ -2140,8 +2140,8 @@ packages:
       typescript: 5.0.4
     dev: false
 
-  /@wagmi/connectors@2.6.1(@wagmi/chains@1.3.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
-    resolution: {integrity: sha512-8dWFGvJ6XjImIWVjxadblBh7dbCzmgVUpS5ZE3YtQYmwYcVp7W1B4Qh1xdZ5GgDPh2qRKjKdzlel1jZ1DqwScw==}
+  /@wagmi/connectors@2.6.2(@wagmi/chains@1.3.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
+    resolution: {integrity: sha512-S6ieyh3jUmECOk70tl6ZDsknRF1zUB3jtj3LaOYc+GQmjynR24xQaG9HigjgLuHFINNsd6JEEWQ3pO+lD56c3Q==}
     peerDependencies:
       '@wagmi/chains': '>=1.3.0'
       typescript: '>=5.0.4'
@@ -2175,8 +2175,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@1.3.2(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
-    resolution: {integrity: sha512-NBu++pEY8uiSleWwncywNmS4XcMSwG0U2tGiHWm217KQjpuy1jGLT7zQn4tYqeSrMdESTkxCpX4GaWFMKAzp0A==}
+  /@wagmi/core@1.3.3(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
+    resolution: {integrity: sha512-zjFWnPPcPKHY9t4j4aIyq4WlMTw/ucxYmmpwszK5ylHPnTbK1bWrGCtsrF0tIGWRTzEFVhJ/s3L4+qGLmoyu3A==}
     peerDependencies:
       typescript: '>=5.0.4'
       viem: '>=0.3.35'
@@ -2185,7 +2185,7 @@ packages:
         optional: true
     dependencies:
       '@wagmi/chains': 1.3.0(typescript@5.0.4)
-      '@wagmi/connectors': 2.6.1(@wagmi/chains@1.3.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
+      '@wagmi/connectors': 2.6.2(@wagmi/chains@1.3.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
       abitype: 0.8.7(typescript@5.0.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
