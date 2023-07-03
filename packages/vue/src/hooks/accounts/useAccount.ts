@@ -1,8 +1,9 @@
-import { getAccount, getConfig, watchAccount } from '@wagmi/core'
-import type { GetAccountResult } from '@wagmi/core'
+import { getAccount, watchAccount } from '@wagmi/core'
+import type { GetAccountResult, PublicClient } from '@wagmi/core'
 import {
   getCurrentScope,
   onScopeDispose,
+  ref,
   reactive,
   toRefs,
   watchEffect,
@@ -26,44 +27,36 @@ export type UseAccountConfig = {
 }
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
-  const account = reactive(getAccount())
+  const account = reactive(getAccount()) as GetAccountResult<PublicClient>
+  const previousAccount = ref<typeof account>()
 
-  const unwatch = watchAccount((data) => {
-    updateState(account, data)
-  })
+  const unwatch = watchAccount(data => updateState(account, data))
 
   if (getCurrentScope()) onScopeDispose(() => unwatch())
 
-  watchEffect((onCleanup) => {
-    const config = getConfig()
-    const unsubscribe = config.subscribe(
-      (state) => ({
-        address: state.data?.account,
-        connector: state.connector,
-        status: state.status,
-      }),
-      (curr, prev) => {
-        if (
-          !!onConnect &&
-          prev.status !== 'connected' &&
-          curr.status === 'connected'
-        )
-          onConnect({
-            address: curr.address,
-            connector: curr.connector,
-            isReconnected: prev.status === 'reconnecting',
-          })
+  watchEffect(() => {
+    if (
+      previousAccount.value?.status !== 'connected' &&
+      account.status === 'connected'
+    ) {
+      onConnect?.({
+        address: account.address,
+        connector: account.connector,
+        isReconnected:
+          previousAccount.value?.status === 'reconnecting' ||
+          // if `previousAccount.status` is `undefined`, the connector connected immediately.
+          previousAccount.value?.status === undefined,
+      })
+    }
 
-        if (
-          !!onDisconnect &&
-          prev.status === 'connected' &&
-          curr.status === 'disconnected'
-        )
-          onDisconnect()
-      },
-    )
+    if (
+      previousAccount.value?.status === 'connected' &&
+      account.status === 'disconnected'
+    ) {
+      onDisconnect?.()
+    }
 
-    onCleanup(() => unsubscribe())
+    previousAccount.value = account
   })
 
   return toRefs(account)
