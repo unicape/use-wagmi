@@ -144,11 +144,11 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0(typescript@5.0.4)
       '@wagmi/connectors':
-        specifier: ^2.6.4
-        version: 2.6.4(@wagmi/chains@1.4.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
+        specifier: ^2.6.5
+        version: 2.6.5(@wagmi/chains@1.4.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
       '@wagmi/core':
-        specifier: ^1.3.5
-        version: 1.3.5(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
+        specifier: ^1.3.6
+        version: 1.3.6(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
       abitype:
         specifier: 0.8.7
         version: 0.8.7(typescript@5.0.4)
@@ -2140,8 +2140,8 @@ packages:
       typescript: 5.0.4
     dev: false
 
-  /@wagmi/connectors@2.6.4(@wagmi/chains@1.4.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
-    resolution: {integrity: sha512-UrgYRNR573uy5exaVDMUfsZrcAh5rj5wNxZB+uN/3O45gOVZFh0o63ZmAWIvouuQDBJPr9UP2pNegEvi4v13cg==}
+  /@wagmi/connectors@2.6.5(@wagmi/chains@1.4.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
+    resolution: {integrity: sha512-klF31togMDd0qQqEcLl5cCGxjMbL0RRXQ8I1vxmEa3KdGzw6Z3ICVzX7/bDfnNEZcOW7BKyAnZDq7rCt5jTOiw==}
     peerDependencies:
       '@wagmi/chains': '>=1.3.0'
       typescript: '>=5.0.4'
@@ -2160,6 +2160,7 @@ packages:
       '@walletconnect/ethereum-provider': 2.8.6(@walletconnect/modal@2.5.9)
       '@walletconnect/legacy-provider': 2.0.0
       '@walletconnect/modal': 2.5.9(react@18.2.0)
+      '@walletconnect/utils': 2.8.6
       abitype: 0.8.7(typescript@5.0.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
@@ -2175,8 +2176,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@1.3.5(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
-    resolution: {integrity: sha512-4aFfXJThr5SldDdgoxAay8Yfyu7tzMtGQhN0/ZmL2OsVmimiW9dDUCi6o4WsFK/xGeBK+ntAYAtYc+ncQ7cFCQ==}
+  /@wagmi/core@1.3.6(react@18.2.0)(typescript@5.0.4)(viem@1.0.0):
+    resolution: {integrity: sha512-TXv9ZlRR5aySfERFuWMuo+lKXC/CoqtxVJZVHPqhK1jY+nldMx3AvrWzzF4CccRaMYcVdvPFepvmxzq2A2VvWg==}
     peerDependencies:
       typescript: '>=5.0.4'
       viem: '>=0.3.35'
@@ -2185,7 +2186,7 @@ packages:
         optional: true
     dependencies:
       '@wagmi/chains': 1.4.0(typescript@5.0.4)
-      '@wagmi/connectors': 2.6.4(@wagmi/chains@1.4.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
+      '@wagmi/connectors': 2.6.5(@wagmi/chains@1.4.0)(react@18.2.0)(typescript@5.0.4)(viem@1.0.0)
       abitype: 0.8.7(typescript@5.0.4)
       eventemitter3: 4.0.7
       typescript: 5.0.4
