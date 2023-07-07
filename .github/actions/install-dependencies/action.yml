@@ -18,7 +18,7 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: pnpm install --ignore-scripts --no-frozen-lockfile
+      run: pnpm install --ignore-scripts
 
     - name: Link packages
       shell: bash
