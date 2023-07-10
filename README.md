@@ -24,7 +24,7 @@ Based on [wagmi](https://wagmi.sh)
 
 ## Installation
 
-Install use-wagmi and its ethers peer dependency.
+Install use-wagmi and its [viem](https://viem.sh) peer dependency.
 
 ```bash
 npm install use-wagmi viem
@@ -75,7 +75,7 @@ const { disconnect } = useDisconnect()
 </template>
 ```
 
-In this example, we create a use-wagmi `wagmi` and pass it to the Vue plugin. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
+In this example, we create a `use-wagmi` and pass it to the Vue plugin. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
 
 Next, we use the `useConnect` composable to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 
