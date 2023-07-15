@@ -126,6 +126,7 @@
   },
   "keywords": [
     "wagmi",
+    "viem",
     "vue",
     "hooks",
     "eth",
