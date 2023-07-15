@@ -131,8 +131,6 @@
     "hooks",
     "eth",
     "ethereum",
-    "dapps",
-    "wallet",
     "web3"
   ],
   "scripts": {
