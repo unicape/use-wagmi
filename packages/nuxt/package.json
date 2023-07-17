@@ -1,6 +1,6 @@
 {
   "name": "@use-wagmi/nuxt",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "use-wagmi nuxt module",
   "author": "Unic Ape <https://github.com/unicape>",
   "license": "MIT",
