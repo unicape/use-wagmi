@@ -5,8 +5,8 @@
     "build": "pnpm -r --filter './packages/**' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
-    "playground": "pnpm dev && pnpm --filter vite dev",
-    "playground:nuxt": "pnpm dev && pnpm --filter nuxt dev",
+    "playground": "pnpm dev && pnpm --filter vite-example dev",
+    "playground:nuxt": "pnpm dev && pnpm --filter nuxt-example dev",
     "test": "vitest",
     "test:ui": "vitest --ui"
   },

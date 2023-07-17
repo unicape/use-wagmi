@@ -3,6 +3,9 @@ import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfil
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 
 export default defineNuxtConfig({
+  modules: [
+    '@use-wagmi/nuxt',
+  ],
   vite: {
     resolve: {
       alias: {

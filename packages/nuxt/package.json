@@ -1,0 +1,50 @@
+{
+  "name": "@use-wagmi/nuxt",
+  "version": "0.0.0",
+  "description": "use-wagmi nuxt module",
+  "author": "Unic Ape <https://github.com/unicape>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unicape/use-wagmi.git",
+    "directory": "packages/nuxt"
+  },
+  "homepage": "https://github.com/unicape/use-wagmi/tree/main/packages/nuxt#readme",
+  "contributors": [
+    "Unic Ape <94770222@qq.com>"
+  ],
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "wagmi",
+    "use-wagmi",
+    "nuxt",
+    "nuxt3",
+    "nuxt-module"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "DEV=true tsup"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.6.3",
+    "use-wagmi": "workspace:*",
+    "local-pkg": "^0.4.3"
+  },
+  "devDependencies": {
+    "@nuxt/schema": "^3.6.3",
+    "unimport": "^3.0.14"
+  },
+  "files": [
+    "/dist"
+  ]
+}

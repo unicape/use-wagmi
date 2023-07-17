@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "use-wagmi": "workspace:*",
+    "@use-wagmi/nuxt": "workspace:*",
     "viem": "~0.3.18"
   },
   "devDependencies": {
