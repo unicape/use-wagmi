@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 
 import { getConfig } from '../../scripts/tsup'
-import { dependencies } from './package.json'
+import { dependencies, devDependencies } from './package.json'
 
 export default defineConfig(
   getConfig({
@@ -12,7 +12,7 @@ export default defineConfig(
     entry: [
       'src/index.ts',
     ],
-    external: [...Object.keys(dependencies)],
+    external: [...Object.keys(dependencies), ...Object.keys(devDependencies)],
     platform: 'browser',
   }),
 )
