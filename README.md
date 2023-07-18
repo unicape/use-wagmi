@@ -82,17 +82,32 @@ Next, we use the `useConnect` composable to connect an injected wallet (e.g. Met
 We've only scratched the surface for what you can do with use-wagmi!
 
 ## Nuxt
-<pre class='language-bash'>
-npm i <b>@use-wagmi/nuxt</b>
-</pre>
+
+we shipped a Nuxt module to enable auto importing for Nuxt 3 and Nuxt Bridge.
+
+```bash
+npm install @use-wagmi/nuxt -D
+```
 
 ```ts
-// nuxt.config
+// nuxt.config.ts
 export default defineNuxtConfig({
   modules: [
-    '@use-wagmi/nuxt',
+    '@vueuse/nuxt',
   ],
 })
+```
+
+And then use use-wagmi function anywhere in your Nuxt app. For example:
+
+```html
+<script setup lang="ts">
+const { address } = useAccount()
+</script>
+
+<template>
+  <div>{{ address }}</div>
+</template>
 ```
 
 ## Credits
