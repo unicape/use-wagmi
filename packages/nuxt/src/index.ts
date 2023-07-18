@@ -1,48 +1,9 @@
 import { defineNuxtModule } from '@nuxt/kit'
+import * as functions from 'use-wagmi'
 import type { Import, Preset } from 'unimport'
 
 const packageName = 'use-wagmi' as const
-
-const functions = [
-  'configureChains',
-  'createConfig',
-  'UseWagmiPlugin',
-  'useConfig',
-  'paginatedIndexesConfig',
-  'useAccount',
-  'useBalance',
-  'useBlockNumber',
-  'useChainId',
-  'useConnect',
-  'useContractEvent',
-  'useContractInfiniteReads',
-  'useContractRead',
-  'useContractReads',
-  'useContractWrite',
-  'useDisconnect',
-  'useEnsAddress',
-  'useEnsAvatar',
-  'useEnsName',
-  'useEnsResolver',
-  'useFeeData',
-  'useInfiniteQuery',
-  'useNetwork',
-  'usePublicClient',
-  'useQuery',
-  'useQueryClient',
-  'useSendTransaction',
-  'usePrepareContractWrite',
-  'usePrepareSendTransaction',
-  'useSignMessage',
-  'useSignTypedData',
-  'useSwitchNetwork',
-  'useToken',
-  'useTransaction',
-  'useWaitForTransaction',
-  'useWalletClient',
-  'useWatchPendingTransactions',
-  'useWebSocketPublicClient',
-]
+const gitignore = ['mainnet', 'sepolia']
 
 export interface WagmiNuxtOptions {
   /**
@@ -60,12 +21,6 @@ export default defineNuxtModule<WagmiNuxtOptions>({
     autoImports: true,
   },
   setup(options, nuxt) {
-    nuxt.hook('vite:extend', ({ config }: any) => {
-      config.optimizeDeps = config.optimizeDeps || {}
-      config.optimizeDeps.exclude = config.optimizeDeps.exclude || []
-      config.optimizeDeps.exclude.push(packageName)
-    })
-
     // add packages to transpile target for alias resolution
     nuxt.options.build = nuxt.options.build || {}
     nuxt.options.build.transpile = nuxt.options.build.transpile || []
@@ -76,7 +31,8 @@ export default defineNuxtModule<WagmiNuxtOptions>({
         if (sources.find(i => (i as Import).from === packageName))
           return
   
-        const imports = functions
+        const imports = Object.keys(functions)
+          .filter(name => !gitignore.includes(name))
           .map((i): Import => {
             return {
               from: packageName,
