@@ -1,6 +1,5 @@
 import { defineNuxtModule } from '@nuxt/kit'
 import * as functions from 'use-wagmi'
-import type { Import, Preset } from 'unimport'
 
 const packageName = 'use-wagmi' as const
 const gitignore = ['mainnet', 'sepolia']
@@ -16,6 +15,9 @@ export default defineNuxtModule<WagmiNuxtOptions>({
   meta: {
     name: packageName,
     configKey: packageName,
+    compatibility: {
+      nuxt: '>=3.0.0',
+    },
   },
   defaults: {
     autoImports: true,
@@ -27,13 +29,12 @@ export default defineNuxtModule<WagmiNuxtOptions>({
     nuxt.options.build.transpile.push(packageName)
 
     if (options.autoImports) {
-      nuxt.hook('imports:sources', (sources: (Import | Preset)[]) => {
-        if (sources.find(i => (i as Import).from === packageName))
-          return
-  
+      nuxt.hook('imports:sources', (sources) => {
+        if (sources.find((i) => i.from === packageName)) return
+
         const imports = Object.keys(functions)
-          .filter(name => !gitignore.includes(name))
-          .map((i): Import => {
+          .filter((name) => !gitignore.includes(name))
+          .map((i) => {
             return {
               from: packageName,
               name: i,
@@ -41,7 +42,7 @@ export default defineNuxtModule<WagmiNuxtOptions>({
               priority: -1,
             }
           })
-  
+
         sources.push({
           from: packageName,
           imports,
@@ -49,7 +50,7 @@ export default defineNuxtModule<WagmiNuxtOptions>({
         })
       })
     }
-  }
+  },
 })
 
 declare module '@nuxt/schema' {
