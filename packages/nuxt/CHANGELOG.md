@@ -1,5 +1,11 @@
 # @use-wagmi/nuxt
 
+## 2.0.0
+
+### Major Changes
+
+- [`6e1a66b`](https://github.com/unicape/use-wagmi/commit/6e1a66ba6ff2432aa0ca5e1181426755404bacae) Thanks [@unicape](https://github.com/unicape)! - Fix nuxt meta.compatibility
+
 ## 1.1.1
 
 ### Patch Changes
