@@ -1,5 +1,11 @@
 # @use-wagmi/nuxt
 
+## 1.1.1
+
+### Patch Changes
+
+- [#44](https://github.com/unicape/use-wagmi/pull/44) [`b26c926`](https://github.com/unicape/use-wagmi/commit/b26c92602987072730c3b76bfc569c18586d1d1b) Thanks [@Hebilicious](https://github.com/Hebilicious)! - Changes the build system and the exports fields of `the package.json` to use `@nuxt/module-builder` instead of `tsup`. This will allow the module to be listed in the module list at nuxt.com/modules.
+
 ## 1.1.0
 
 ### Minor Changes
