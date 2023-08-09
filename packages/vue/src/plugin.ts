@@ -1,32 +1,33 @@
 import { VueQueryPlugin, type VueQueryPluginOptions } from '@tanstack/vue-query'
 import type { PublicClient, WebSocketPublicClient } from '@wagmi/core'
-import type { Ref } from 'vue-demi'
+import type { Ref, App } from 'vue-demi'
 import { inject, isVue2, markRaw, shallowRef, triggerRef } from 'vue-demi'
 
 import type { Config } from './config'
 
 const USE_WAGMI_KEY = 'USE_WAGMI' as const
 
+export const createVueProvidableConfig = (config: Config, app: App) => {
+  const _config = shallowRef(markRaw(config))
+  const unsubscribe = config.subscribe(() => {
+    triggerRef(markRaw(_config))
+  })
+  //@todo refactor with app.onUnmount when implemented https://github.com/vuejs/core/issues/4516
+  const originalUnmount = app.unmount
+  app.unmount = function vueQueryUnmount() {
+    unsubscribe()
+    originalUnmount()
+  }
+  return _config
+}
+
 export const UseWagmiPlugin = {
-  install: (app: any, config: Config) => {
+  install: (app: App, config: Config) => {
     app.use(VueQueryPlugin, {
       queryClient: config.queryClient,
     } as VueQueryPluginOptions)
 
-    const _config = shallowRef(markRaw(config))
-    const unsubscribe = config.subscribe(() => {
-      triggerRef(markRaw(_config))
-    })
-
-    if (app.onUnmount) {
-      app.onUnmount(unsubscribe)
-    } else {
-      const originalUnmount = app.unmount
-      app.unmount = function vueQueryUnmount() {
-        unsubscribe()
-        originalUnmount()
-      }
-    }
+    const _config = createVueProvidableConfig(config, app)
 
     if (isVue2) {
       app.mixin({

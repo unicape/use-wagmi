@@ -1,7 +1,7 @@
 export { createConfig } from './config'
 export type { Config, CreateConfigParameters } from './config'
 
-export { UseWagmiPlugin, useConfig } from './plugin'
+export { UseWagmiPlugin, createVueProvidableConfig, useConfig } from './plugin'
 
 export {
   paginatedIndexesConfig,
