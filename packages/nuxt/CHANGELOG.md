@@ -1,5 +1,11 @@
 # @use-wagmi/nuxt
 
+## 1.1.3
+
+### Patch Changes
+
+- [#51](https://github.com/unicape/use-wagmi/pull/51) [`82d45fe`](https://github.com/unicape/use-wagmi/commit/82d45fe3dcb1b9856aee912d9be5e7e572299079) Thanks [@Hebilicious](https://github.com/Hebilicious)! - add excludeImports
+
 ## 1.1.2
 
 ### Patch Changes
