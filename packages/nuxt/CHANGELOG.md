@@ -1,5 +1,12 @@
 # @use-wagmi/nuxt
 
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies [[`73daab4`](https://github.com/unicape/use-wagmi/commit/73daab4e5a18191d8fdf80d423ff4319bc8410ad)]:
+  - use-wagmi@0.3.9
+
 ## 1.1.3
 
 ### Patch Changes
