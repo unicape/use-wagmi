@@ -1,5 +1,11 @@
 # @use-wagmi/nuxt
 
+## 1.1.8
+
+### Patch Changes
+
+- [`a10b120`](https://github.com/unicape/use-wagmi/commit/a10b12026aac74cfbbba6deb0ccb1c544e40f8a3) Thanks [@unicape](https://github.com/unicape)! - fix nuxt plugin bug
+
 ## 1.1.7
 
 ### Patch Changes
