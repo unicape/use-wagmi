@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.3.12
+
+### Patch Changes
+
+- [`d580552`](https://github.com/unicape/use-wagmi/commit/d58055263feb6d500a375e3b580404d754e47d3a) Thanks [@unicape](https://github.com/unicape)! - useContractReads queryKey & nuxt plugin functions
+
 ## 0.3.11
 
 ### Patch Changes
