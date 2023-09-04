@@ -7,6 +7,7 @@ import { computed, unref } from 'vue-demi'
 import type { UnwrapRef } from 'vue-demi'
 
 import type {
+  MaybeRef,
   DeepMaybeRef,
   DeepPartial,
   QueryConfigWithSelect,
@@ -22,11 +23,11 @@ export type UseContractReadsConfig<
   TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
   TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
-  Config = DeepMaybeRef<ReadContractsConfig<TContracts, TAllowFailure>>,
+  Config = ReadContractsConfig<TContracts, TAllowFailure>,
 > = {
   [K in keyof Config]?: K extends 'contracts'
-    ? DeepPartial<Config[K], 2>
-    : Config[K]
+  ? MaybeRef<DeepMaybeRef<DeepPartial<Config[K], 2>>>
+  : MaybeRef<Config[K]>
 } & QueryConfigWithSelect<
   ReadContractsResult<TContracts, TAllowFailure>,
   Error,
@@ -120,7 +121,7 @@ function queryFn<
   return ({
     queryKey: [{ allowFailure, blockNumber, blockTag, contracts: contracts_ }],
   }: UnwrapRef<QueryFunctionArgs<typeof queryKey<TContracts>>>) => {
-    const contracts = contracts_.map((contract, i) => ({
+    const contracts = unref(contracts_).map((contract, i) => ({
       ...contract,
       abi: abis[i] as Abi,
     }))
