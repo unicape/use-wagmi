@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.3.11
+
+### Patch Changes
+
+- [`8448448`](https://github.com/unicape/use-wagmi/commit/8448448a2c5bec6dbb311aa35679a48033adc97b) Thanks [@unicape](https://github.com/unicape)! - fix useContractReads type & unref
+
 ## 0.3.10
 
 ### Patch Changes
