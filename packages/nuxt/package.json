@@ -51,8 +51,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.6.3",
-    "local-pkg": "^0.4.3",
-    "use-wagmi": "workspace:*"
+    "local-pkg": "^0.4.3"
   },
   "devDependencies": {
     "@nuxt/module-builder": "^0.4.0",

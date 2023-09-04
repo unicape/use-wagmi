@@ -101,7 +101,7 @@ function queryKey<
       chainId,
       scopeKey,
       contracts: (
-        (contracts ?? []) as unknown as (ContractFunctionConfig & {
+        (unref(contracts) ?? []) as unknown as (ContractFunctionConfig & {
           chainId?: number
         })[]
       ).map(({ address, args, chainId, functionName }) => ({
@@ -121,7 +121,7 @@ function queryFn<
   return ({
     queryKey: [{ allowFailure, blockNumber, blockTag, contracts: contracts_ }],
   }: UnwrapRef<QueryFunctionArgs<typeof queryKey<TContracts>>>) => {
-    const contracts = unref(contracts_).map((contract, i) => ({
+    const contracts = contracts_.map((contract, i) => ({
       ...contract,
       abi: abis[i] as Abi,
     }))

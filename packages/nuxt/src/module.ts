@@ -1,8 +1,7 @@
 import { defineNuxtModule } from '@nuxt/kit'
-import * as functions from 'use-wagmi'
+import { functions } from './functions'
 
 const packageName = 'use-wagmi' as const
-const gitignore = ['mainnet', 'sepolia']
 
 export interface WagmiNuxtOptions {
   /**
@@ -40,7 +39,6 @@ export default defineNuxtModule<WagmiNuxtOptions>({
         if (sources.find((i) => i.from === packageName)) return
 
         const imports = Object.keys(functions)
-          .filter((name) => !gitignore.includes(name))
           .filter((name) => !exclude.includes(name))
           .map((name) => {
             return {

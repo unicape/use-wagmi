@@ -1,0 +1,52 @@
+export const functions = [
+  /* config */
+  'createConfig',
+
+  /* plugin */
+  'UseWagmiPlugin',
+  'useConfig',
+
+  /* hooks */
+  'paginatedIndexesConfig',
+  'useAccount',
+  'useBalance',
+  'useBlockNumber',
+  'useChainId',
+  'useConnect',
+  'useContractEvent',
+  'useContractInfiniteReads',
+  'useContractRead',
+  'useContractReads',
+  'useContractWrite',
+  'useDisconnect',
+  'useEnsAddress',
+  'useEnsAvatar',
+  'useEnsName',
+  'useEnsResolver',
+  'useFeeData',
+  'useInfiniteQuery',
+  'useNetwork',
+  'usePublicClient',
+  'useQuery',
+  'useQueryClient',
+  'useSendTransaction',
+  'usePrepareContractWrite',
+  'usePrepareSendTransaction',
+  'useSignMessage',
+  'useSignTypedData',
+  'useSwitchNetwork',
+  'useToken',
+  'useTransaction',
+  'useWaitForTransaction',
+  'useWalletClient',
+  'useWatchPendingTransactions',
+  'useWebSocketPublicClient',
+
+  /* @wagmi/core */
+  'configureChains',
+  'createStorage',
+  'deepEqual',
+  'deserialize',
+  'readContracts',
+  'serialize',
+]
