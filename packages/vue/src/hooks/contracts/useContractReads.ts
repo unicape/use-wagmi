@@ -117,13 +117,13 @@ function queryKey<
 function queryFn<
   TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
->({ abis }: { abis: (Abi | readonly unknown[])[] }) {
+>({ abis }: { abis: MaybeRef<(Abi | readonly unknown[])[]> }) {
   return ({
     queryKey: [{ allowFailure, blockNumber, blockTag, contracts: contracts_ }],
   }: UnwrapRef<QueryFunctionArgs<typeof queryKey<TContracts>>>) => {
     const contracts = contracts_.map((contract, i) => ({
       ...contract,
-      abi: abis[i] as Abi,
+      abi: unref(abis)[i] as Abi,
     }))
     return readContracts({
       allowFailure,
@@ -206,11 +206,11 @@ export function useContractReads<
     queryKey: queryKey_.value,
   })
 
-  const abis = (
+  const abis = computed(() => (
     (unref(contracts) ?? []) as unknown as ContractFunctionConfig[]
-  ).map(({ abi }) => abi)
+  ).map(({ abi }) => abi))
 
-  return useQuery(queryKey_, queryFn({ abis: unref(abis) }), {
+  return useQuery(queryKey_, queryFn({ abis }), {
     cacheTime,
     enabled,
     isDataEqual,
