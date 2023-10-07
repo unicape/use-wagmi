@@ -83,7 +83,7 @@ We've only scratched the surface for what you can do with use-wagmi!
 
 ## Nuxt
 
-we shipped a Nuxt module to enable auto importing for Nuxt 3 and Nuxt Bridge.
+We shipped a Nuxt module to enable auto importing for Nuxt 3 and Nuxt Bridge.
 
 ```bash
 npm install @use-wagmi/nuxt -D
@@ -93,7 +93,7 @@ npm install @use-wagmi/nuxt -D
 // nuxt.config.ts
 export default defineNuxtConfig({
   modules: [
-    '@vueuse/nuxt',
+    '@use-wagmi/nuxt',
   ],
 })
 ```
