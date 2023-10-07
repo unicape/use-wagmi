@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 overrides:
   abitype: 0.8.7
 
@@ -165,8 +169,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2(react@18.2.0)(typescript@5.1.6)(viem@1.0.0)
       '@wagmi/core':
-        specifier: ^1.4.2
-        version: 1.4.2(react@18.2.0)(typescript@5.1.6)(viem@1.0.0)
+        specifier: ^1.4.3
+        version: 1.4.3(react@18.2.0)(typescript@5.1.6)(viem@1.0.0)
       abitype:
         specifier: 0.8.7
         version: registry.npmmirror.com/abitype@0.8.7(typescript@5.1.6)
@@ -1964,8 +1968,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@1.4.2(react@18.2.0)(typescript@5.1.6)(viem@1.0.0):
-    resolution: {integrity: sha512-szgNs2DCbBXKsq3wdm/YD8FWkg7lfmTRAv25b2nJYJUTQN59pVXznlWfq8VCJLamhKOYjeYHlTQxXkAeUAJdhw==}
+  /@wagmi/core@1.4.3(react@18.2.0)(typescript@5.1.6)(viem@1.0.0):
+    resolution: {integrity: sha512-CIV9jwv5ue+WpqmA3FvwGa+23cppe7oIaz6TRnlGm0Hm0wDImSaQSWqcsFyOPvleD29oOIJ8e3KnHINEvI64AA==}
     peerDependencies:
       typescript: '>=5.0.4'
       viem: '>=0.3.35'
@@ -12259,7 +12263,3 @@ packages:
       compress-commons: registry.npmmirror.com/compress-commons@4.1.1
       readable-stream: 3.6.2
     dev: true
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
