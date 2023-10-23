@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.4.3
+
+### Patch Changes
+
+- [`debcbac`](https://github.com/unicape/use-wagmi/commit/debcbac0547f44507d8961db3cd82856c48085e1) Thanks [@unicape](https://github.com/unicape)! - fix: pass dataSuffix into viem requests
+
 ## 0.4.2
 
 ### Patch Changes
