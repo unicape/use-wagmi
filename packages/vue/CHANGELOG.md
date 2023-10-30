@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.4.4
+
+### Patch Changes
+
+- [#78](https://github.com/unicape/use-wagmi/pull/78) [`6ab4165`](https://github.com/unicape/use-wagmi/commit/6ab4165c706e1c22c601504d9fb173ef4eec45ff) Thanks [@unicape](https://github.com/unicape)! - Fix: useSendTransaction retuen result
+
 ## 0.4.3
 
 ### Patch Changes
