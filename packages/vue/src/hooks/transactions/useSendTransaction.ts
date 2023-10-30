@@ -151,7 +151,7 @@ export function useSendTransaction<
         to,
       }),
     })
-    mutate(_args as SendTransactionArgs)
+    return mutate(_args as SendTransactionArgs)
   }
 
   const sendTransactionAsync = (args?: UseSendTransactionMutationArgs) => {
@@ -173,7 +173,7 @@ export function useSendTransaction<
         to,
       }),
     })
-    mutateAsync(_args as SendTransactionArgs)
+    return mutateAsync(_args as SendTransactionArgs)
   }
 
   return {
