@@ -56,7 +56,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
       onDisconnect?.()
     }
 
-    previousAccount.value = account
+    previousAccount.value = Object.assign({}, account)
   })
 
   return toRefs(account)
