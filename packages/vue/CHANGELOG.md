@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.4.5
+
+### Patch Changes
+
+- [`4449d02`](https://github.com/unicape/use-wagmi/commit/4449d02b9dc037961a08dd5ec5b25141bfeceb6d) Thanks [@unicape](https://github.com/unicape)! - Fix onConnect in useAccount is not triggered
+
 ## 0.4.4
 
 ### Patch Changes
