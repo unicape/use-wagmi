@@ -1,0 +1,65 @@
+'use client'
+
+import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
+import type { Evaluate } from '@wagmi/core/internal'
+import { watchEffect } from 'vue'
+
+import type { MaybeRef } from '../types/index.js'
+import type { ConfigParameter } from '../types/properties.js'
+import { useConfig } from './useConfig.js'
+
+export type UseAccountEffectParameters = Evaluate<
+  {
+    onConnect?(
+      data: Evaluate<
+        Pick<
+          Extract<GetAccountReturnType, { status: 'connected' }>,
+          'address' | 'addresses' | 'chain' | 'chainId' | 'connector'
+        > & {
+          isReconnected: boolean
+        }
+      >,
+    ): void
+    onDisconnect?(): void
+  } & MaybeRef<ConfigParameter>
+>
+
+/** https://beta.wagmi.sh/react/api/hooks/useAccountEffect */
+export function useAccountEffect(parameters: UseAccountEffectParameters = {}) {
+  const { onConnect, onDisconnect } = parameters
+
+  const config = useConfig(parameters)
+
+  watchEffect((onCleanup) => {
+    const unwatch = watchAccount(config, {
+      onChange(data, prevData) {
+        if (
+          (prevData.status === 'reconnecting' ||
+            (prevData.status === 'connecting' &&
+              prevData.address === undefined)) &&
+          data.status === 'connected'
+        ) {
+          const { address, addresses, chain, chainId, connector } = data
+          const isReconnected =
+            prevData.status === 'reconnecting' ||
+            // if `previousAccount.status` is `undefined`, the connector connected immediately.
+            prevData.status === undefined
+          onConnect?.({
+            address,
+            addresses,
+            chain,
+            chainId,
+            connector,
+            isReconnected,
+          })
+        } else if (
+          prevData.status === 'connected' &&
+          data.status === 'disconnected'
+        )
+          onDisconnect?.()
+      },
+    })
+
+    onCleanup(() => unwatch())
+  })
+}
