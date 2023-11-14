@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { useAccount } from 'use-wagmi';
+import { useAccount, useBalance, useChainId } from 'use-wagmi';
 
-const { address, addresses, chainId } = useAccount();
+const { address, addresses } = useAccount();
+
+// useBalance();
+const chainId = useChainId();
 </script>
 
 <template>

@@ -51,8 +51,8 @@ importers:
         specifier: 5.1.6
         version: 5.1.6
       viem:
-        specifier: 2.0.0-beta.0
-        version: 2.0.0-beta.0(typescript@5.1.6)
+        specifier: 2.0.0-beta.6
+        version: 2.0.0-beta.6(typescript@5.1.6)
       vitest:
         specifier: ^0.34.5
         version: 0.34.6(@vitest/ui@0.34.6)
@@ -79,14 +79,11 @@ importers:
         specifier: ^5.8.1
         version: 5.8.1
       '@wagmi/connectors':
-        specifier: 4.0.0-beta.1
-        version: 4.0.0-beta.1(@wagmi/core@2.0.0-beta.1)(typescript@5.1.6)(viem@2.0.0-beta.0)
+        specifier: 4.0.0-beta.3
+        version: 4.0.0-beta.3(@wagmi/core@2.0.0-beta.3)(typescript@5.1.6)(viem@2.0.0-beta.6)
       '@wagmi/core':
-        specifier: 2.0.0-beta.1
-        version: 2.0.0-beta.1(@tanstack/query-core@5.8.1)(typescript@5.1.6)(viem@2.0.0-beta.0)
-      use-sync-external-store:
-        specifier: ^1.2.0
-        version: 1.2.0
+        specifier: 2.0.0-beta.3
+        version: 2.0.0-beta.3(@tanstack/query-core@5.8.1)(typescript@5.1.6)(viem@2.0.0-beta.6)
       vue:
         specifier: 3.3.8
         version: 3.3.8(typescript@5.1.6)
@@ -94,9 +91,6 @@ importers:
       '@tanstack/vue-query':
         specifier: 5.0.5
         version: 5.0.5(vue@3.3.8)
-      '@types/use-sync-external-store':
-        specifier: ^0.0.3
-        version: 0.0.3
 
   playgrounds/vite-vue:
     dependencies:
@@ -1950,7 +1944,7 @@ packages:
     resolution: {integrity: sha512-osvveYtyzdEVbt3OfwwXFr4P2iVBL5u1Q3q4ONBfDY/UpOuXmOlbgwc1xECEboY8wIays8Yt6onaWMUdUbfl0A==}
     dependencies:
       '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.1
+      '@noble/hashes': 1.3.2
       '@scure/base': 1.1.3
     dev: false
 
@@ -2270,10 +2264,6 @@ packages:
     resolution: {integrity: sha512-HYtNooPvUY9WAVRBr4u+4Qa9fYD1ze2IUlAD3HoA6oehn1taGwBx3Oa52U4mTslTS+GAExKpaFu39Y5xUEwfjg==}
     dev: false
 
-  /@types/use-sync-external-store@0.0.3:
-    resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
-    dev: true
-
   /@viem/anvil@0.0.6:
     resolution: {integrity: sha512-OjKR/+FVwzuygXYFqP8MBal1SXG8bT2gbZwqqB0XuLw81LNBBvmE/Repm6+5kkBh4IUj0PhYdrqOsnayS14Gtg==}
     dependencies:
@@ -2486,12 +2476,12 @@ packages:
   /@vue/shared@3.3.8:
     resolution: {integrity: sha512-8PGwybFwM4x8pcfgqEQFy70NaQxASvOC5DJwLQfpArw1UDfUXrJkdxD3BhVTMS+0Lef/TU7YO0Jvr0jJY8T+mw==}
 
-  /@wagmi/connectors@4.0.0-beta.1(@wagmi/core@2.0.0-beta.1)(typescript@5.1.6)(viem@2.0.0-beta.0):
-    resolution: {integrity: sha512-CEfkQFxKhJqmW3c11JKVhr/U1QwirdKIxHGgCvR2pPij7om2MEJCZgNKMeFPlwQb+UGXCIJLvndVrpFSZqvOLA==}
+  /@wagmi/connectors@4.0.0-beta.3(@wagmi/core@2.0.0-beta.3)(typescript@5.1.6)(viem@2.0.0-beta.6):
+    resolution: {integrity: sha512-BMgwvwVb4Iy7KVGb/eTYXLebYhIbV8Nh7EggUnP6hTyz71fXN2wrX0dlQyllDBptQZFk+wH2WVU7YbnY5DLHGQ==}
     peerDependencies:
-      '@wagmi/core': 2.0.0-beta.1
+      '@wagmi/core': 2.0.0-beta.3
       typescript: '>=5.0.4'
-      viem: 2.0.0-beta.0
+      viem: 2.0.0-beta.6
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -2501,11 +2491,11 @@ packages:
       '@metamask/sdk': 0.8.0
       '@safe-global/safe-apps-provider': 0.18.0(typescript@5.1.6)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@wagmi/core': 2.0.0-beta.1(@tanstack/query-core@5.8.1)(typescript@5.1.6)(viem@2.0.0-beta.0)
+      '@wagmi/core': 2.0.0-beta.3(@tanstack/query-core@5.8.1)(typescript@5.1.6)(viem@2.0.0-beta.6)
       '@walletconnect/ethereum-provider': 2.10.4(@walletconnect/modal@2.6.2)
       '@walletconnect/modal': 2.6.2
       typescript: 5.1.6
-      viem: 2.0.0-beta.0(typescript@5.1.6)
+      viem: 2.0.0-beta.6(typescript@5.1.6)
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - '@types/react'
@@ -2519,12 +2509,12 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.0.0-beta.1(@tanstack/query-core@5.8.1)(typescript@5.1.6)(viem@2.0.0-beta.0):
-    resolution: {integrity: sha512-EoKjv7axGBMiFYkTTNZscQJHgiPwgFwht33RHMeVacI00wUgslLLnAjkaAhu/blH9Dej+89wrJrpLzI1ZNf7lg==}
+  /@wagmi/core@2.0.0-beta.3(@tanstack/query-core@5.8.1)(typescript@5.1.6)(viem@2.0.0-beta.6):
+    resolution: {integrity: sha512-8zGG/flmyGtpOdfgqu4QDX1HClwbSH2XfqlTvqqfbkskiXpa7gwkd0edfpEm3nc07wbJUhqGCneg8WUy7HVjlQ==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
       typescript: '>=5.0.4'
-      viem: 2.0.0-beta.0
+      viem: 2.0.0-beta.6
     peerDependenciesMeta:
       '@tanstack/query-core':
         optional: true
@@ -2535,7 +2525,7 @@ packages:
       eventemitter3: 5.0.1
       mipd: 0.0.5(typescript@5.1.6)
       typescript: 5.1.6
-      viem: 2.0.0-beta.0(typescript@5.1.6)
+      viem: 2.0.0-beta.6(typescript@5.1.6)
       zustand: 4.4.6
     transitivePeerDependencies:
       - '@types/react'
@@ -3302,6 +3292,7 @@ packages:
   /clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+    requiresBuild: true
     dev: true
 
   /clsx@1.2.1:
@@ -3513,6 +3504,7 @@ packages:
 
   /defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    requiresBuild: true
     dependencies:
       clone: 1.0.4
     dev: true
@@ -6904,6 +6896,29 @@ packages:
 
   /viem@2.0.0-beta.0(typescript@5.1.6):
     resolution: {integrity: sha512-KsUh16uhSvTSI/tCBuMqjCvvdVIKDI4lAFWQ4hMPofBLw9W0UEmFk8hd+e/NlNc/fI24eghHmkTYLBRancIBkg==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@adraffy/ens-normalize': 1.9.4
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
+      '@scure/bip32': 1.3.2
+      '@scure/bip39': 1.2.1
+      abitype: 0.10.0(typescript@5.1.6)
+      isows: 1.0.3(ws@8.13.0)
+      typescript: 5.1.6
+      ws: 8.13.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /viem@2.0.0-beta.6(typescript@5.1.6):
+    resolution: {integrity: sha512-HpRP1r30PwfWVYg2/GKy7BUPruxCxj60RVi49Mdz9QakRGTFXmlT75jMX04EjmCTMAkYUrLB9j+2S2N/fHAhsA==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:

@@ -37,16 +37,16 @@ export {
   useAccount,
 } from '../hooks/useAccount.js'
 
-// export {
-//   type UseAccountEffectParameters,
-//   useAccountEffect,
-// } from '../hooks/useAccountEffect.js'
+export {
+  type UseAccountEffectParameters,
+  useAccountEffect,
+} from '../hooks/useAccountEffect.js'
 
-// export {
-//   type UseBalanceParameters,
-//   type UseBalanceReturnType,
-//   useBalance,
-// } from '../hooks/useBalance.js'
+export {
+  type UseBalanceParameters,
+  type UseBalanceReturnType,
+  useBalance,
+} from '../hooks/useBalance.js'
 
 // export {
 //   type UseBlockParameters,
@@ -60,11 +60,11 @@ export {
 //   useBlockNumber,
 // } from '../hooks/useBlockNumber.js'
 
-// export {
-//   type UseChainIdParameters,
-//   type UseChainIdReturnType,
-//   useChainId,
-// } from '../hooks/useChainId.js'
+export {
+  type UseChainIdParameters,
+  type UseChainIdReturnType,
+  useChainId,
+} from '../hooks/useChainId.js'
 
 // export {
 //   type UseClientParameters,

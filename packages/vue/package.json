@@ -73,7 +73,7 @@
   "peerDependencies": {
     "@tanstack/vue-query": ">=5.0.0",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.0",
+    "viem": "2.0.0-beta.6",
     "vue": ">=3"
   },
   "peerDependenciesMeta": {
@@ -83,14 +83,12 @@
   },
   "dependencies": {
     "@tanstack/query-core": "^5.8.1",
-    "@wagmi/connectors": "4.0.0-beta.1",
-    "@wagmi/core": "2.0.0-beta.1",
-    "use-sync-external-store": "^1.2.0",
+    "@wagmi/connectors": "4.0.0-beta.3",
+    "@wagmi/core": "2.0.0-beta.3",
     "vue": "3.3.8"
   },
   "devDependencies": {
-    "@tanstack/vue-query": "5.0.5",
-    "@types/use-sync-external-store": "^0.0.3"
+    "@tanstack/vue-query": "5.0.5"
   },
   "contributors": [
     "Unic Ape <unicape.dev@gmail.com>"

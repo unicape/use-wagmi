@@ -7,12 +7,12 @@ import {
 } from '@wagmi/core'
 import { type ToRefs, reactive, toRefs } from 'vue'
 
-import type { MaybeRef } from '../types/index.js'
+import type { DeepMaybeRef } from '../types/index.js'
 import type { ConfigParameter } from '../types/properties.js'
 import { updateState } from '../utils/updateState.js'
 import { useConfig } from './useConfig.js'
 
-export type UseAccountParameters = MaybeRef<ConfigParameter>
+export type UseAccountParameters = DeepMaybeRef<ConfigParameter>
 
 export type UseAccountReturnType = ToRefs<GetAccountReturnType>
 

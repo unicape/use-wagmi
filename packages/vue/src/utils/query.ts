@@ -20,18 +20,14 @@ import {
   deepEqual,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import type {
-  MaybeRef,
-  MaybeRefDeep,
-  MaybeRefOrGetter,
-} from '../types/index.js'
+import type { MaybeRef, DeepMaybeRef } from '../types/index.js'
 
 export type UseMutationParameters<
   data = unknown,
   error = Error,
   variables = void,
   context = unknown,
-> = MaybeRefDeep<
+> = DeepMaybeRef<
   Evaluate<
     Omit<
       MutationObserverOptions<data, error, Evaluate<variables>, context>,
@@ -81,7 +77,7 @@ type UseQueryOptions<
         TData,
         TQueryData,
         TQueryKey
-      >]: MaybeRefOrGetter<
+      >]: MaybeRef<
       QueryObserverOptions<
         TQueryFnData,
         TError,
@@ -92,7 +88,7 @@ type UseQueryOptions<
     >
   } & {
     // Fix `initialData` type
-    initialData?: MaybeRefOrGetter<
+    initialData?: MaybeRef<
       QOO<TQueryFnData, TError, TData, TQueryData, TQueryKey>['initialData']
     >
   }
