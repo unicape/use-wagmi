@@ -9,8 +9,7 @@ import {
   watchChainId,
 } from '@wagmi/core'
 
-import type { ConfigParameter } from '../types/properties.js'
-import type { DeepMaybeRef } from '../types/index.js'
+import type { ConfigParameter, DeepMaybeRef } from '../types.js'
 import { useConfig } from './useConfig.js'
 
 export type UseChainIdParameters<config extends Config = Config> = DeepMaybeRef<

@@ -5,6 +5,9 @@ const { address, addresses } = useAccount();
 
 // useBalance();
 const chainId = useChainId();
+const { data } = useBalance({
+	address
+});
 </script>
 
 <template>
@@ -12,5 +15,6 @@ const chainId = useChainId();
 		<p>chainId - {{ chainId }}</p>
 		<p>address - {{ address }}</p>
 		<p>addresses - {{ addresses }}</p>
+		<p>{{ data?.value }}</p>
 	</div>
 </template>

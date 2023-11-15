@@ -5,8 +5,7 @@ import { inject, unref } from 'vue'
 
 import { WagmiProviderNotFoundError } from '../errors/plugin.js'
 import { WagmiConfigInjectionKey } from '../plugin.js'
-import type { DeepMaybeRef } from '../types/index.js'
-import type { ConfigParameter } from '../types/properties.js'
+import type { DeepMaybeRef, ConfigParameter } from '../types.js'
 
 export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<
   ConfigParameter<config>

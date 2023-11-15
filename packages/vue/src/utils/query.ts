@@ -1,66 +1,26 @@
-import type {
-  MutationObserverOptions,
-  QueryObserverOptions as QOO,
-} from '@tanstack/query-core'
 import {
   type DefaultError,
   type QueryKey,
-  type UseInfiniteQueryOptions,
-  type UseInfiniteQueryReturnType as UIQRT,
-  type UseMutationReturnType as UMRT,
   type UseQueryReturnType as UQRT,
-  replaceEqualDeep,
-  useInfiniteQuery as tanstack_useInfiniteQuery,
+  type QueryObserverOptions,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
 import {
   type Evaluate,
   type ExactPartial,
   type Omit,
-  deepEqual,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import type { MaybeRef, DeepMaybeRef } from '../types/index.js'
-
-export type UseMutationParameters<
-  data = unknown,
-  error = Error,
-  variables = void,
-  context = unknown,
-> = DeepMaybeRef<
-  Evaluate<
-    Omit<
-      MutationObserverOptions<data, error, Evaluate<variables>, context>,
-      'mutationFn' | 'mutationKey' | 'throwOnError'
-    >
-  >
->
-
-export type UseMutationReturnType<
-  data = unknown,
-  error = Error,
-  variables = void,
-  context = unknown,
-> = Evaluate<
-  Omit<UMRT<data, error, variables, context>, 'mutate' | 'mutateAsync'>
->
+import type { UnwrapRef } from 'vue'
+import type {
+  WithRequired,
+  MaybeRef,
+  DeepMaybeRef,
+  DeepUnwrapRef,
+  MaybeRefOrGetter,
+} from '../types.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-type QueryObserverOptions<
-  TQueryFnData = unknown,
-  TError = DefaultError,
-  TData = TQueryFnData,
-  TQueryData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-> = Omit<
-  QOO<TQueryFnData, TError, TData, TQueryData, TQueryKey>,
-  | 'initialData'
-  | 'queryFn'
-  | 'queryHash'
-  | 'queryKey'
-  | 'queryKeyHashFn'
-  | 'throwOnError'
->
 
 type UseQueryOptions<
   TQueryFnData = unknown,
@@ -68,129 +28,100 @@ type UseQueryOptions<
   TData = TQueryFnData,
   TQueryData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> = MaybeRef<
-  {
-    [Property in
-      keyof QueryObserverOptions<
+> = {
+  [Property in
+    keyof QueryObserverOptions<
+      TQueryFnData,
+      TError,
+      TData,
+      TQueryData,
+      TQueryKey
+    >]: Property extends 'queryFn'
+    ? QueryObserverOptions<
         TQueryFnData,
         TError,
         TData,
         TQueryData,
-        TQueryKey
-      >]: MaybeRef<
-      QueryObserverOptions<
-        TQueryFnData,
-        TError,
-        TData,
-        TQueryData,
-        TQueryKey
+        DeepUnwrapRef<TQueryKey>
       >[Property]
+    : Property extends 'enabled'
+    ? MaybeRefOrGetter<
+        QueryObserverOptions<
+          TQueryFnData,
+          TError,
+          TData,
+          TQueryData,
+          TQueryKey
+        >[Property]
+      >
+    : DeepMaybeRef<
+        WithRequired<
+          QueryObserverOptions<
+            TQueryFnData,
+            TError,
+            TData,
+            TQueryData,
+            TQueryKey
+          >,
+          'queryKey'
+        >[Property]
+      >
+}
+
+export type UseQueryParameters<
+  TQueryFnData = unknown,
+  TError = DefaultError,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+> = Evaluate<
+  ExactPartial<
+    Omit<
+      UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>,
+      | 'initialData'
+      | 'queryHash'
+      | 'queryKey'
+      | 'queryKeyHashFn'
+      | 'throwOnError'
     >
-  } & {
+  > & {
     // Fix `initialData` type
-    initialData?: MaybeRef<
-      QOO<TQueryFnData, TError, TData, TQueryData, TQueryKey>['initialData']
-    >
+    initialData?: UnwrapRef<
+      UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
+    >['initialData']
   }
 >
 
-export type UseQueryParameters<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryKey extends QueryKey = QueryKey,
-> = Evaluate<ExactPartial<UseQueryOptions<queryFnData, error, data, queryKey>>>
-
 export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
   UQRT<data, error> & {
-    queryKey: QueryKey
+    queryKey: MaybeRef<QueryKey>
   }
 >
 
 // Adding some basic customization.
 // Ideally we don't have this function, but `import('@tanstack/react-query').useQuery` currently has some quirks where it is super hard to
 // pass down the inferred `initialData` type because of it's discriminated overload in the on `useQuery`.
-export function useQuery<queryFnData, error, data, queryKey extends QueryKey>(
-  parameters: UseQueryParameters<queryFnData, error, data, queryKey> & {
-    queryKey: QueryKey
+export function useQuery<
+  TQueryFnData,
+  TError,
+  TData,
+  TQueryData,
+  TQueryKey extends QueryKey,
+>(
+  parameters: UseQueryParameters<
+    TQueryFnData,
+    TError,
+    TData,
+    TQueryData,
+    TQueryKey
+  > & {
+    queryKey: MaybeRef<TQueryKey>
   },
-): UseQueryReturnType<data, error> {
+): UseQueryReturnType<TData, TError> {
   const result = tanstack_useQuery({
     ...(parameters as any),
     queryKeyHashFn: hashFn, // for bigint support
-  }) as UseQueryReturnType<data, error>
+  }) as UseQueryReturnType<TData, TError>
   result.queryKey = parameters.queryKey
   return result
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-export type UseInfiniteQueryParameters<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryData = queryFnData,
-  queryKey extends QueryKey = QueryKey,
-  pageParam = unknown,
-> = Evaluate<
-  Omit<
-    UseInfiniteQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryData,
-      queryKey,
-      pageParam
-    >,
-    | 'initialData'
-    | 'queryFn'
-    | 'queryHash'
-    | 'queryKey'
-    | 'queryKeyHashFn'
-    | 'throwOnError'
-  > & {
-    // Fix `initialData` type
-    initialData?: UseInfiniteQueryOptions<
-      queryFnData,
-      error,
-      data,
-      queryKey
-    >['initialData']
-  }
->
-
-export type UseInfiniteQueryReturnType<
-  data = unknown,
-  error = DefaultError,
-> = UIQRT<data, error> & {
-  queryKey: QueryKey
-}
-
-// Adding some basic customization.
-export function useInfiniteQuery<
-  queryFnData,
-  error,
-  data,
-  queryKey extends QueryKey,
->(
-  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
-    queryKey: QueryKey
-  },
-): UseInfiniteQueryReturnType<data, error> {
-  const result = tanstack_useInfiniteQuery({
-    ...(parameters as any),
-    queryKeyHashFn: hashFn, // for bigint support
-  }) as UseInfiniteQueryReturnType<data, error>
-  result.queryKey = parameters.queryKey
-  return result
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-export function structuralSharing<data>(
-  oldData: data | undefined,
-  newData: data,
-): data {
-  if (deepEqual(oldData, newData)) return oldData as data
-  return replaceEqualDeep(oldData, newData)
 }

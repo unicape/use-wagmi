@@ -4,8 +4,7 @@ import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { watchEffect } from 'vue'
 
-import type { MaybeRefShallow } from '../types/index.js'
-import type { ConfigParameter } from '../types/properties.js'
+import type { DeepMaybeRef, ConfigParameter } from '../types.js'
 import { useConfig } from './useConfig.js'
 
 export type UseAccountEffectParameters = Evaluate<
@@ -21,7 +20,7 @@ export type UseAccountEffectParameters = Evaluate<
       >,
     ): void
     onDisconnect?(): void
-  } & MaybeRefShallow<ConfigParameter>
+  } & DeepMaybeRef<ConfigParameter>
 >
 
 /** https://beta.wagmi.sh/react/api/hooks/useAccountEffect */
