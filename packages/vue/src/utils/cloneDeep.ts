@@ -1,9 +1,9 @@
 import { isRef } from 'vue'
-import type { DeepMaybeRef } from '../types.js'
+import type { MaybeRefDeep } from '../types.js'
 
 export function cloneDeep<T>(
-  value: DeepMaybeRef<T>,
-  customizer?: (val: DeepMaybeRef<T>) => T | undefined,
+  value: MaybeRefDeep<T>,
+  customizer?: (val: MaybeRefDeep<T>) => T | undefined,
 ): T {
   if (customizer) {
     const result = customizer(value)

@@ -84,11 +84,11 @@ export {
 //   useConnect,
 // } from '../hooks/useConnect.js'
 
-// export {
-//   type UseConnectionsParameters,
-//   type UseConnectionsReturnType,
-//   useConnections,
-// } from '../hooks/useConnections.js'
+export {
+  type UseConnectionsParameters,
+  type UseConnectionsReturnType,
+  useConnections,
+} from '../hooks/useConnections.js'
 
 // export {
 //   type UseConnectorsParameters,

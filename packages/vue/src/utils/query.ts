@@ -2,7 +2,7 @@ import {
   type DefaultError,
   type QueryKey,
   type UseQueryReturnType as UQRT,
-  type QueryObserverOptions,
+  type UseQueryOptions,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
 import {
@@ -11,62 +11,9 @@ import {
   type Omit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import type { UnwrapRef } from 'vue'
-import type {
-  WithRequired,
-  MaybeRef,
-  DeepMaybeRef,
-  DeepUnwrapRef,
-  MaybeRefOrGetter,
-} from '../types.js'
-
-////////////////////////////////////////////////////////////////////////////////
-
-type UseQueryOptions<
-  TQueryFnData = unknown,
-  TError = DefaultError,
-  TData = TQueryFnData,
-  TQueryData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
-> = {
-  [Property in
-    keyof QueryObserverOptions<
-      TQueryFnData,
-      TError,
-      TData,
-      TQueryData,
-      TQueryKey
-    >]: Property extends 'queryFn'
-    ? QueryObserverOptions<
-        TQueryFnData,
-        TError,
-        TData,
-        TQueryData,
-        DeepUnwrapRef<TQueryKey>
-      >[Property]
-    : Property extends 'enabled'
-    ? MaybeRefOrGetter<
-        QueryObserverOptions<
-          TQueryFnData,
-          TError,
-          TData,
-          TQueryData,
-          TQueryKey
-        >[Property]
-      >
-    : DeepMaybeRef<
-        WithRequired<
-          QueryObserverOptions<
-            TQueryFnData,
-            TError,
-            TData,
-            TQueryData,
-            TQueryKey
-          >,
-          'queryKey'
-        >[Property]
-      >
-}
+import { computed } from 'vue'
+import type { MaybeRefDeep, DeepUnwrapRef } from '../types.js'
+import { unref } from 'vue'
 
 export type UseQueryParameters<
   TQueryFnData = unknown,
@@ -74,27 +21,31 @@ export type UseQueryParameters<
   TData = TQueryFnData,
   TQueryData = TQueryFnData,
   TQueryKey extends QueryKey = QueryKey,
-> = Evaluate<
-  ExactPartial<
-    Omit<
-      UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>,
-      | 'initialData'
-      | 'queryHash'
-      | 'queryKey'
-      | 'queryKeyHashFn'
-      | 'throwOnError'
-    >
+> = MaybeRefDeep<
+  Evaluate<
+    ExactPartial<
+      Omit<
+        DeepUnwrapRef<
+          UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
+        >,
+        'queryKey' | 'initialData'
+      >
+    > & {
+      // Fix `initialData` type
+      initialData?:
+        | DeepUnwrapRef<
+            UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
+          >['initialData']
+        | undefined
+    }
   > & {
-    // Fix `initialData` type
-    initialData?: UnwrapRef<
-      UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
-    >['initialData']
+    queryKey: TQueryKey
   }
 >
 
 export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
   UQRT<data, error> & {
-    queryKey: MaybeRef<QueryKey>
+    queryKey: MaybeRefDeep<QueryKey>
   }
 >
 
@@ -114,14 +65,14 @@ export function useQuery<
     TData,
     TQueryData,
     TQueryKey
-  > & {
-    queryKey: MaybeRef<TQueryKey>
-  },
+  >,
 ): UseQueryReturnType<TData, TError> {
-  const result = tanstack_useQuery({
-    ...(parameters as any),
+  const options = computed(() => ({
+    ...(unref(parameters) as any),
     queryKeyHashFn: hashFn, // for bigint support
-  }) as UseQueryReturnType<TData, TError>
-  result.queryKey = parameters.queryKey
+  }))
+
+  const result = tanstack_useQuery(options) as UseQueryReturnType<TData, TError>
+  result.queryKey = unref(parameters).queryKey
   return result
 }

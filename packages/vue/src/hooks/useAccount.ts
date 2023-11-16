@@ -5,15 +5,15 @@ import {
   getAccount,
   watchAccount,
 } from '@wagmi/core'
-import { type ToRefs, reactive, toRefs } from 'vue'
+import { type ToRefs, type DeepReadonly, reactive, toRefs, readonly } from 'vue'
 
-import type { DeepMaybeRef, ConfigParameter } from '../types.js'
+import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { updateState } from '../utils/updateState.js'
 import { useConfig } from './useConfig.js'
 
-export type UseAccountParameters = DeepMaybeRef<ConfigParameter>
+export type UseAccountParameters = MaybeRefDeep<ConfigParameter>
 
-export type UseAccountReturnType = ToRefs<GetAccountReturnType>
+export type UseAccountReturnType = ToRefs<DeepReadonly<GetAccountReturnType>>
 
 /** https://beta.wagmi.sh/react/api/hooks/useAccount */
 export function useAccount(
@@ -28,5 +28,5 @@ export function useAccount(
     },
   })
 
-  return toRefs(account) as UseAccountReturnType
+  return toRefs(readonly(account))
 }

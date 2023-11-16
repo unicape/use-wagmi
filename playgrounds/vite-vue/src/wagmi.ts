@@ -1,5 +1,5 @@
 import { http, createConfig } from 'use-wagmi'
-import { celo, mainnet, optimism, sepolia } from 'use-wagmi/chains'
+import { celo, mainnet, optimism, sepolia, goerli } from 'use-wagmi/chains'
 import {
   coinbaseWallet,
   injected,
@@ -10,7 +10,7 @@ import {
 } from 'use-wagmi/connectors'
 
 export const config = createConfig({
-  chains: [mainnet, sepolia, optimism, celo],
+  chains: [mainnet, sepolia, optimism, celo, goerli],
   connectors: [
     // walletConnect({
     //   projectId: import.meta.env.VITE_WC_PROJECT_ID,
@@ -30,6 +30,7 @@ export const config = createConfig({
     ),
     [optimism.id]: http(),
     [celo.id]: http(),
+    [goerli.id]: http(),
   },
 })
 

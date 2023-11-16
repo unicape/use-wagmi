@@ -16,19 +16,27 @@ type UnwrapLeaf =
   | Set<any>
   | WeakSet<any>
 
-export type WithRequired<T, K extends keyof T> = T & {
-  [_ in K]: {}
-}
-
-export type MaybeRef<T> = T | Ref<T>
+export type MaybeRef<T> = Ref<T> | T
 
 export type MaybeRefOrGetter<T> = MaybeRef<T> | (() => T)
 
-export type DeepMaybeRef<T> = T extends Ref<infer V>
-  ? MaybeRef<V>
-  : T extends any[] | object
-  ? { [K in keyof T]: DeepMaybeRef<T[K]> }
-  : MaybeRef<T>
+export type MaybeRefShallow<T> = T extends object
+  ? {
+      [Property in keyof T]: MaybeRef<T[Property]>
+    }
+  : T
+
+export type MaybeRefDeep<T> = MaybeRef<
+  T extends Function | Config
+    ? T
+    : T extends object | any[]
+    ? {
+        [Property in keyof T]: MaybeRefDeep<T[Property]>
+      }
+    : T
+>
+
+export type ShallowUnwrapRef<T> = T extends Ref<infer P> ? P : T
 
 export type DeepUnwrapRef<T> = T extends UnwrapLeaf
   ? T
@@ -49,10 +57,18 @@ export type ConfigParameter<config extends Config = Config> = {
 }
 
 export type QueryParameter<
-  queryFnData = unknown,
-  error = DefaultError,
-  data = queryFnData,
-  queryKey extends QueryKey = QueryKey,
+  TQueryFnData = unknown,
+  TError = DefaultError,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
 > = {
-  query?: UseQueryParameters<queryFnData, error, data, queryKey> | undefined
+  query?:
+    | Omit<
+        DeepUnwrapRef<
+          UseQueryParameters<TQueryFnData, TError, TData, TQueryData, TQueryKey>
+        >,
+        'queryFn' | 'queryHash' | 'queryKey' | 'queryKeyHashFn' | 'throwOnError'
+      >
+    | undefined
 }

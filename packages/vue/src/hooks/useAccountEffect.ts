@@ -2,12 +2,13 @@
 
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
-import { watchEffect } from 'vue'
+import { watchEffect, unref } from 'vue'
 
-import type { DeepMaybeRef, ConfigParameter } from '../types.js'
+import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { useConfig } from './useConfig.js'
+import { cloneDeepUnref } from '../utils/cloneDeepUnref.js'
 
-export type UseAccountEffectParameters = Evaluate<
+type UseAccountEffectArgs = Evaluate<
   {
     onConnect?(
       data: Evaluate<
@@ -20,16 +21,20 @@ export type UseAccountEffectParameters = Evaluate<
       >,
     ): void
     onDisconnect?(): void
-  } & DeepMaybeRef<ConfigParameter>
+  } & ConfigParameter
 >
+export type UseAccountEffectParameters = MaybeRefDeep<UseAccountEffectArgs>
+// MaybeRefShallow<ConfigParameter>
 
 /** https://beta.wagmi.sh/react/api/hooks/useAccountEffect */
 export function useAccountEffect(parameters: UseAccountEffectParameters = {}) {
-  const { onConnect, onDisconnect } = parameters
-
   const config = useConfig(parameters)
 
   watchEffect((onCleanup) => {
+    const { config: _, ...options } = unref(parameters)
+    const { onConnect, onDisconnect } =
+      cloneDeepUnref<UseAccountEffectArgs>(options)
+
     const unwatch = watchAccount(config, {
       onChange(data, prevData) {
         if (

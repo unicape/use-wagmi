@@ -9,21 +9,20 @@ import {
   watchChainId,
 } from '@wagmi/core'
 
-import type { ConfigParameter, DeepMaybeRef } from '../types.js'
+import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { useConfig } from './useConfig.js'
 
-export type UseChainIdParameters<config extends Config = Config> = DeepMaybeRef<
-  ConfigParameter<config>
->
+export type UseChainIdParameters<TConfig extends Config = Config> =
+  MaybeRefDeep<ConfigParameter<TConfig>>
 
-export type UseChainIdReturnType<config extends Config = Config> = ComputedRef<
-  GetChainIdReturnType<config>
+export type UseChainIdReturnType<TConfig extends Config = Config> = ComputedRef<
+  GetChainIdReturnType<TConfig>
 >
 
 /** https://beta.wagmi.sh/react/api/hooks/useChainId */
-export function useChainId<config extends Config = ResolvedRegister['config']>(
-  parameters: UseChainIdParameters<config> = {},
-): UseChainIdReturnType<config> {
+export function useChainId<TConfig extends Config = ResolvedRegister['config']>(
+  parameters: UseChainIdParameters<TConfig> = {},
+): UseChainIdReturnType<TConfig> {
   const config = useConfig(parameters)
   const chainId = ref(getChainId(config as ResolvedRegister['config']))
 
@@ -33,5 +32,5 @@ export function useChainId<config extends Config = ResolvedRegister['config']>(
     },
   })
 
-  return computed(() => chainId.value)
+  return computed<GetChainIdReturnType<TConfig>>(() => chainId.value)
 }

@@ -5,9 +5,9 @@ import { inject, unref } from 'vue'
 
 import { WagmiProviderNotFoundError } from '../errors/plugin.js'
 import { WagmiConfigInjectionKey } from '../plugin.js'
-import type { DeepMaybeRef, ConfigParameter } from '../types.js'
+import type { MaybeRefDeep, ConfigParameter } from '../types.js'
 
-export type UseConfigParameters<config extends Config = Config> = DeepMaybeRef<
+export type UseConfigParameters<config extends Config = Config> = MaybeRefDeep<
   ConfigParameter<config>
 >
 
@@ -19,5 +19,5 @@ export function useConfig<config extends Config = ResolvedRegister['config']>(
 ): UseConfigReturnType<config> {
   const config = unref(parameters).config ?? inject(WagmiConfigInjectionKey)
   if (!config) throw new WagmiProviderNotFoundError()
-  return config as UseConfigReturnType<config>
+  return unref(config) as UseConfigReturnType<config>
 }

@@ -11,23 +11,25 @@ import {
   type GetBalanceOptions,
   type GetBalanceQueryKey,
   getBalanceQueryOptions,
-  getBalanceQueryKey,
 } from '@wagmi/core/query'
 import type { GetBalanceQueryFnData } from '@wagmi/core/query'
 import { computed, unref } from 'vue'
 
-import type { ConfigParameter, QueryParameter, DeepMaybeRef } from '../types.js'
-import { useQuery } from '../utils/query.js'
+import type {
+  ConfigParameter,
+  QueryParameter,
+  MaybeRefDeep,
+  DeepUnwrapRef,
+} from '../types.js'
+import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 import { cloneDeepUnref } from '../utils/cloneDeepUnref.js'
 
-import type { UseQueryReturnType } from '@tanstack/vue-query'
-
 export type UseBalanceParameters<
   config extends Config = Config,
   selectData = GetBalanceData,
-> = DeepMaybeRef<
+> = MaybeRefDeep<
   Evaluate<
     GetBalanceOptions<config> &
       ConfigParameter<config> &
@@ -47,29 +49,33 @@ export type UseBalanceReturnType<selectData = GetBalanceData> =
 export function useBalance<
   config extends Config = ResolvedRegister['config'],
   selectData = GetBalanceData,
->(parameters: UseBalanceParameters<config, selectData> = {}) {
-  const { address, query = {} } = parameters
-
+>(
+  parameters: UseBalanceParameters<config, selectData> = {},
+): UseBalanceReturnType<selectData> {
   const config = useConfig(parameters)
   const chainId = useChainId()
 
-  const { queryFn } = getBalanceQueryOptions(config)
-  const queryKey = computed(() => {
-    const options = cloneDeepUnref({
-      ...parameters,
-      chainId,
+  const queryOptions = computed(() => {
+    const { config: _, ...params } = unref(parameters)
+    const clonedParameters = cloneDeepUnref<
+      Omit<DeepUnwrapRef<UseBalanceParameters>, 'config'>
+    >(params as any)
+
+    const options = getBalanceQueryOptions(config, {
+      ...clonedParameters,
+      chainId: clonedParameters.chainId ?? unref(chainId),
     })
-    return getBalanceQueryKey<config>(options)
+
+    const { address, query = {} } = clonedParameters
+
+    const enabled = Boolean(address && (query.enabled ?? true))
+
+    return {
+      ...query,
+      ...options,
+      enabled,
+    }
   })
 
-  const enabled = computed(() => {
-    return Boolean(unref(address) && (unref(query)?.enabled ?? true))
-  })
-
-  return useQuery({
-    ...query,
-    queryKey,
-    queryFn,
-    enabled,
-  }) as UseBalanceReturnType<selectData>
+  return useQuery(queryOptions as any) as UseBalanceReturnType<selectData>
 }

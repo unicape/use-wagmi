@@ -1,21 +1,17 @@
-import { type UnwrapNestedRefs, unref } from 'vue'
-import type { MaybeRef } from '../types.js'
+import { unref, isRef } from 'vue'
+import type { MaybeRefDeep } from '../types.js'
+import { cloneDeep } from './cloneDeep.js'
 
 export function isPlainObject(obj: any) {
   return toString.call(obj) === '[object Object]'
 }
 
-export function cloneDeepUnref<T>(maybeRef: MaybeRef<T>): UnwrapNestedRefs<T> {
-  const value = unref(maybeRef)
+export function cloneDeepUnref<T>(obj: MaybeRefDeep<T>): T {
+  return cloneDeep(obj, (val) => {
+    if (isRef(val)) {
+      return cloneDeepUnref(unref(val))
+    }
 
-  if (isPlainObject(value)) {
-    return Object.fromEntries(
-      Object.entries(value as any).map(([k, v]) => [k, cloneDeepUnref(v)]),
-    ) as any
-  }
-
-  if (Array.isArray(value))
-    return value.map((item) => cloneDeepUnref(item)) as any
-
-  return value as any
+    return undefined
+  })
 }
