@@ -113,9 +113,9 @@
     "@tanstack/query-persist-client-core": "^4.29.11",
     "@tanstack/query-sync-storage-persister": "^4.29.11",
     "@tanstack/vue-query": "^4.29.11",
-    "@wagmi/core": "^1.4.6",
+    "@wagmi/core": "1.4.10",
     "@wagmi/chains": "^1.8.0",
-    "@wagmi/connectors": "^3.1.4",
+    "@wagmi/connectors": "3.1.8",
     "eventemitter3": "^4.0.7",
     "abitype": "0.8.7",
     "vue-demi": "latest"
