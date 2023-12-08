@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.4.7
+
+### Patch Changes
+
+- [#94](https://github.com/unicape/use-wagmi/pull/94) [`01e0242`](https://github.com/unicape/use-wagmi/commit/01e02428af27f812a33b83c7876c17fdac3c1cff) Thanks [@unicape](https://github.com/unicape)! - Update dependencies
+
 ## 0.4.6
 
 ### Patch Changes
