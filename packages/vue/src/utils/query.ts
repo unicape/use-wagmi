@@ -3,6 +3,8 @@ import {
   type QueryKey,
   type UseQueryReturnType as UQRT,
   type UseQueryOptions,
+  type UseMutationOptions,
+  type MutationObserverResult,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
 import {
@@ -12,8 +14,42 @@ import {
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
 import { computed } from 'vue-demi'
-import type { MaybeRefDeep, DeepUnwrapRef } from '../types.js'
-import { unref } from 'vue-demi'
+import type { MaybeRefDeep, DeepUnwrapRef, DistributiveOmit } from '../types.js'
+import { type ToRefs, unref } from 'vue-demi'
+
+export type UseMutationParameters<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+> = Evaluate<
+  MaybeRefDeep<
+    Omit<
+      DeepUnwrapRef<
+        UseMutationOptions<data, error, Evaluate<variables>, context>
+      >,
+      'mutationFn' | 'mutationKey' | 'throwOnError'
+    >
+  >
+>
+
+type MutationResult<TData, TError, TVariables, TContext> = DistributiveOmit<
+  MutationObserverResult<TData, TError, TVariables, TContext>,
+  'mutate' | 'reset'
+>
+export type UseMutationReturnType<
+  data = unknown,
+  error = Error,
+  variables = void,
+  context = unknown,
+  result = MutationResult<data, error, variables, context>,
+> = Evaluate<
+  ToRefs<Readonly<result>> & {
+    reset: MutationObserverResult<data, error, variables, context>['reset']
+  }
+>
+
+////////////////////////////////////////////////////////////////////////////////
 
 export type UseQueryParameters<
   TQueryFnData = unknown,

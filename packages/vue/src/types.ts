@@ -1,6 +1,7 @@
 import type { Ref, UnwrapRef } from 'vue-demi'
-import type { DefaultError, QueryKey } from '@tanstack/vue-query'
+import type { DefaultError, QueryKey, MutateOptions } from '@tanstack/vue-query'
 import type { Config } from '@wagmi/core'
+import type { Evaluate } from '@wagmi/core/internal'
 
 import type { UseQueryParameters } from './utils/query.js'
 
@@ -48,6 +49,10 @@ export type DeepUnwrapRef<T> = T extends UnwrapLeaf
     }
   : UnwrapRef<T>
 
+export type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never
+
 export type EnabledParameter = {
   enabled?: boolean | undefined
 }
@@ -72,3 +77,38 @@ export type QueryParameter<
       >
     | undefined
 }
+
+export type Mutate<
+  data = unknown,
+  error = unknown,
+  variables = void,
+  context = unknown,
+> = (
+  ...args: Parameters<MutateFn<data, error, Evaluate<variables>, context>>
+) => void
+
+export type MutateAsync<
+  data = unknown,
+  error = unknown,
+  variables = void,
+  context = unknown,
+> = MutateFn<data, error, Evaluate<variables>, context>
+
+type MutateFn<
+  data = unknown,
+  error = unknown,
+  variables = void,
+  context = unknown,
+> = undefined extends variables
+  ? (
+      variables?: variables,
+      options?:
+        | Evaluate<MutateOptions<data, error, variables, context>>
+        | undefined,
+    ) => Promise<data>
+  : (
+      variables: variables,
+      options?:
+        | Evaluate<MutateOptions<data, error, variables, context>>
+        | undefined,
+    ) => Promise<data>

@@ -5,13 +5,17 @@ import { type Connector, type DisconnectErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type DisconnectData,
-  type DisconnectMutate,
-  type DisconnectMutateAsync,
   type DisconnectVariables,
   disconnectMutationOptions,
 } from '@wagmi/core/query'
 
-import type { ConfigParameter, DeepMaybeRef, MaybeRef } from '../types.js'
+import type {
+  ConfigParameter,
+  MaybeRefDeep,
+  MaybeRef,
+  Mutate,
+  MutateAsync,
+} from '../types.js'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
@@ -20,8 +24,22 @@ import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
 import { computed } from 'vue-demi'
 
+type DisconnectMutate<context = unknown> = Mutate<
+  DisconnectData,
+  DisconnectErrorType,
+  DisconnectVariables,
+  context
+>
+
+type DisconnectMutateAsync<context = unknown> = MutateAsync<
+  DisconnectData,
+  DisconnectErrorType,
+  DisconnectVariables,
+  context
+>
+
 export type UseDisconnectParameters<context = unknown> = Evaluate<
-  DeepMaybeRef<ConfigParameter> & {
+  MaybeRefDeep<ConfigParameter> & {
     mutation?:
       | UseMutationParameters<
           DisconnectData,

@@ -2,7 +2,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --r --filter \"./packages/**\" build",
+    "build": "pnpm run --r --filter \"./packages/vue\" build",
     "clean": "pnpm run --r --parallel clean",
     "format": "biome format . --write",
     "lint": "biome check .",

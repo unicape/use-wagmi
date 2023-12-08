@@ -102,11 +102,11 @@ export {
 //   useConnectorClient,
 // } from '../hooks/useConnectorClient.js'
 
-// export {
-//   type UseDisconnectParameters,
-//   type UseDisconnectReturnType,
-//   useDisconnect,
-// } from '../hooks/useDisconnect.js'
+export {
+  type UseDisconnectParameters,
+  type UseDisconnectReturnType,
+  useDisconnect,
+} from '../hooks/useDisconnect.js'
 
 // export {
 //   type UseEnsAddressParameters,
