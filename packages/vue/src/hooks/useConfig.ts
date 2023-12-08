@@ -1,7 +1,7 @@
 'use client'
 
 import { type Config, type ResolvedRegister } from '@wagmi/core'
-import { inject, unref } from 'vue'
+import { inject, unref } from 'vue-demi'
 
 import { WagmiProviderNotFoundError } from '../errors/plugin.js'
 import { WagmiConfigInjectionKey } from '../plugin.js'

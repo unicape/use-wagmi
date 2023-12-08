@@ -11,9 +11,9 @@ import {
   type Omit,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import { computed } from 'vue'
+import { computed } from 'vue-demi'
 import type { MaybeRefDeep, DeepUnwrapRef } from '../types.js'
-import { unref } from 'vue'
+import { unref } from 'vue-demi'
 
 export type UseQueryParameters<
   TQueryFnData = unknown,

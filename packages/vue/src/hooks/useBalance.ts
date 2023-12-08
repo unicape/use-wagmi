@@ -13,7 +13,7 @@ import {
   getBalanceQueryOptions,
 } from '@wagmi/core/query'
 import type { GetBalanceQueryFnData } from '@wagmi/core/query'
-import { computed, unref } from 'vue'
+import { computed, unref } from 'vue-demi'
 
 import type {
   ConfigParameter,

@@ -1,4 +1,4 @@
-import type { Ref, UnwrapRef } from 'vue'
+import type { Ref, UnwrapRef } from 'vue-demi'
 import type { DefaultError, QueryKey } from '@tanstack/vue-query'
 import type { Config } from '@wagmi/core'
 

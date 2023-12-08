@@ -1,4 +1,4 @@
-import { isRef } from 'vue'
+import { isRef } from 'vue-demi'
 import type { MaybeRefDeep } from '../types.js'
 
 export function cloneDeep<T>(

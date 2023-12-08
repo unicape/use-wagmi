@@ -1,5 +1,5 @@
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, isVue2 } from 'vue-demi'
 import { createInjectionKey } from './utils/createInjectionKey.js'
 
 export const WagmiConfigInjectionKey =
@@ -34,6 +34,23 @@ export const UseWagmiPlugin = {
       })
     })
 
-    app.provide(WagmiConfigInjectionKey, config)
+    if (isVue2) {
+      app.mixin({
+        beforeCreate() {
+          // HACK: taken from provide(): https://github.com/vuejs/composition-api/blob/master/src/apis/inject.ts#L30
+          if (!this._provided) {
+            const provideCache = {}
+            Object.defineProperty(this, '_provided', {
+              get: () => provideCache,
+              set: (v) => Object.assign(provideCache, v),
+            })
+          }
+
+          this._provided[WagmiConfigInjectionKey as unknown as string] = config
+        },
+      })
+    } else {
+      app.provide(WagmiConfigInjectionKey, config)
+    }
   },
 }

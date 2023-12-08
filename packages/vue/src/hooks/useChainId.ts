@@ -1,6 +1,6 @@
 'use client'
 
-import { ref, computed, type ComputedRef } from 'vue'
+import { ref, computed, type ComputedRef } from 'vue-demi'
 import {
   type Config,
   type GetChainIdReturnType,

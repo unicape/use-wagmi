@@ -18,7 +18,7 @@ import type {
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
-import { computed } from 'vue'
+import { computed } from 'vue-demi'
 
 export type UseDisconnectParameters<context = unknown> = Evaluate<
   DeepMaybeRef<ConfigParameter> & {

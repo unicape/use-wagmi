@@ -56,19 +56,31 @@
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "connectors": [
+        "./dist/types/exports/connectors.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ]
     }
   },
   "peerDependencies": {
+    "@vue/composition-api": "^1.0.0-rc.1",
     "@tanstack/vue-query": ">=5.0.0",
     "typescript": ">=5.0.4",
     "viem": "2.0.0-beta.6",
-    "vue": ">=3"
+    "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
@@ -76,12 +88,15 @@
   "dependencies": {
     "@wagmi/connectors": "4.0.0-beta.3",
     "@wagmi/core": "2.0.0-beta.3",
-    "vue": "3.3.8"
+    "vue": "3.3.8",
+    "vue-demi": "^0.14.6"
   },
   "devDependencies": {
     "@tanstack/vue-query": "5.0.5"
   },
-  "contributors": ["Unic Ape <unicape.dev@gmail.com>"],
+  "contributors": [
+    "Unic Ape <unicape.dev@gmail.com>"
+  ],
   "keywords": [
     "wagmi",
     "vue",

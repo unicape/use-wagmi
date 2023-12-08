@@ -8,7 +8,7 @@ import {
 
 import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { useConfig } from './useConfig.js'
-import { shallowRef, type ShallowRef } from 'vue'
+import { shallowRef, type ShallowRef } from 'vue-demi'
 
 export type UseConnectionsParameters = MaybeRefDeep<ConfigParameter>
 
