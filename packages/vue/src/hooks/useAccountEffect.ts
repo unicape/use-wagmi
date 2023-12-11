@@ -2,11 +2,11 @@
 
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
-import { watchEffect, unref } from 'vue-demi'
+import { unref, watchEffect } from 'vue-demi'
 
 import type { ConfigParameter, MaybeRefDeep } from '../types.js'
-import { useConfig } from './useConfig.js'
 import { cloneDeepUnref } from '../utils/cloneDeepUnref.js'
+import { useConfig } from './useConfig.js'
 
 type UseAccountEffectArgs = Evaluate<
   {

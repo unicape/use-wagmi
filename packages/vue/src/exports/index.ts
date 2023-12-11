@@ -78,11 +78,11 @@ export {
   useConfig,
 } from '../hooks/useConfig.js'
 
-// export {
-//   type UseConnectParameters,
-//   type UseConnectReturnType,
-//   useConnect,
-// } from '../hooks/useConnect.js'
+export {
+  type UseConnectParameters,
+  type UseConnectReturnType,
+  useConnect,
+} from '../hooks/useConnect.js'
 
 export {
   type UseConnectionsParameters,

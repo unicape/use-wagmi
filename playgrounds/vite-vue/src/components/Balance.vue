@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useBalance, useAccount } from 'use-wagmi';
-import { goerli } from 'use-wagmi/chains';
+import { useBalance, useAccount } from 'use-wagmi'
+import { goerli } from 'use-wagmi/chains'
 
-const { address } = useAccount();
+const { address } = useAccount()
 
-const { data: default_ } = useBalance({ address });
-const { data: account_ } = useBalance({ address });
+const { data: default_ } = useBalance({ address })
+const { data: account_ } = useBalance({ address })
 const { data: goerli_ } = useBalance({
 	address,
 	chainId: goerli.id
-});
+})
 </script>
 
 <template>

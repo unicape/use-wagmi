@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useAccount } from 'use-wagmi';
+import { useAccount, useDisconnect } from 'use-wagmi'
 
-const account = useAccount();
+const { address, chainId, status } = useAccount()
+const { disconnect } = useDisconnect()
 </script>
 
 <template>
@@ -9,13 +10,13 @@ const account = useAccount();
 		<h2>Account</h2>
 
 		<div>
-			account: {{ account.address }}
+			account: {{ address }}
 			<br />
-			chainId: {{ account.chainId }}
+			chainId: {{ chainId }}
 			<br />
-			status: {{ account.status }}
+			status: {{ status }}
 		</div>
 
-		<button v-if="account.isConnected" type="button">Disconnect</button>
+		<button v-if="status !== 'disconnected'" type="button" @click="() => disconnect()">Disconnect</button>
 	</div>
 </template>

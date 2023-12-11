@@ -6,9 +6,9 @@ import {
   watchConnections,
 } from '@wagmi/core'
 
+import { type ShallowRef, shallowRef } from 'vue-demi'
 import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { useConfig } from './useConfig.js'
-import { shallowRef, type ShallowRef } from 'vue-demi'
 
 export type UseConnectionsParameters = MaybeRefDeep<ConfigParameter>
 
@@ -20,13 +20,13 @@ export function useConnections(
 ): UseConnectionsReturnType {
   const config = useConfig(parameters)
 
-  const connectors = shallowRef(getConnections(config))
+  const connections = shallowRef(getConnections(config))
 
   watchConnections(config, {
     onChange() {
-      connectors.value = getConnections(config)
+      connections.value = getConnections(config)
     },
   })
 
-  return connectors
+  return connections
 }

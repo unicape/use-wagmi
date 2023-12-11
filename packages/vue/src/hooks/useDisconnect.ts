@@ -9,10 +9,11 @@ import {
   disconnectMutationOptions,
 } from '@wagmi/core/query'
 
+import { computed } from 'vue-demi'
 import type {
   ConfigParameter,
-  MaybeRefDeep,
   MaybeRef,
+  MaybeRefDeep,
   Mutate,
   MutateAsync,
 } from '../types.js'
@@ -22,7 +23,6 @@ import type {
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { useConnections } from './useConnections.js'
-import { computed } from 'vue-demi'
 
 type DisconnectMutate<context = unknown> = Mutate<
   DisconnectData,

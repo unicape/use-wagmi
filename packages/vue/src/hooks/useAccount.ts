@@ -6,11 +6,11 @@ import {
   watchAccount,
 } from '@wagmi/core'
 import {
-  type ToRefs,
   type DeepReadonly,
+  type ToRefs,
   reactive,
-  toRefs,
   readonly,
+  toRefs,
 } from 'vue-demi'
 
 import type { ConfigParameter, MaybeRefDeep } from '../types.js'

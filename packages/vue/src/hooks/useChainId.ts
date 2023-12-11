@@ -1,6 +1,5 @@
 'use client'
 
-import { ref, computed, type ComputedRef } from 'vue-demi'
 import {
   type Config,
   type GetChainIdReturnType,
@@ -8,6 +7,7 @@ import {
   getChainId,
   watchChainId,
 } from '@wagmi/core'
+import { type ComputedRef, computed, ref } from 'vue-demi'
 
 import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { useConfig } from './useConfig.js'

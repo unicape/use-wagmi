@@ -17,14 +17,14 @@ import { computed, unref } from 'vue-demi'
 
 import type {
   ConfigParameter,
-  QueryParameter,
-  MaybeRefDeep,
   DeepUnwrapRef,
+  MaybeRefDeep,
+  QueryParameter,
 } from '../types.js'
+import { cloneDeepUnref } from '../utils/cloneDeepUnref.js'
 import { type UseQueryReturnType, useQuery } from '../utils/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import { cloneDeepUnref } from '../utils/cloneDeepUnref.js'
 
 export type UseBalanceParameters<
   config extends Config = Config,
