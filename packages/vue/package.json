@@ -63,10 +63,10 @@
     }
   },
   "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.1",
     "@tanstack/vue-query": ">=5.0.0",
+    "@vue/composition-api": "^1.0.0-rc.1",
     "typescript": ">=5.0.4",
-    "viem": "2.0.0-beta.6",
+    "viem": "2.0.0-beta.15",
     "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
@@ -78,8 +78,8 @@
     }
   },
   "dependencies": {
-    "@wagmi/connectors": "4.0.0-beta.5",
-    "@wagmi/core": "2.0.0-beta.5",
+    "@wagmi/connectors": "4.0.0-beta.7",
+    "@wagmi/core": "2.0.0-beta.7",
     "vue": "3.3.8",
     "vue-demi": "^0.14.6"
   },

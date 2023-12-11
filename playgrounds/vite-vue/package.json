@@ -13,7 +13,7 @@
     "@tanstack/vue-query": "5.8.1",
     "@tanstack/query-persist-client-core": "5.8.1",
     "vue": "^3.3.4",
-    "viem": "2.0.0-beta.0",
+    "viem": "2.0.0-beta.15",
     "use-wagmi": "workspace:*"
   },
   "devDependencies": {

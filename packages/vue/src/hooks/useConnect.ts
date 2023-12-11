@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/vue-query'
 import {
   type Config,
   type ConnectErrorType,
-  type Connector,
   type ResolvedRegister,
 } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
@@ -26,7 +25,7 @@ import type {
   UseMutationReturnType,
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
-import { useConnectors } from './useConnectors.js'
+import { type UseConnectorsReturnType, useConnectors } from './useConnectors.js'
 
 type ConnectMutate<config extends Config, context = unknown> = Mutate<
   ConnectData<config>,
@@ -70,14 +69,16 @@ export type UseConnectReturnType<
   > & {
     connect: ConnectMutate<config, context>
     connectAsync: ConnectMutateAsync<config, context>
-    connectors: readonly Connector[]
+    connectors: UseConnectorsReturnType
   }
 >
 
 export function useConnect<
   config extends Config = ResolvedRegister['config'],
   context = unknown,
->(parameters: UseConnectParameters<config, context> = {}) {
+>(
+  parameters: UseConnectParameters<config, context> = {},
+): UseConnectReturnType<config, context> {
   const { mutation } = parameters
 
   const config = useConfig(parameters)
