@@ -90,11 +90,11 @@ export {
   useConnections,
 } from '../hooks/useConnections.js'
 
-// export {
-//   type UseConnectorsParameters,
-//   type UseConnectorsReturnType,
-//   useConnectors,
-// } from '../hooks/useConnectors.js'
+export {
+  type UseConnectorsParameters,
+  type UseConnectorsReturnType,
+  useConnectors,
+} from '../hooks/useConnectors.js'
 
 // export {
 //   type UseConnectorClientParameters,
@@ -206,11 +206,11 @@ export {
 //   useSimulateContract,
 // } from '../hooks/useSimulateContract.js'
 
-// export {
-//   type UseSwitchAccountParameters,
-//   type UseSwitchAccountReturnType,
-//   useSwitchAccount,
-// } from '../hooks/useSwitchAccount.js'
+export {
+  type UseSwitchAccountParameters,
+  type UseSwitchAccountReturnType,
+  useSwitchAccount,
+} from '../hooks/useSwitchAccount.js'
 
 // export {
 //   type UseSwitchChainParameters,

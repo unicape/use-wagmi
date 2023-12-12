@@ -9,37 +9,20 @@ import {
 import type { Evaluate } from '@wagmi/core/internal'
 import {
   type ConnectData,
+  type ConnectMutate,
+  type ConnectMutateAsync,
   type ConnectVariables,
   connectMutationOptions,
 } from '@wagmi/core/query'
 import { watchEffect } from 'vue-demi'
 
-import type {
-  ConfigParameter,
-  MaybeRefDeep,
-  Mutate,
-  MutateAsync,
-} from '../types.js'
+import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
 } from '../utils/query.js'
 import { useConfig } from './useConfig.js'
 import { type UseConnectorsReturnType, useConnectors } from './useConnectors.js'
-
-type ConnectMutate<config extends Config, context = unknown> = Mutate<
-  ConnectData<config>,
-  ConnectErrorType,
-  ConnectVariables<config>,
-  context
->
-
-type ConnectMutateAsync<config extends Config, context = unknown> = MutateAsync<
-  ConnectData<config>,
-  ConnectErrorType,
-  ConnectVariables<config>,
-  context
->
 
 export type UseConnectParameters<
   config extends Config = Config,
