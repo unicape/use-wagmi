@@ -7,6 +7,7 @@ import SignMessage from './components/SignMessage.vue'
 import Connections from './components/Connections.vue'
 import BlockNumber from './components/BlockNumber.vue'
 import Balance from './components/Balance.vue'
+import ConnectorClient from './components/ConnectorClient.vue'
 </script>
 
 <template>
@@ -18,4 +19,5 @@ import Balance from './components/Balance.vue'
 	<Connections />
 	<BlockNumber />
 	<Balance />
+	<ConnectorClient />
 </template>

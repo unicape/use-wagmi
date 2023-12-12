@@ -49,9 +49,7 @@ export type UseBalanceReturnType<selectData = GetBalanceData> =
 export function useBalance<
   config extends Config = ResolvedRegister['config'],
   selectData = GetBalanceData,
->(
-  parameters: UseBalanceParameters<config, selectData> = {},
-): UseBalanceReturnType<selectData> {
+>(parameters: UseBalanceParameters<config, selectData> = {}) {
   const config = useConfig(parameters)
   const chainId = useChainId()
 

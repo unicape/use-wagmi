@@ -96,11 +96,11 @@ export {
   useConnectors,
 } from '../hooks/useConnectors.js'
 
-// export {
-//   type UseConnectorClientParameters,
-//   type UseConnectorClientReturnType,
-//   useConnectorClient,
-// } from '../hooks/useConnectorClient.js'
+export {
+  type UseConnectorClientParameters,
+  type UseConnectorClientReturnType,
+  useConnectorClient,
+} from '../hooks/useConnectorClient.js'
 
 export {
   type UseDisconnectParameters,
