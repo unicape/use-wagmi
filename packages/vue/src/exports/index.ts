@@ -54,11 +54,11 @@ export {
 //   useBlock,
 // } from '../hooks/useBlock.js'
 
-// export {
-//   type UseBlockNumberParameters,
-//   type UseBlockNumberReturnType,
-//   useBlockNumber,
-// } from '../hooks/useBlockNumber.js'
+export {
+  type UseBlockNumberParameters,
+  type UseBlockNumberReturnType,
+  useBlockNumber,
+} from '../hooks/useBlockNumber.js'
 
 export {
   type UseChainIdParameters,
@@ -188,11 +188,11 @@ export {
 //   useSendTransaction,
 // } from '../hooks/useSendTransaction.js'
 
-// export {
-//   type UseSignMessageParameters,
-//   type UseSignMessageReturnType,
-//   useSignMessage,
-// } from '../hooks/useSignMessage.js'
+export {
+  type UseSignMessageParameters,
+  type UseSignMessageReturnType,
+  useSignMessage,
+} from '../hooks/useSignMessage.js'
 
 // export {
 //   type UseSignTypedDataParameters,
@@ -212,11 +212,11 @@ export {
   useSwitchAccount,
 } from '../hooks/useSwitchAccount.js'
 
-// export {
-//   type UseSwitchChainParameters,
-//   type UseSwitchChainReturnType,
-//   useSwitchChain,
-// } from '../hooks/useSwitchChain.js'
+export {
+  type UseSwitchChainParameters,
+  type UseSwitchChainReturnType,
+  useSwitchChain,
+} from '../hooks/useSwitchChain.js'
 
 // export {
 //   type UseTokenParameters,
@@ -249,11 +249,11 @@ export {
 //   useWatchBlocks,
 // } from '../hooks/useWatchBlocks.js'
 
-// export {
-//   type UseWatchBlockNumberParameters,
-//   type UseWatchBlockNumberReturnType,
-//   useWatchBlockNumber,
-// } from '../hooks/useWatchBlockNumber.js'
+export {
+  type UseWatchBlockNumberParameters,
+  type UseWatchBlockNumberReturnType,
+  useWatchBlockNumber,
+} from '../hooks/useWatchBlockNumber.js'
 
 // export {
 //   type UseWatchContractEventParameters,
