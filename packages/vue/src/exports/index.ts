@@ -48,11 +48,11 @@ export {
   useBalance,
 } from '../hooks/useBalance.js'
 
-// export {
-//   type UseBlockParameters,
-//   type UseBlockReturnType,
-//   useBlock,
-// } from '../hooks/useBlock.js'
+export {
+  type UseBlockParameters,
+  type UseBlockReturnType,
+  useBlock,
+} from '../hooks/useBlock.js'
 
 export {
   type UseBlockNumberParameters,
@@ -66,11 +66,11 @@ export {
   useChainId,
 } from '../hooks/useChainId.js'
 
-// export {
-//   type UseClientParameters,
-//   type UseClientReturnType,
-//   useClient,
-// } from '../hooks/useClient.js'
+export {
+  type UseClientParameters,
+  type UseClientReturnType,
+  useClient,
+} from '../hooks/useClient.js'
 
 export {
   type UseConfigParameters,
@@ -243,11 +243,11 @@ export {
 //   useWaitForTransactionReceipt,
 // } from '../hooks/useWaitForTransactionReceipt.js'
 
-// export {
-//   type UseWatchBlocksParameters,
-//   type UseWatchBlocksReturnType,
-//   useWatchBlocks,
-// } from '../hooks/useWatchBlocks.js'
+export {
+  type UseWatchBlocksParameters,
+  type UseWatchBlocksReturnType,
+  useWatchBlocks,
+} from '../hooks/useWatchBlocks.js'
 
 export {
   type UseWatchBlockNumberParameters,

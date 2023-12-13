@@ -66,7 +66,9 @@ export function useConnectorClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetConnectorClientData<config, chainId>,
->(parameters: UseConnectorClientParameters<config, chainId, selectData> = {}) {
+>(
+  parameters: UseConnectorClientParameters<config, chainId, selectData> = {},
+): UseConnectorClientReturnType<config, chainId, selectData> {
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
   const { address, connector, status } = useAccount()

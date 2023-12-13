@@ -70,7 +70,9 @@ export function useBlockNumber<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
   selectData = GetBlockNumberData,
->(parameters: UseBlockNumberParameters<config, chainId, selectData> = {}) {
+>(
+  parameters: UseBlockNumberParameters<config, chainId, selectData> = {},
+): UseBlockNumberReturnType<selectData> {
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
   const configChainId = useChainId()
@@ -100,6 +102,12 @@ export function useBlockNumber<
     >(parameters as any)
     const { query = {}, watch } = _parameters
 
+    type OnBlockNumber =
+      DeepUnwrapRef<UseWatchBlockNumberParameters>['onBlockNumber']
+    const onBlockNumber: OnBlockNumber = (blockNumber) => {
+      queryClient.setQueryData(queryOptions.value.queryKey, blockNumber)
+    }
+
     return {
       ...({
         config: _parameters.config,
@@ -110,9 +118,7 @@ export function useBlockNumber<
         (query.enabled ?? true) &&
           (typeof watch === 'object' ? watch.enabled : watch),
       ),
-      onBlockNumber(blockNumber: bigint) {
-        queryClient.setQueryData(queryOptions.value.queryKey, blockNumber)
-      },
+      onBlockNumber,
     }
   })
 

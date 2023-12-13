@@ -17,7 +17,8 @@ export type UseConfigReturnType<config extends Config = Config> = config
 export function useConfig<config extends Config = ResolvedRegister['config']>(
   parameters: UseConfigParameters<config> = {},
 ): UseConfigReturnType<config> {
-  const config = unref(parameters).config ?? inject(WagmiConfigInjectionKey)
+  const config =
+    unref(unref(parameters).config) ?? inject(WagmiConfigInjectionKey)
   if (!config) throw new WagmiProviderNotFoundError()
   return unref(config) as UseConfigReturnType<config>
 }
