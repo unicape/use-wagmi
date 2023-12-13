@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.4.8
+
+### Patch Changes
+
+- [#97](https://github.com/unicape/use-wagmi/pull/97) [`dedb3ba`](https://github.com/unicape/use-wagmi/commit/dedb3bad8681dec5b0a1bccda4758d824e1da144) Thanks [@unicape](https://github.com/unicape)! - Update dependencies
+
 ## 0.4.7
 
 ### Patch Changes
