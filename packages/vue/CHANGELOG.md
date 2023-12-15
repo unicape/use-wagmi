@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 0.4.9
+
+### Patch Changes
+
+- [#100](https://github.com/unicape/use-wagmi/pull/100) [`fe41b42`](https://github.com/unicape/use-wagmi/commit/fe41b42455497c8ba1c5be9e8a9f9465f10d0902) Thanks [@unicape](https://github.com/unicape)! - fix(connectors): remove ledger due to security vulnerability
+
 ## 0.4.8
 
 ### Patch Changes
