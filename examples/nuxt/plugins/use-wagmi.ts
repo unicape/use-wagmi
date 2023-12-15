@@ -3,7 +3,6 @@ import { avalanche, goerli, mainnet, optimism } from 'use-wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'use-wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'use-wagmi/connectors/injected'
-import { LedgerConnector } from 'use-wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'use-wagmi/connectors/metaMask'
 import { SafeConnector } from 'use-wagmi/connectors/safe'
 import { WalletConnectConnector } from 'use-wagmi/connectors/walletConnect'
@@ -13,7 +12,7 @@ import { alchemyProvider } from 'use-wagmi/providers/alchemy'
 import { infuraProvider } from 'use-wagmi/providers/infura'
 import { publicProvider } from 'use-wagmi/providers/public'
 
-export default defineNuxtPlugin(nuxtApp => {
+export default defineNuxtPlugin((nuxtApp) => {
   const { chains, publicClient, webSocketPublicClient } = configureChains(
     [mainnet, goerli, optimism, avalanche],
     [
@@ -22,7 +21,7 @@ export default defineNuxtPlugin(nuxtApp => {
       publicProvider(),
     ],
   )
-  
+
   const config = createConfig({
     autoConnect: true,
     connectors: [
@@ -48,12 +47,6 @@ export default defineNuxtPlugin(nuxtApp => {
         chains,
         options: {
           qrcode: true,
-        },
-      }),
-      new LedgerConnector({
-        chains,
-        options: {
-          projectId: '', //TODO: your project ID
         },
       }),
       new InjectedConnector({
