@@ -138,8 +138,8 @@ importers:
         specifier: ^3.8.3
         version: 3.34.0
       use-wagmi:
-        specifier: ^0.4.8
-        version: 0.4.8(@vue/composition-api@1.0.0-rc.1)(react@18.2.0)(typescript@5.1.6)(viem@1.20.0)(vue@2.7.15)
+        specifier: workspace:*
+        version: link:../../packages/vue
       viem:
         specifier: ^1.19.13
         version: 1.20.0(typescript@5.1.6)
@@ -161,7 +161,7 @@ importers:
         version: 5.0.8(@vue/cli-service@5.0.8)(esbuild@0.17.19)(eslint@7.32.0)
       '@vue/cli-service':
         specifier: ~5.0.0
-        version: 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(vue@2.7.15)
+        version: 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(vue-template-compiler@2.7.14)(vue@2.7.15)
       eslint:
         specifier: ^7.32.0
         version: 7.32.0
@@ -2571,10 +2571,6 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@ledgerhq/connect-kit-loader@1.1.0:
-    resolution: {integrity: sha512-HUy12FEczoWY2FPubnsm1uOA8tkVWc0j90i47suThV3C9NL2xx69ZAIEU3Ytzs2bwLek9S1Q2S1VQJvA+3Ygkg==}
-    dev: false
-
   /@leichtgewicht/ip-codec@2.0.4:
     resolution: {integrity: sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==}
     dev: true
@@ -2943,6 +2939,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -3349,46 +3346,6 @@ packages:
       '@stablelib/wipe': 1.0.1
     dev: false
 
-  /@tanstack/match-sorter-utils@8.8.4:
-    resolution: {integrity: sha512-rKH8LjZiszWEvmi01NR72QWZ8m4xmXre0OOwlRGnjU01Eqz/QnN+cqpty2PJ0efHblq09+KilvyR7lsbzmXVEw==}
-    engines: {node: '>=12'}
-    dependencies:
-      remove-accents: 0.4.2
-    dev: false
-
-  /@tanstack/query-core@4.29.11:
-    resolution: {integrity: sha512-8C+hF6SFAb/TlFZyS9FItgNwrw4PMa7YeX+KQYe2ZAiEz6uzg6yIr+QBzPkUwZ/L0bXvGd1sufTm3wotoz+GwQ==}
-    dev: false
-
-  /@tanstack/query-persist-client-core@4.29.11:
-    resolution: {integrity: sha512-CSmMZchr+446r79NJ/pjD2yfjqNqFV7k8BnqOq4yTZvXsaQLEIn3tsaU45IsPgs4N7g9OBfPUPDdapSQvck2WQ==}
-    dependencies:
-      '@tanstack/query-core': 4.29.11
-    dev: false
-
-  /@tanstack/query-sync-storage-persister@4.29.11:
-    resolution: {integrity: sha512-JP9U3m9YPkUelcE9+7D6fAEsNEp2ysKsH6qrd0WJtqsuhe5Zwr407NxaQ5uB2ow/MmhPOm8bxzMZw00Y7RagoQ==}
-    dependencies:
-      '@tanstack/query-persist-client-core': 4.29.11
-    dev: false
-
-  /@tanstack/vue-query@4.29.11(@vue/composition-api@1.0.0-rc.1)(vue@2.7.15):
-    resolution: {integrity: sha512-HxaACzKQv3zlDyu2QHirMQpDNszdsQ+0vZqCzjDf1hkhQNYS+98Ofy4SvnKjSfUBsmNDc88YkZDo78eJh638jA==}
-    peerDependencies:
-      '@vue/composition-api': ^1.1.2
-      vue: ^2.5.0 || ^3.0.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-    dependencies:
-      '@tanstack/match-sorter-utils': 8.8.4
-      '@tanstack/query-core': 4.29.11
-      '@vue/composition-api': registry.npmmirror.com/@vue/composition-api@1.0.0-rc.1(vue@3.3.4)
-      '@vue/devtools-api': 6.5.0
-      vue: 2.7.15
-      vue-demi: 0.13.11(@vue/composition-api@1.0.0-rc.1)(vue@2.7.15)
-    dev: false
-
   /@trysound/sax@0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
@@ -3750,7 +3707,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.8
       '@vue/babel-preset-app': 5.0.8(@babel/core@7.22.8)(core-js@3.34.0)(vue@2.7.15)
-      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(vue@2.7.15)
+      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(vue-template-compiler@2.7.14)(vue@2.7.15)
       '@vue/cli-shared-utils': 5.0.8
       babel-loader: 8.3.0(@babel/core@7.22.8)(webpack@5.89.0)
       thread-loader: 3.0.4(webpack@5.89.0)
@@ -3772,7 +3729,7 @@ packages:
       '@vue/cli-service': ^3.0.0 || ^4.0.0 || ^5.0.0-0
       eslint: '>=7.5.0'
     dependencies:
-      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(vue@2.7.15)
+      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(vue-template-compiler@2.7.14)(vue@2.7.15)
       '@vue/cli-shared-utils': 5.0.8
       eslint: 7.32.0
       eslint-webpack-plugin: 3.2.0(eslint@7.32.0)(webpack@5.89.0)
@@ -3792,7 +3749,7 @@ packages:
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0 || ^5.0.0-0
     dependencies:
-      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(vue@2.7.15)
+      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(vue-template-compiler@2.7.14)(vue@2.7.15)
       '@vue/cli-shared-utils': 5.0.8
     transitivePeerDependencies:
       - encoding
@@ -3803,10 +3760,10 @@ packages:
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0 || ^5.0.0-0
     dependencies:
-      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(vue@2.7.15)
+      '@vue/cli-service': 5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(vue-template-compiler@2.7.14)(vue@2.7.15)
     dev: true
 
-  /@vue/cli-service@5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(vue@2.7.15):
+  /@vue/cli-service@5.0.8(@babel/core@7.22.8)(@vue/compiler-sfc@3.3.4)(esbuild@0.17.19)(prettier@2.8.8)(vue-template-compiler@2.7.14)(vue@2.7.15):
     resolution: {integrity: sha512-nV7tYQLe7YsTtzFrfOMIHc5N2hp5lHG2rpYr0aNja9rNljdgcPZLyQRb2YRivTHqTv7lI962UXFURcpStHgyFw==}
     engines: {node: ^12.0.0 || >= 14.0.0}
     hasBin: true
@@ -3845,8 +3802,8 @@ packages:
       '@vue/cli-plugin-router': 5.0.8(@vue/cli-service@5.0.8)
       '@vue/cli-plugin-vuex': 5.0.8(@vue/cli-service@5.0.8)
       '@vue/cli-shared-utils': 5.0.8
-      '@vue/component-compiler-utils': 3.3.0(react@18.2.0)
-      '@vue/vue-loader-v15': /vue-loader@15.11.1(@vue/compiler-sfc@3.3.4)(css-loader@6.8.1)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(webpack@5.89.0)
+      '@vue/component-compiler-utils': 3.3.0
+      '@vue/vue-loader-v15': /vue-loader@15.11.1(@vue/compiler-sfc@3.3.4)(css-loader@6.8.1)(prettier@2.8.8)(vue-template-compiler@2.7.14)(webpack@5.89.0)
       '@vue/web-component-wrapper': 1.3.0
       acorn: 8.10.0
       acorn-walk: 8.2.0
@@ -3986,7 +3943,7 @@ packages:
   /@vue/compiler-core@3.3.4:
     resolution: {integrity: sha512-cquyDNvZ6jTbf/+x+AgM2Arrp6G4Dzbb0R64jiG804HRMfRiFXWI6kqUVqZ6ZR0bQhIoQjB4+2bhNtVwndW15g==}
     dependencies:
-      '@babel/parser': 7.22.7
+      '@babel/parser': 7.23.6
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       source-map-js: 1.0.2
@@ -4009,7 +3966,7 @@ packages:
   /@vue/compiler-sfc@3.3.4:
     resolution: {integrity: sha512-6y/d8uw+5TkCuzBkgLS0v3lSM3hJDntFEiUORM11pQ/hKvkhSKZrXW6i69UyXlJQisJxuUEJKAWEqWbWsLeNKQ==}
     dependencies:
-      '@babel/parser': 7.22.7
+      '@babel/parser': 7.23.6
       '@vue/compiler-core': 3.3.4
       '@vue/compiler-dom': 3.3.4
       '@vue/compiler-ssr': 3.3.4
@@ -4028,10 +3985,10 @@ packages:
       '@vue/shared': 3.3.4
     dev: true
 
-  /@vue/component-compiler-utils@3.3.0(react@18.2.0):
+  /@vue/component-compiler-utils@3.3.0:
     resolution: {integrity: sha512-97sfH2mYNU+2PzGrmK2haqffDpVASuib9/w2/noxiFi31Z54hW+q3izKQXXQZSNhtiUpAI36uSuYepeBe4wpHQ==}
     dependencies:
-      consolidate: 0.15.1(react@18.2.0)
+      consolidate: 0.15.1
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -4097,14 +4054,10 @@ packages:
       - whiskers
     dev: true
 
-  /@vue/devtools-api@6.5.0:
-    resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
-    dev: false
-
   /@vue/reactivity-transform@3.3.4:
     resolution: {integrity: sha512-MXgwjako4nu5WFLAjpBnCj/ieqcjE2aJBINUNQzkZQfzIZA4xn+0fV1tIYBJvvva3N3OvKGofRLvQIwEQPpaXw==}
     dependencies:
-      '@babel/parser': 7.22.7
+      '@babel/parser': 7.23.6
       '@vue/compiler-core': 3.3.4
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
@@ -4176,87 +4129,6 @@ packages:
       - '@vercel/kv'
       - bufferutil
       - encoding
-      - react
-      - supports-color
-      - utf-8-validate
-      - zod
-    dev: false
-
-  /@wagmi/connectors@3.1.9(react@18.2.0)(typescript@5.1.6)(viem@1.20.0):
-    resolution: {integrity: sha512-q7Hz6WDnvOcZ/EPzuFgilirSwyoWYo1owowHmHqHTxEu0yu6HFNQGuaMNK9hsM/XCHeCisW/ZdUvudQSBUVpHQ==}
-    peerDependencies:
-      typescript: '>=5.0.4'
-      viem: '>=0.3.35'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@coinbase/wallet-sdk': 3.7.1
-      '@ledgerhq/connect-kit-loader': 1.1.0
-      '@safe-global/safe-apps-provider': 0.18.1(typescript@5.1.6)
-      '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@walletconnect/ethereum-provider': 2.10.6(react@18.2.0)
-      '@walletconnect/legacy-provider': 2.0.0
-      '@walletconnect/modal': 2.6.2(react@18.2.0)
-      '@walletconnect/utils': 2.10.2
-      abitype: 0.8.7(typescript@5.1.6)
-      eventemitter3: 4.0.7
-      typescript: 5.1.6
-      viem: 1.20.0(typescript@5.1.6)
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@react-native-async-storage/async-storage'
-      - '@types/react'
-      - '@upstash/redis'
-      - '@vercel/kv'
-      - bufferutil
-      - encoding
-      - react
-      - supports-color
-      - utf-8-validate
-      - zod
-    dev: false
-
-  /@wagmi/core@1.4.11(react@18.2.0)(typescript@5.1.6)(viem@1.20.0):
-    resolution: {integrity: sha512-H6y5v+PpvYbT5Qsk7PTVu5MtcSqudDqGZC/LZFV6Y+UeJlBsnfJNy5+cPEzKmvaz+6tSyVPGCF9aWK+sNdC0sQ==}
-    peerDependencies:
-      typescript: '>=5.0.4'
-      viem: '>=0.3.35'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      '@wagmi/connectors': 3.1.9(react@18.2.0)(typescript@5.1.6)(viem@1.20.0)
-      abitype: 0.8.7(typescript@5.1.6)
-      eventemitter3: 4.0.7
-      typescript: 5.1.6
-      viem: 1.20.0(typescript@5.1.6)
-      zustand: 4.3.9(react@18.2.0)
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@react-native-async-storage/async-storage'
-      - '@types/react'
-      - '@upstash/redis'
-      - '@vercel/kv'
-      - bufferutil
-      - encoding
-      - immer
       - react
       - supports-color
       - utf-8-validate
@@ -5796,7 +5668,7 @@ packages:
     resolution: {integrity: sha512-I5qxpzLv+sJhTVEoLYNcTW+bThDCPsit0vLNKShZx6rLtpilNpmmeTPaeqJb9ZE9dV3DGaeby6Vuhrw38WjeyQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
 
-  /consolidate@0.15.1(react@18.2.0):
+  /consolidate@0.15.1:
     resolution: {integrity: sha512-DW46nrsMJgy9kqAbPt5rKaCr7uFtpo4mSUvLHIUbJEjm0vo+aY5QLwBUq3FK4tRnJr/X0Psc0C4jf/h+HtXSMw==}
     engines: {node: '>= 0.10.0'}
     deprecated: Please upgrade to consolidate v1.0.0+ as it has been modernized with several long-awaited fixes implemented. Maintenance is supported by Forward Email at https://forwardemail.net ; follow/watch https://github.com/ladjs/consolidate for updates and release changelog
@@ -5963,7 +5835,6 @@ packages:
         optional: true
     dependencies:
       bluebird: 3.7.2
-      react: 18.2.0
     dev: true
 
   /content-disposition@0.5.4:
@@ -8526,6 +8397,7 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: false
 
   /lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
@@ -8877,6 +8749,10 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: false
+
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
@@ -9189,7 +9065,7 @@ packages:
     resolution: {integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==}
     engines: {node: '>=8'}
     dependencies:
-      '@babel/code-frame': 7.22.5
+      '@babel/code-frame': 7.23.5
       error-ex: 1.3.2
       json-parse-even-better-errors: 2.3.1
       lines-and-columns: 1.2.4
@@ -9896,6 +9772,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
 
   /read-pkg-up@7.0.1:
     resolution: {integrity: sha512-zK0TB7Xd6JpCLmlLmufqykGE+/TlOePD6qKClNW7hHDKFh/J7/7gCWGR7joEQEW1bKq3a3yUZSObOoWLFQ4ohg==}
@@ -10034,10 +9911,6 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /remove-accents@0.4.2:
-    resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
-    dev: false
-
   /renderkid@3.0.0:
     resolution: {integrity: sha512-q/7VIQA8lmM1hF+jn+sFSPWGlMkSAeNYcPLmDQx2zzuiDfaLrOmumR8iaUKlenFgh0XRPIUeSPlH3A+AW3Z5pg==}
     dependencies:
@@ -10126,7 +9999,7 @@ packages:
       rollup: 3.26.2
       typescript: 5.1.6
     optionalDependencies:
-      '@babel/code-frame': 7.22.5
+      '@babel/code-frame': 7.23.5
     dev: true
 
   /rollup@3.26.2:
@@ -11220,55 +11093,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /use-wagmi@0.4.8(@vue/composition-api@1.0.0-rc.1)(react@18.2.0)(typescript@5.1.6)(viem@1.20.0)(vue@2.7.15):
-    resolution: {integrity: sha512-7qV3HrmcRY4Xgrenlv6PqQN/Atiltlt239cQn/pFqE7zZaKCojgYYdzJsnFD5O0fRA6anCImhRh98Zon3Cs8FA==}
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      typescript: '>=5.0.4'
-      viem: '>=0.3.35'
-      vue: ^2.0.0 || >=3.0.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      '@tanstack/query-persist-client-core': 4.29.11
-      '@tanstack/query-sync-storage-persister': 4.29.11
-      '@tanstack/vue-query': 4.29.11(@vue/composition-api@1.0.0-rc.1)(vue@2.7.15)
-      '@vue/composition-api': registry.npmmirror.com/@vue/composition-api@1.0.0-rc.1(vue@3.3.4)
-      '@wagmi/chains': 1.8.0(typescript@5.1.6)
-      '@wagmi/connectors': 3.1.9(react@18.2.0)(typescript@5.1.6)(viem@1.20.0)
-      '@wagmi/core': 1.4.11(react@18.2.0)(typescript@5.1.6)(viem@1.20.0)
-      abitype: 0.8.7(typescript@5.1.6)
-      eventemitter3: 4.0.7
-      typescript: 5.1.6
-      viem: 1.20.0(typescript@5.1.6)
-      vue: 2.7.15
-      vue-demi: 0.14.6(@vue/composition-api@1.0.0-rc.1)(vue@2.7.15)
-    transitivePeerDependencies:
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@react-native-async-storage/async-storage'
-      - '@types/react'
-      - '@upstash/redis'
-      - '@vercel/kv'
-      - bufferutil
-      - encoding
-      - immer
-      - react
-      - supports-color
-      - utf-8-validate
-      - zod
-    dev: false
-
   /utf-8-validate@5.0.10:
     resolution: {integrity: sha512-Z6czzLq4u8fPOyx7TU6X3dvUZVvoJmxSQ+IcrlmagKhilxlhZgxPK6C5Jqbkw1IDUmFTM+cz9QDnnLTwDz/2gQ==}
     engines: {node: '>=6.14.2'}
@@ -11377,22 +11201,6 @@ packages:
       - zod
     dev: false
 
-  /vue-demi@0.13.11(@vue/composition-api@1.0.0-rc.1)(vue@2.7.15):
-    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
-    engines: {node: '>=12'}
-    hasBin: true
-    requiresBuild: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-    dependencies:
-      '@vue/composition-api': registry.npmmirror.com/@vue/composition-api@1.0.0-rc.1(vue@3.3.4)
-      vue: 2.7.15
-    dev: false
-
   /vue-demi@0.13.11(@vue/composition-api@1.0.0-rc.1)(vue@3.3.4):
     resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
     engines: {node: '>=12'}
@@ -11407,22 +11215,6 @@ packages:
     dependencies:
       '@vue/composition-api': registry.npmmirror.com/@vue/composition-api@1.0.0-rc.1(vue@3.3.4)
       vue: registry.npmmirror.com/vue@3.3.4
-    dev: false
-
-  /vue-demi@0.14.6(@vue/composition-api@1.0.0-rc.1)(vue@2.7.15):
-    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
-    engines: {node: '>=12'}
-    hasBin: true
-    requiresBuild: true
-    peerDependencies:
-      '@vue/composition-api': ^1.0.0-rc.1
-      vue: ^3.0.0-0 || ^2.6.0
-    peerDependenciesMeta:
-      '@vue/composition-api':
-        optional: true
-    dependencies:
-      '@vue/composition-api': registry.npmmirror.com/@vue/composition-api@1.0.0-rc.1(vue@3.3.4)
-      vue: 2.7.15
     dev: false
 
   /vue-demi@0.14.6(@vue/composition-api@1.0.0-rc.1)(vue@3.3.4):
@@ -11463,7 +11255,7 @@ packages:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==}
     dev: true
 
-  /vue-loader@15.11.1(@vue/compiler-sfc@3.3.4)(css-loader@6.8.1)(prettier@2.8.8)(react@18.2.0)(vue-template-compiler@2.7.14)(webpack@5.89.0):
+  /vue-loader@15.11.1(@vue/compiler-sfc@3.3.4)(css-loader@6.8.1)(prettier@2.8.8)(vue-template-compiler@2.7.14)(webpack@5.89.0):
     resolution: {integrity: sha512-0iw4VchYLePqJfJu9s62ACWUXeSqM30SQqlIftbYWM3C+jpPcEHKSPUZBLjSF9au4HTHQ/naF6OGnO3Q/qGR3Q==}
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.8
@@ -11483,7 +11275,7 @@ packages:
         optional: true
     dependencies:
       '@vue/compiler-sfc': 3.3.4
-      '@vue/component-compiler-utils': 3.3.0(react@18.2.0)
+      '@vue/component-compiler-utils': 3.3.0
       css-loader: 6.8.1(webpack@5.89.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
@@ -12146,7 +11938,7 @@ packages:
     version: 7.22.5
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/helper-validator-identifier': 7.22.5
+      '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: true
@@ -13539,6 +13331,7 @@ packages:
       electron-to-chromium: registry.npmmirror.com/electron-to-chromium@1.4.452
       node-releases: registry.npmmirror.com/node-releases@2.0.13
       update-browserslist-db: registry.npmmirror.com/update-browserslist-db@1.0.11(browserslist@4.21.9)
+    dev: true
 
   registry.npmmirror.com/buffer-crc32@0.2.13:
     resolution: {integrity: sha512-VO9Ht/+p3SN7SKWqcrgEzjGbRSJYTx+Q1pTQC0wrWqHx0vpJraQ6GtHx8tvcg1rlK1byhU5gccxgOgj7B0TDkQ==, registry: https://registry.npmjs.org/, tarball: https://registry.npmmirror.com/buffer-crc32/-/buffer-crc32-0.2.13.tgz}
@@ -17921,7 +17714,7 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
-      browserslist: registry.npmmirror.com/browserslist@4.21.9
+      browserslist: 4.21.9
       escalade: 3.1.1
       picocolors: 1.0.0
 
