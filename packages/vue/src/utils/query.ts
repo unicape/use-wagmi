@@ -1,21 +1,25 @@
 import {
   type DefaultError,
-  type QueryKey,
-  type UseQueryReturnType as UQRT,
-  type UseQueryOptions,
-  type UseMutationOptions,
   type MutationObserverResult,
+  type QueryKey,
+  type UseInfiniteQueryOptions,
+  type UseInfiniteQueryReturnType as UIQRT,
+  type UseMutationOptions,
+  type UseQueryOptions,
+  type UseQueryReturnType as UQRT,
+  replaceEqualDeep,
+  useInfiniteQuery as tanstack_useInfiniteQuery,
   useQuery as tanstack_useQuery,
 } from '@tanstack/vue-query'
 import {
   type Evaluate,
   type ExactPartial,
   type Omit,
+  deepEqual,
 } from '@wagmi/core/internal'
 import { hashFn } from '@wagmi/core/query'
-import { computed } from 'vue-demi'
-import type { MaybeRefDeep, DeepUnwrapRef, DistributiveOmit } from '../types.js'
-import { type ToRefs, unref } from 'vue-demi'
+import { type ToRefs, computed, unref } from 'vue-demi'
+import type { DeepUnwrapRef, DistributiveOmit, MaybeRefDeep } from '../types.js'
 
 export type UseMutationParameters<
   data = unknown,
@@ -111,4 +115,73 @@ export function useQuery<
   const result = tanstack_useQuery(options) as UseQueryReturnType<TData, TError>
   result.queryKey = unref(parameters).queryKey
   return result
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+export type UseInfiniteQueryParameters<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryData = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+  pageParam = unknown,
+> = Evaluate<
+  Omit<
+    UseInfiniteQueryOptions<
+      queryFnData,
+      error,
+      data,
+      queryData,
+      queryKey,
+      pageParam
+    >,
+    'initialData'
+  > & {
+    // Fix `initialData` type
+    initialData?:
+      | UseInfiniteQueryOptions<
+          queryFnData,
+          error,
+          data,
+          queryKey
+        >['initialData']
+      | undefined
+  }
+>
+
+export type UseInfiniteQueryReturnType<
+  data = unknown,
+  error = DefaultError,
+> = UIQRT<data, error> & {
+  queryKey: MaybeRefDeep<QueryKey>
+}
+
+// Adding some basic customization.
+export function useInfiniteQuery<
+  queryFnData,
+  error,
+  data,
+  queryKey extends QueryKey,
+>(
+  parameters: UseInfiniteQueryParameters<queryFnData, error, data, queryKey> & {
+    queryKey: QueryKey
+  },
+): UseInfiniteQueryReturnType<data, error> {
+  const result = tanstack_useInfiniteQuery({
+    ...(parameters as any),
+    queryKeyHashFn: hashFn, // for bigint support
+  }) as UseInfiniteQueryReturnType<data, error>
+  result.queryKey = parameters.queryKey
+  return result
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+export function structuralSharing<data>(
+  oldData: data | undefined,
+  newData: data,
+): data {
+  if (deepEqual(oldData, newData)) return oldData as data
+  return replaceEqualDeep(oldData, newData)
 }

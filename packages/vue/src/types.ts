@@ -1,8 +1,11 @@
 import type { DefaultError, QueryKey } from '@tanstack/vue-query'
-import type { Config } from '@wagmi/core'
+import type { Config, Connector } from '@wagmi/core'
 import type { Ref, UnwrapRef } from 'vue-demi'
 
-import type { UseQueryParameters } from './utils/query.js'
+import type {
+  UseInfiniteQueryParameters,
+  UseQueryParameters,
+} from './utils/query.js'
 
 type Primitive = string | number | boolean | bigint | symbol | undefined | null
 type UnwrapLeaf =
@@ -27,7 +30,7 @@ export type MaybeRefShallow<T> = T extends object
   : T
 
 export type MaybeRefDeep<T> = MaybeRef<
-  T extends Function | Config
+  T extends Function | Config | Connector
     ? T
     : T extends object | any[]
     ? {
@@ -75,4 +78,27 @@ export type QueryParameter<
         'queryFn' | 'queryHash' | 'queryKey' | 'queryKeyHashFn' | 'throwOnError'
       >
     | undefined
+}
+
+export type InfiniteQueryParameter<
+  queryFnData = unknown,
+  error = DefaultError,
+  data = queryFnData,
+  queryData = queryFnData,
+  queryKey extends QueryKey = QueryKey,
+  pageParam = unknown,
+> = {
+  query: Omit<
+    DeepUnwrapRef<
+      UseInfiniteQueryParameters<
+        queryFnData,
+        error,
+        data,
+        queryData,
+        queryKey,
+        pageParam
+      >
+    >,
+    'queryFn' | 'queryHash' | 'queryKey' | 'queryKeyHashFn' | 'throwOnError'
+  >
 }

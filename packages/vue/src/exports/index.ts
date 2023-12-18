@@ -132,41 +132,41 @@ export {
   useEnsResolver,
 } from '../hooks/useEnsResolver.js'
 
-// export {
-//   type UseEstimateFeesPerGasParameters,
-//   type UseEstimateFeesPerGasReturnType,
-//   useEstimateFeesPerGas,
-//   /** @deprecated Use `useEstimateFeesPerGas` instead */
-//   useEstimateFeesPerGas as useFeeData,
-// } from '../hooks/useEstimateFeesPerGas.js'
+export {
+  type UseEstimateFeesPerGasParameters,
+  type UseEstimateFeesPerGasReturnType,
+  useEstimateFeesPerGas,
+  /** @deprecated Use `useEstimateFeesPerGas` instead */
+  useEstimateFeesPerGas as useFeeData,
+} from '../hooks/useEstimateFeesPerGas.js'
 
-// export {
-//   type UseEstimateGasParameters,
-//   type UseEstimateGasReturnType,
-//   useEstimateGas,
-// } from '../hooks/useEstimateGas.js'
+export {
+  type UseEstimateGasParameters,
+  type UseEstimateGasReturnType,
+  useEstimateGas,
+} from '../hooks/useEstimateGas.js'
 
-// export {
-//   type UseInfiniteContractReadsParameters,
-//   type UseInfiniteContractReadsReturnType,
-//   useInfiniteReadContracts,
-//   /** @deprecated Use `useInfiniteReadContracts` instead */
-//   useInfiniteReadContracts as useContractInfiniteReads,
-// } from '../hooks/useInfiniteReadContracts.js'
+export {
+  type UseInfiniteContractReadsParameters,
+  type UseInfiniteContractReadsReturnType,
+  useInfiniteReadContracts,
+  /** @deprecated Use `useInfiniteReadContracts` instead */
+  useInfiniteReadContracts as useContractInfiniteReads,
+} from '../hooks/useInfiniteReadContracts.js'
 
-// export {
-//   type UsePublicClientParameters,
-//   type UsePublicClientReturnType,
-//   usePublicClient,
-// } from '../hooks/usePublicClient.js'
+export {
+  type UsePublicClientParameters,
+  type UsePublicClientReturnType,
+  usePublicClient,
+} from '../hooks/usePublicClient.js'
 
-// export {
-//   type UseReadContractParameters,
-//   type UseReadContractReturnType,
-//   useReadContract,
-//   /** @deprecated Use `useWriteContract` instead */
-//   useReadContract as useContractRead,
-// } from '../hooks/useReadContract.js'
+export {
+  type UseReadContractParameters,
+  type UseReadContractReturnType,
+  useReadContract,
+  /** @deprecated Use `useWriteContract` instead */
+  useReadContract as useContractRead,
+} from '../hooks/useReadContract.js'
 
 // export {
 //   type UseReadContractsParameters,
