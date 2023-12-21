@@ -47,21 +47,21 @@ const config = createConfig({
   }),
 })
 
-const app = createApp(App);
-app.use(UseWagmiPlugin, config);
-app.mount('#app');
+const app = createApp(App)
+app.use(UseWagmiPlugin, config)
+app.mount('#app')
 ```
 
 ```html
 <script setup>
-import { useAccount, useConnect, useDisconnect } from 'use-wagmi'
-import { InjectedConnector } from 'use-wagmi/connectors/injected'
+  import { useAccount, useConnect, useDisconnect } from 'use-wagmi'
+  import { InjectedConnector } from 'use-wagmi/connectors/injected'
 
-const { address, isConnected } = useAccount()
-const { connect } = useConnect({
-  connector: new InjectedConnector(),
-})
-const { disconnect } = useDisconnect()
+  const { address, isConnected } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
 </script>
 
 <template>
@@ -69,9 +69,7 @@ const { disconnect } = useDisconnect()
     Connected to {{ address }}
     <button @click="disconnect">Disconnect</button>
   </div>
-  <button v-else @click="connect">
-    Connect Wallet
-  </button>
+  <button v-else @click="connect">Connect Wallet</button>
 </template>
 ```
 
@@ -92,9 +90,7 @@ npm install @use-wagmi/nuxt -D
 ```ts
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: [
-    '@use-wagmi/nuxt',
-  ],
+  modules: ['@use-wagmi/nuxt'],
 })
 ```
 
@@ -102,13 +98,22 @@ And then use use-wagmi function anywhere in your Nuxt app. For example:
 
 ```html
 <script setup lang="ts">
-const { address } = useAccount()
+  const { address } = useAccount()
 </script>
 
 <template>
   <div>{{ address }}</div>
 </template>
 ```
+
+## Support
+
+If you find `use-wagmi` useful, please consider supporting development. Thank you 🙏
+
+ERC20-USDT: 0xb493c9555f5c2be907a3bfa363daf1fc22635fe5
+TRC20-USDT: TLXcmNCTSngBXMxzmkZVHFdWE3XHEK5bBi
+
+> Please do not send other assets except USDT
 
 ## Credits
 
