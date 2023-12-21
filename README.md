@@ -110,8 +110,7 @@ And then use use-wagmi function anywhere in your Nuxt app. For example:
 
 If you find `use-wagmi` useful, please consider supporting development. Thank you 🙏
 
-ERC20-USDT: 0xb493c9555f5c2be907a3bfa363daf1fc22635fe5
-TRC20-USDT: TLXcmNCTSngBXMxzmkZVHFdWE3XHEK5bBi
+ERC20-USDT: 0xb493c9555f5c2be907a3bfa363daf1fc22635fe5<br />TRC20-USDT: TLXcmNCTSngBXMxzmkZVHFdWE3XHEK5bBi
 
 > Please do not send other assets except USDT
 
