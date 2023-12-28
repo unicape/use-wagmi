@@ -79,13 +79,21 @@ Next, we use the `useConnect` composable to connect an injected wallet (e.g. Met
 
 We've only scratched the surface for what you can do with use-wagmi!
 
-## Nuxt
+## Integrating use-wagmi with Nuxt 3 and Nuxt Bridge
 
-We shipped a Nuxt module to enable auto importing for Nuxt 3 and Nuxt Bridge.
+To simplify the process of integrating wagmi (Web3 hooks library) with Nuxt 3 or Nuxt Bridge, we provide the `@use-wagmi/nuxt` module. This module enables automatic importing of wagmi functionality into your Nuxt application.
+
+### Installation
+
+First, install the `@use-wagmi/nuxt` module in your project:
 
 ```bash
 npm install @use-wagmi/nuxt -D
 ```
+
+### Configuration
+
+Next, add the module to your Nuxt configuration:
 
 ```ts
 // nuxt.config.ts
@@ -94,17 +102,56 @@ export default defineNuxtConfig({
 })
 ```
 
-And then use use-wagmi function anywhere in your Nuxt app. For example:
+This registers `@use-wagmi/nuxt` as a module in your Nuxt application.
+
+### Setting Up use-wagmi in Your Application
+
+In your main Vue file (typically `app.vue`), set up use-wagmi with your desired configuration:
+
+```html
+<!-- app.vue -->
+<script setup lang="ts">
+import { UseWagmiPlugin, createConfig, mainnet } from 'use-wagmi';
+import { createPublicClient, http } from 'viem';
+
+const nuxtApp = useNuxtApp();
+const config = createConfig({
+  autoConnect: true,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  }),
+});
+
+nuxtApp.vueApp.use(UseWagmiPlugin, config);
+</script>
+
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>
+```
+
+This script sets up the wagmi configuration and registers it with your Nuxt application.
+
+### Using use-wagmi in Components
+
+After setting up, you can use wagmi functions anywhere in your Nuxt application. For instance, to access the connected account's address:
 
 ```html
 <script setup lang="ts">
-  const { address } = useAccount()
+  import { useAccount } from 'use-wagmi';
+
+  const { address } = useAccount();
 </script>
 
 <template>
   <div>{{ address }}</div>
 </template>
 ```
+
+In this example, `useAccount` from wagmi is used to get the address of the connected account, which is then rendered in the template.
 
 ## Support
 
