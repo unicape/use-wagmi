@@ -1,16 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////
-// Viem
-
-// extremely commonly used viem exports
-export {
-  custom,
-  fallback,
-  http,
-  webSocket,
-} from 'viem'
-
-////////////////////////////////////////////////////////////////////////////////
 // Plugin
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   type UseWagmiPluginOptions,
@@ -20,6 +10,7 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Errors
+////////////////////////////////////////////////////////////////////////////////
 
 export { type BaseErrorType, BaseError } from '../errors/base.js'
 
@@ -30,6 +21,7 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   type UseAccountParameters,
@@ -59,6 +51,12 @@ export {
   type UseBlockNumberReturnType,
   useBlockNumber,
 } from '../hooks/useBlockNumber.js'
+
+export {
+  type UseBlockTransactionCountParameters,
+  type UseBlockTransactionCountReturnType,
+  useBlockTransactionCount,
+} from '../hooks/useBlockTransactionCount.js'
 
 export {
   type UseChainIdParameters,
@@ -147,6 +145,24 @@ export {
 } from '../hooks/useEstimateGas.js'
 
 export {
+  type UseEstimateMaxPriorityFeePerGasParameters,
+  type UseEstimateMaxPriorityFeePerGasReturnType,
+  useEstimateMaxPriorityFeePerGas,
+} from '../hooks/useEstimateMaxPriorityFeePerGas.js'
+
+export {
+  type UseFeeHistoryParameters,
+  type UseFeeHistoryReturnType,
+  useFeeHistory,
+} from '../hooks/useFeeHistory.js'
+
+export {
+  type UseGasPriceParameters,
+  type UseGasPriceReturnType,
+  useGasPrice,
+} from '../hooks/useGasPrice.js'
+
+export {
   type UseInfiniteContractReadsParameters,
   type UseInfiniteContractReadsReturnType,
   useInfiniteReadContracts,
@@ -168,13 +184,13 @@ export {
   useReadContract as useContractRead,
 } from '../hooks/useReadContract.js'
 
-// export {
-//   type UseReadContractsParameters,
-//   type UseReadContractsReturnType,
-//   useReadContracts,
-//   /** @deprecated Use `useWriteContract` instead */
-//   useReadContracts as useContractReads,
-// } from '../hooks/useReadContracts.js'
+export {
+  type UseReadContractsParameters,
+  type UseReadContractsReturnType,
+  useReadContracts,
+  /** @deprecated Use `useWriteContract` instead */
+  useReadContracts as useContractReads,
+} from '../hooks/useReadContracts.js'
 
 // export {
 //   type UseReconnectParameters,
@@ -232,6 +248,24 @@ export {
 // } from '../hooks/useTransaction.js'
 
 // export {
+//   type UseTransactionCountParameters,
+//   type UseTransactionCountReturnType,
+//   useTransactionCount,
+// } from '../hooks/useTransactionCount.js'
+
+// export {
+//   type UseVerifyMessageParameters,
+//   type UseVerifyMessageReturnType,
+//   useVerifyMessage,
+// } from '../hooks/useVerifyMessage.js'
+
+// export {
+//   type UseVerifyTypedDataParameters,
+//   type UseVerifyTypedDataReturnType,
+//   useVerifyTypedData,
+// } from '../hooks/useVerifyTypedData.js'
+
+// export {
 //   type UseWalletClientParameters,
 //   type UseWalletClientReturnType,
 //   useWalletClient,
@@ -276,7 +310,8 @@ export {
 // } from '../hooks/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
-// hydrate
+// Hydrate
+////////////////////////////////////////////////////////////////////////////////
 
 // export {
 //   type HydrateProps,
@@ -285,6 +320,7 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
+////////////////////////////////////////////////////////////////////////////////
 
 export {
   // Config
@@ -316,6 +352,12 @@ export {
   type Storage,
   createStorage,
   noopStorage,
+  // Transports
+  custom,
+  fallback,
+  http,
+  webSocket,
+  unstable_connector,
   // Types
   type Register,
   type ResolvedRegister,
@@ -331,5 +373,6 @@ export {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Version
+////////////////////////////////////////////////////////////////////////////////
 
 export { version } from '../version.js'
