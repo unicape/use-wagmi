@@ -8,7 +8,8 @@
     "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
     "lint:unused": "pnpm clean && knip --ignore-internal",
-    "dev": "pnpm --filter vite-vue dev"
+    "dev": "pnpm --filter vite-vue dev",
+    "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit"
   },
   "devDependencies": {
     "@biomejs/biome": "1.1.2",

@@ -1,6 +1,6 @@
 'use client'
 
-import { type QueryFilters, useQueryClient } from '@tanstack/vue-query'
+import { useQueryClient } from '@tanstack/vue-query'
 import {
   type Config,
   type GetBlockErrorType,
@@ -41,13 +41,13 @@ export type UseBlockParameters<
   blockTag extends BlockTag = 'latest',
   config extends Config = Config,
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetBlockData,
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = MaybeRefDeep<
   Evaluate<
     GetBlockOptions<includeTransactions, blockTag, config, chainId> &
       ConfigParameter<config> &
       QueryParameter<
-        GetBlockQueryFnData,
+        GetBlockQueryFnData<includeTransactions, blockTag, config, chainId>,
         GetBlockErrorType,
         selectData,
         GetBlockQueryKey<includeTransactions, blockTag, config, chainId>
@@ -75,7 +75,9 @@ export type UseBlockParameters<
 export type UseBlockReturnType<
   includeTransactions extends boolean = false,
   blockTag extends BlockTag = 'latest',
-  selectData = GetBlockData<includeTransactions, blockTag>,
+  config extends Config = Config,
+  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 > = UseQueryReturnType<selectData, GetBlockErrorType>
 
 /** https://wagmi.sh/react/hooks/useBlock */
@@ -84,7 +86,7 @@ export function useBlock<
   blockTag extends BlockTag = 'latest',
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
-  selectData = GetBlockData<includeTransactions, blockTag>,
+  selectData = GetBlockData<includeTransactions, blockTag, config, chainId>,
 >(
   parameters: UseBlockParameters<
     includeTransactions,
@@ -93,27 +95,25 @@ export function useBlock<
     chainId,
     selectData
   > = {},
-): UseBlockReturnType<includeTransactions, blockTag, selectData> {
+): UseBlockReturnType<
+  includeTransactions,
+  blockTag,
+  config,
+  chainId,
+  selectData
+> {
   const config = useConfig(parameters)
   const queryClient = useQueryClient()
-  const configChainId = useChainId()
+  const chainId = useChainId()
 
   const queryOptions = computed(() => {
-    const _parameters = cloneDeepUnref<
-      DeepUnwrapRef<
-        UseBlockParameters<
-          includeTransactions,
-          blockTag,
-          config,
-          chainId,
-          selectData
-        >
-      >
-    >(parameters as any)
+    const _parameters = cloneDeepUnref(parameters as any)
 
     const { query = {} } = _parameters
-    const chainId = _parameters.chainId ?? configChainId.value
-    const options = getBlockQueryOptions(config, { chainId })
+
+    const options = getBlockQueryOptions(config, {
+      chainId: _parameters.chainId ?? chainId.value,
+    })
     const enabled = Boolean(query.enabled ?? true)
 
     return {
@@ -141,10 +141,7 @@ export function useBlock<
 
     type OnBlock = DeepUnwrapRef<UseWatchBlocksParameters>['onBlock']
     const onBlock: OnBlock = (block) => {
-      queryClient.setQueriesData(
-        queryOptions.value.queryKey as QueryFilters,
-        block,
-      )
+      queryClient.setQueriesData(queryOptions.value.queryKey, block)
     }
 
     return {
@@ -162,9 +159,11 @@ export function useBlock<
 
   useWatchBlocks(watchBlocksOptions)
 
-  return useQuery(queryOptions as any) as UseBlockReturnType<
+  return useQuery(queryOptions) as UseBlockReturnType<
     includeTransactions,
     blockTag,
+    config,
+    chainId,
     selectData
   >
 }
