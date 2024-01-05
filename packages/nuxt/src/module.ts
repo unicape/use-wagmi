@@ -29,7 +29,7 @@ export default defineNuxtModule<WagmiNuxtOptions>({
   },
   setup(options, nuxt) {
     // add packages to transpile target for alias resolution
-    nuxt.options.build = nuxt.options.build || {}
+    nuxt.options.build = (nuxt.options.build || {}) as any
     nuxt.options.build.transpile = nuxt.options.build.transpile || []
     nuxt.options.build.transpile.push(packageName)
 
