@@ -27,131 +27,71 @@ Based on [wagmi](https://wagmi.sh)
 Install use-wagmi and its [viem](https://viem.sh) peer dependency.
 
 ```bash
-npm install use-wagmi viem
+npm install use-wagmi viem @tanstack/vue-query
 ```
 
-## Quick Start
+## Create Config
 
-Connect a wallet in under 60 seconds.
+Create and export a new Wagmi config using **createConfig**.
 
 ```ts
-import { UseWagmiPlugin, createConfig, mainnet } from 'use-wagmi'
-import { createPublicClient, http } from 'viem'
-import App from './App.vue'
+import { http, createConfig } from 'use-wagmi'
+import { mainnet, sepolia } from 'use-wagmi/chains'
 
-const config = createConfig({
-  autoConnect: true,
-  publicClient: createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  }),
+export const config = createConfig({
+  chains: [mainnet, sepolia],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+  },
 })
-
-const app = createApp(App)
-app.use(UseWagmiPlugin, config)
-app.mount('#app')
 ```
 
-```html
+In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and **injected** connector. Check out the **createConfig** [docs](https://wagmi.sh/react/api/createConfig) for more configuration options.
+
+## Use Wagmi Initialization
+
+Before using Vue Query, you need to initialize it using `UseWagmiPlugin`
+
+```ts
+import { UseWagmiPlugin } from 'use-wagmi'
+
+app.use(VueQueryPlugin, vueQueryOptions, { config })
+```
+
+## Use of Composition API with `<script setup>`
+
+All examples in our documentation use `<script setup>` syntax.
+
+Vue 2 users can also use that syntax using this plugin. Please check the plugin documentation for installation details.
+
+If you are not a fan of `<script setup>` syntax, you can easily translate all the examples into normal Composition API syntax by moving the code under `setup()` function and returning the values used in the template.
+
+```vue
 <script setup>
-  import { useAccount, useConnect, useDisconnect } from 'use-wagmi'
-  import { InjectedConnector } from 'use-wagmi/connectors/injected'
+import { useAccount, useDisconnect } from 'use-wagmi'
 
-  const { address, isConnected } = useAccount()
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  })
-  const { disconnect } = useDisconnect()
+const { address, chainId, status } = useAccount()
+const { disconnect } = useDisconnect()
 </script>
 
 <template>
-  <div v-if="isConnected">
-    Connected to {{ address }}
-    <button @click="disconnect">Disconnect</button>
+  <div>
+    <h2>Account</h2>
+    <div>
+      account: {{ address }}
+      chainId: {{ chainId }}
+      status: {{ status }}
+    </div>
+
+    <button v-if="status !== 'disconnected'" type="button" @click="() => disconnect()">Disconnect</button>
   </div>
-  <button v-else @click="connect">Connect Wallet</button>
 </template>
 ```
 
-In this example, we create a `use-wagmi` and pass it to the Vue plugin. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
+## Nuxt
 
-Next, we use the `useConnect` composable to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
-
-We've only scratched the surface for what you can do with use-wagmi!
-
-## Integrating use-wagmi with Nuxt 3 and Nuxt Bridge
-
-To simplify the process of integrating wagmi (Web3 hooks library) with Nuxt 3 or Nuxt Bridge, we provide the `@use-wagmi/nuxt` module. This module enables automatic importing of wagmi functionality into your Nuxt application.
-
-### Installation
-
-First, install the `@use-wagmi/nuxt` module in your project:
-
-```bash
-npm install @use-wagmi/nuxt -D
-```
-
-### Configuration
-
-Next, add the module to your Nuxt configuration:
-
-```ts
-// nuxt.config.ts
-export default defineNuxtConfig({
-  modules: ['@use-wagmi/nuxt'],
-})
-```
-
-This registers `@use-wagmi/nuxt` as a module in your Nuxt application.
-
-### Setting Up use-wagmi in Your Application
-
-In your main Vue file (typically `app.vue`), set up use-wagmi with your desired configuration:
-
-```html
-<!-- app.vue -->
-<script setup lang="ts">
-import { UseWagmiPlugin, createConfig, mainnet } from 'use-wagmi';
-import { createPublicClient, http } from 'viem';
-
-const nuxtApp = useNuxtApp();
-const config = createConfig({
-  autoConnect: true,
-  publicClient: createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  }),
-});
-
-nuxtApp.vueApp.use(UseWagmiPlugin, config);
-</script>
-
-<template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-</template>
-```
-
-This script sets up the wagmi configuration and registers it with your Nuxt application.
-
-### Using use-wagmi in Components
-
-After setting up, you can use wagmi functions anywhere in your Nuxt application. For instance, to access the connected account's address:
-
-```html
-<script setup lang="ts">
-  import { useAccount } from 'use-wagmi';
-
-  const { address } = useAccount();
-</script>
-
-<template>
-  <div>{{ address }}</div>
-</template>
-```
-
-In this example, `useAccount` from wagmi is used to get the address of the connected account, which is then rendered in the template.
+we provide the [@use-wagmi/nuxt](https://github.com/unicape/use-wagmi/tree/main/packages/nuxt) module. This module enables automatic importing of wagmi functionality into your Nuxt application.
 
 ## Support
 
