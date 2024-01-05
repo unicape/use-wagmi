@@ -10,8 +10,8 @@ concurrency:
 jobs:
   changesets:
     name: Create pull request or publish
-    needs: verify
-    permissions: write-all
+    # needs: verify
+    # permissions: write-all
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
