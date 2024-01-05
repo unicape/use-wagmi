@@ -68,7 +68,7 @@ export type UseQueryParameters<
         DeepUnwrapRef<
           UseQueryOptions<TQueryFnData, TError, TData, TQueryData, TQueryKey>
         >,
-        'queryKey' | 'initialData'
+        'initialData'
       >
     > & {
       // Fix `initialData` type
@@ -78,9 +78,7 @@ export type UseQueryParameters<
           >['initialData']
         | undefined
     }
-  > & {
-    queryKey: TQueryKey
-  }
+  >
 >
 
 export type UseQueryReturnType<data = unknown, error = DefaultError> = Evaluate<
@@ -113,7 +111,7 @@ export function useQuery<
   }))
 
   const result = tanstack_useQuery(options) as UseQueryReturnType<TData, TError>
-  result.queryKey = unref(parameters).queryKey
+  result.queryKey = unref(parameters).queryKey as TQueryKey
   return result
 }
 

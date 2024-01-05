@@ -192,17 +192,17 @@ export {
   useReadContracts as useContractReads,
 } from '../hooks/useReadContracts.js'
 
-// export {
-//   type UseReconnectParameters,
-//   type UseReconnectReturnType,
-//   useReconnect,
-// } from '../hooks/useReconnect.js'
+export {
+  type UseReconnectParameters,
+  type UseReconnectReturnType,
+  useReconnect,
+} from '../hooks/useReconnect.js'
 
-// export {
-//   type UseSendTransactionParameters,
-//   type UseSendTransactionReturnType,
-//   useSendTransaction,
-// } from '../hooks/useSendTransaction.js'
+export {
+  type UseSendTransactionParameters,
+  type UseSendTransactionReturnType,
+  useSendTransaction,
+} from '../hooks/useSendTransaction.js'
 
 export {
   type UseSignMessageParameters,
@@ -210,17 +210,17 @@ export {
   useSignMessage,
 } from '../hooks/useSignMessage.js'
 
-// export {
-//   type UseSignTypedDataParameters,
-//   type UseSignTypedDataReturnType,
-//   useSignTypedData,
-// } from '../hooks/useSignTypedData.js'
+export {
+  type UseSignTypedDataParameters,
+  type UseSignTypedDataReturnType,
+  useSignTypedData,
+} from '../hooks/useSignTypedData.js'
 
-// export {
-//   type UseSimulateContractParameters,
-//   type UseSimulateContractReturnType,
-//   useSimulateContract,
-// } from '../hooks/useSimulateContract.js'
+export {
+  type UseSimulateContractParameters,
+  type UseSimulateContractReturnType,
+  useSimulateContract,
+} from '../hooks/useSimulateContract.js'
 
 export {
   type UseSwitchAccountParameters,
@@ -234,48 +234,48 @@ export {
   useSwitchChain,
 } from '../hooks/useSwitchChain.js'
 
-// export {
-//   type UseTokenParameters,
-//   type UseTokenReturnType,
-//   /** @deprecated Use `useReadContracts` instead */
-//   useToken,
-// } from '../hooks/useToken.js'
+export {
+  type UseTokenParameters,
+  type UseTokenReturnType,
+  /** @deprecated Use `useReadContracts` instead */
+  useToken,
+} from '../hooks/useToken.js'
 
-// export {
-//   type UseTransactionParameters,
-//   type UseTransactionReturnType,
-//   useTransaction,
-// } from '../hooks/useTransaction.js'
+export {
+  type UseTransactionParameters,
+  type UseTransactionReturnType,
+  useTransaction,
+} from '../hooks/useTransaction.js'
 
-// export {
-//   type UseTransactionCountParameters,
-//   type UseTransactionCountReturnType,
-//   useTransactionCount,
-// } from '../hooks/useTransactionCount.js'
+export {
+  type UseTransactionCountParameters,
+  type UseTransactionCountReturnType,
+  useTransactionCount,
+} from '../hooks/useTransactionCount.js'
 
-// export {
-//   type UseVerifyMessageParameters,
-//   type UseVerifyMessageReturnType,
-//   useVerifyMessage,
-// } from '../hooks/useVerifyMessage.js'
+export {
+  type UseVerifyMessageParameters,
+  type UseVerifyMessageReturnType,
+  useVerifyMessage,
+} from '../hooks/useVerifyMessage.js'
 
-// export {
-//   type UseVerifyTypedDataParameters,
-//   type UseVerifyTypedDataReturnType,
-//   useVerifyTypedData,
-// } from '../hooks/useVerifyTypedData.js'
+export {
+  type UseVerifyTypedDataParameters,
+  type UseVerifyTypedDataReturnType,
+  useVerifyTypedData,
+} from '../hooks/useVerifyTypedData.js'
 
-// export {
-//   type UseWalletClientParameters,
-//   type UseWalletClientReturnType,
-//   useWalletClient,
-// } from '../hooks/useWalletClient.js'
+export {
+  type UseWalletClientParameters,
+  type UseWalletClientReturnType,
+  useWalletClient,
+} from '../hooks/useWalletClient.js'
 
-// export {
-//   type UseWaitForTransactionReceiptParameters,
-//   type UseWaitForTransactionReceiptReturnType,
-//   useWaitForTransactionReceipt,
-// } from '../hooks/useWaitForTransactionReceipt.js'
+export {
+  type UseWaitForTransactionReceiptParameters,
+  type UseWaitForTransactionReceiptReturnType,
+  useWaitForTransactionReceipt,
+} from '../hooks/useWaitForTransactionReceipt.js'
 
 export {
   type UseWatchBlocksParameters,
@@ -289,34 +289,25 @@ export {
   useWatchBlockNumber,
 } from '../hooks/useWatchBlockNumber.js'
 
-// export {
-//   type UseWatchContractEventParameters,
-//   type UseWatchContractEventReturnType,
-//   useWatchContractEvent,
-// } from '../hooks/useWatchContractEvent.js'
+export {
+  type UseWatchContractEventParameters,
+  type UseWatchContractEventReturnType,
+  useWatchContractEvent,
+} from '../hooks/useWatchContractEvent.js'
 
-// export {
-//   type UseWatchPendingTransactionsParameters,
-//   type UseWatchPendingTransactionsReturnType,
-//   useWatchPendingTransactions,
-// } from '../hooks/useWatchPendingTransactions.js'
+export {
+  type UseWatchPendingTransactionsParameters,
+  type UseWatchPendingTransactionsReturnType,
+  useWatchPendingTransactions,
+} from '../hooks/useWatchPendingTransactions.js'
 
-// export {
-//   type UseWriteContractParameters,
-//   type UseWriteContractReturnType,
-//   useWriteContract,
-//   /** @deprecated Use `useWriteContract` instead */
-//   useWriteContract as useContractWrite,
-// } from '../hooks/useWriteContract.js'
-
-////////////////////////////////////////////////////////////////////////////////
-// Hydrate
-////////////////////////////////////////////////////////////////////////////////
-
-// export {
-//   type HydrateProps,
-//   Hydrate,
-// } from '../hydrate.js'
+export {
+  type UseWriteContractParameters,
+  type UseWriteContractReturnType,
+  useWriteContract,
+  /** @deprecated Use `useWriteContract` instead */
+  useWriteContract as useContractWrite,
+} from '../hooks/useWriteContract.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
