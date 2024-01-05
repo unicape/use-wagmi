@@ -1,5 +1,5 @@
 import { defineNuxtModule } from '@nuxt/kit'
-import { functions } from './functions'
+import { functions } from './functions.js'
 
 const packageName = 'use-wagmi' as const
 
@@ -39,8 +39,8 @@ export default defineNuxtModule<WagmiNuxtOptions>({
         if (sources.find((i) => i.from === packageName)) return
 
         const imports = functions
-          .filter((name) => !exclude.includes(name))
-          .map((name) => {
+          .filter((name: string) => !exclude.includes(name))
+          .map((name: string) => {
             return {
               from: packageName,
               name,
