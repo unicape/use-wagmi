@@ -26,7 +26,7 @@ type UseAccountEffectArgs = Evaluate<
 export type UseAccountEffectParameters = MaybeRefDeep<UseAccountEffectArgs>
 // MaybeRefShallow<ConfigParameter>
 
-/** https://beta.wagmi.sh/react/api/hooks/useAccountEffect */
+/** https://wagmi.sh/react/api/hooks/useAccountEffect */
 export function useAccountEffect(parameters: UseAccountEffectParameters = {}) {
   const config = useConfig(parameters)
 

@@ -45,7 +45,7 @@ export type UseEnsResolverParameters<
 export type UseEnsResolverReturnType<selectData = GetEnsResolverData> =
   UseQueryReturnType<selectData, GetEnsResolverErrorType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useEnsResolver */
+/** https://wagmi.sh/react/api/hooks/useEnsResolver */
 export function useEnsResolver<
   config extends Config = ResolvedRegister['config'],
   selectData = GetEnsResolverData,

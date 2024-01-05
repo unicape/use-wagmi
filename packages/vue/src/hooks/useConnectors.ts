@@ -14,7 +14,7 @@ export type UseConnectorsParameters = MaybeRefDeep<ConfigParameter>
 
 export type UseConnectorsReturnType = ShallowRef<GetConnectorsReturnType>
 
-/** https://beta.wagmi.sh/react/api/hooks/useConnections */
+/** https://wagmi.sh/react/api/hooks/useConnections */
 export function useConnectors(
   parameters: UseConnectorsParameters = {},
 ): UseConnectorsReturnType {

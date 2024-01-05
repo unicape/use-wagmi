@@ -19,7 +19,7 @@ export type UseChainIdReturnType<TConfig extends Config = Config> = ComputedRef<
   GetChainIdReturnType<TConfig>
 >
 
-/** https://beta.wagmi.sh/react/api/hooks/useChainId */
+/** https://wagmi.sh/react/api/hooks/useChainId */
 export function useChainId<TConfig extends Config = ResolvedRegister['config']>(
   parameters: UseChainIdParameters<TConfig> = {},
 ): UseChainIdReturnType<TConfig> {

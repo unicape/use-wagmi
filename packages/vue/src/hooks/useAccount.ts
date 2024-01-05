@@ -21,7 +21,7 @@ export type UseAccountParameters = MaybeRefDeep<ConfigParameter>
 
 export type UseAccountReturnType = ToRefs<DeepReadonly<GetAccountReturnType>>
 
-/** https://beta.wagmi.sh/react/api/hooks/useAccount */
+/** https://wagmi.sh/react/api/hooks/useAccount */
 export function useAccount(
   parameters: UseAccountParameters = {},
 ): UseAccountReturnType {

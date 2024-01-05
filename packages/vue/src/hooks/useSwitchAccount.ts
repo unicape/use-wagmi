@@ -57,7 +57,7 @@ export type UseSwitchAccountReturnType<
   }
 >
 
-/** https://beta.wagmi.sh/react/api/hooks/useSwitchAccount */
+/** https://wagmi.sh/react/api/hooks/useSwitchAccount */
 export function useSwitchAccount<
   config extends Config = ResolvedRegister['config'],
   context = unknown,

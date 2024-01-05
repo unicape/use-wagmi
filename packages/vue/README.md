@@ -10,4 +10,4 @@ pnpm add use-wagmi@beta viem@beta @tanstack/vue-query
 
 ## Documentation
 
-For documentation and guides, visit [wagmi.sh](https://beta.wagmi.sh).
+For documentation and guides, visit [wagmi.sh](https://wagmi.sh).

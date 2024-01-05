@@ -32,7 +32,7 @@ export type UseClientReturnType<
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
 > = ShallowRef<DeepReadonly<GetClientReturnType<config, chainId>>>
 
-/** https://beta.wagmi.sh/react/api/hooks/useClient */
+/** https://wagmi.sh/react/api/hooks/useClient */
 export function useClient<
   config extends Config = ResolvedRegister['config'],
   chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
