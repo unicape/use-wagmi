@@ -1,5 +1,5 @@
 import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
-import { ref, watchEffect, isVue2 } from 'vue-demi'
+import { isVue2, ref, watchEffect } from 'vue-demi'
 import { createInjectionKey } from './utils/createInjectionKey.js'
 
 export const WagmiConfigInjectionKey =
