@@ -2,14 +2,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run --r --filter \"./packages/vue\" build",
+    "build": "pnpm run --r --filter \"./packages/**\" build",
+    "changeset:publish": "pnpm version:update && pnpm build && bun .scripts/formatPackageJson.ts && bun .scripts/generateProxyPackages.ts && changeset publish",
+    "changeset:version": "changeset version && pnpm version:update",
     "clean": "pnpm run --r --parallel clean",
     "format": "biome format . --write",
     "lint": "biome check .",
     "lint:fix": "pnpm lint --apply",
     "lint:unused": "pnpm clean && knip --ignore-internal",
     "dev": "pnpm --filter vite-vue dev",
-    "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit"
+    "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
+    "version:update": "bun .scripts/updateVersion.ts",
+    "version:update:viem": "bun .scripts/updateViemVersion.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "1.1.2",

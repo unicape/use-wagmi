@@ -49,14 +49,24 @@ export const config = createConfig({
 
 In this example, Wagmi is configured to use the Mainnet and Sepolia chains, and **injected** connector. Check out the **createConfig** [docs](https://wagmi.sh/react/api/createConfig) for more configuration options.
 
-## Use Wagmi Initialization
+## Setup Use Wagmi
 
 Before using Vue Query, you need to initialize it using `UseWagmiPlugin`
 
 ```ts
 import { UseWagmiPlugin } from 'use-wagmi'
 
-app.use(VueQueryPlugin, vueQueryOptions, { config })
+app.use(UseWagmiPlugin, { config })
+```
+
+## Setup TanStack Query
+
+Inside the `VueQueryPlugin`, wrap your app in a TanStack Query Vue Plugin, e.g. VueQueryPlugin, and pass a new QueryClient instance to the client property.
+
+```ts
+import { VueQueryPlugin } from "@tanstack/vue-query"
+
+app.use(VueQueryPlugin)
 ```
 
 ## Use of Composition API with `<script setup>`
