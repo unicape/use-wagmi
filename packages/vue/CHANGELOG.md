@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.0.0
+
+### Major Changes
+
+- [#117](https://github.com/unicape/use-wagmi/pull/117) [`269e5ed55cda34ea41e20ddf4142c1431e1b588f`](https://github.com/unicape/use-wagmi/commit/269e5ed55cda34ea41e20ddf4142c1431e1b588f) Thanks [@unicape](https://github.com/unicape)! - Upgradge wagmi@2.x
+
 ## 0.4.10
 
 ### Patch Changes

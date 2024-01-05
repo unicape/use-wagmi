@@ -1,7 +1,7 @@
 {
   "name": "use-wagmi",
   "description": "Vue Composition for Ethereum based on wagmi",
-  "version": "0.4.10",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -56,10 +56,18 @@
   },
   "typesVersions": {
     "*": {
-      "actions": ["./dist/types/exports/actions.d.ts"],
-      "chains": ["./dist/types/exports/chains.d.ts"],
-      "connectors": ["./dist/types/exports/connectors.d.ts"],
-      "query": ["./dist/types/exports/query.d.ts"]
+      "actions": [
+        "./dist/types/exports/actions.d.ts"
+      ],
+      "chains": [
+        "./dist/types/exports/chains.d.ts"
+      ],
+      "connectors": [
+        "./dist/types/exports/connectors.d.ts"
+      ],
+      "query": [
+        "./dist/types/exports/query.d.ts"
+      ]
     }
   },
   "peerDependencies": {
@@ -86,7 +94,9 @@
   "devDependencies": {
     "@tanstack/vue-query": "5.0.5"
   },
-  "contributors": ["Unic Ape <unicape.dev@gmail.com>"],
+  "contributors": [
+    "Unic Ape <unicape.dev@gmail.com>"
+  ],
   "keywords": [
     "wagmi",
     "vue",
