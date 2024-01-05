@@ -11,7 +11,7 @@ jobs:
   changesets:
     name: Create pull request or publish
     # needs: verify
-    # permissions: write-all
+    permissions: write-all
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -34,5 +34,5 @@ jobs:
           publish: pnpm changeset:publish
           version: pnpm changeset:version
         env:
-          GITHUB_TOKEN: ${{ secrets.WAGMI_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
