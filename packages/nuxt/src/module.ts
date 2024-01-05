@@ -38,7 +38,8 @@ export default defineNuxtModule<WagmiNuxtOptions>({
       nuxt.hook('imports:sources', (sources) => {
         if (sources.find((i) => i.from === packageName)) return
 
-        const imports = functions.filter((name) => !exclude.includes(name))
+        const imports = functions
+          .filter((name) => !exclude.includes(name))
           .map((name) => {
             return {
               from: packageName,

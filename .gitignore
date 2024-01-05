@@ -1,6 +1,4 @@
-*.local
 .DS_Store
-.eslintcache
 .nuxt
 .pnpm-debug.log*
 cache
@@ -8,7 +6,7 @@ coverage
 dist
 node_modules
 tsconfig.tsbuildinfo
-./wagmi.config.ts
+*.vitest-temp.json
 
 # local env files
 .env
@@ -17,3 +15,9 @@ tsconfig.tsbuildinfo
 .env.test.local
 .env.production.local
 .envrc
+
+# proxy packages
+packages/vue/actions
+packages/vue/chains
+packages/vue/connectors
+packages/vue/query

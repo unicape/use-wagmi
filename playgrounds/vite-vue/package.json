@@ -1,0 +1,27 @@
+{
+  "name": "vite-vue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/query-sync-storage-persister": "5.8.1",
+    "@tanstack/vue-query": "5.8.1",
+    "@tanstack/query-persist-client-core": "5.8.1",
+    "vue": "^3.3.4",
+    "viem": "2.0.0-beta.15",
+    "use-wagmi": "workspace:*"
+  },
+  "devDependencies": {
+    "@tanstack/vue-query-devtools": "5.8.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "typescript": "^5.0.2",
+    "buffer": "^6.0.3",
+    "vite": "^4.4.5",
+    "vue-tsc": "^1.8.5"
+  }
+}

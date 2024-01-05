@@ -1,136 +1,100 @@
 {
   "name": "use-wagmi",
   "description": "Vue Composition for Ethereum based on wagmi",
-  "license": "MIT",
   "version": "0.4.10",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/unicape/use-wagmi.git",
     "directory": "packages/vue"
   },
-  "contributors": [
-    "Unic Ape <94770222@qq.com>"
-  ],
-  "homepage": "https://github.com/unicape/use-wagmi",
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./actions": {
-      "types": "./dist/actions.d.ts",
-      "default": "./dist/actions.js"
-    },
-    "./chains": {
-      "types": "./dist/chains.d.ts",
-      "default": "./dist/chains.js"
-    },
-    "./connectors": {
-      "types": "./dist/connectors/index.d.ts",
-      "default": "./dist/connectors/index.js"
-    },
-    "./connectors/coinbaseWallet": {
-      "types": "./dist/connectors/coinbaseWallet.d.ts",
-      "default": "./dist/connectors/coinbaseWallet.js"
-    },
-    "./connectors/injected": {
-      "types": "./dist/connectors/injected.d.ts",
-      "default": "./dist/connectors/injected.js"
-    },
-    "./connectors/metaMask": {
-      "types": "./dist/connectors/metaMask.d.ts",
-      "default": "./dist/connectors/metaMask.js"
-    },
-    "./connectors/mock": {
-      "types": "./dist/connectors/mock.d.ts",
-      "default": "./dist/connectors/mock.js"
-    },
-    "./connectors/safe": {
-      "types": "./dist/connectors/safe.d.ts",
-      "default": "./dist/connectors/safe.js"
-    },
-    "./connectors/walletConnect": {
-      "types": "./dist/connectors/walletConnect.d.ts",
-      "default": "./dist/connectors/walletConnect.js"
-    },
-    "./connectors/walletConnectLegacy": {
-      "types": "./dist/connectors/walletConnectLegacy.d.ts",
-      "default": "./dist/connectors/walletConnectLegacy.js"
-    },
-    "./providers/alchemy": {
-      "types": "./dist/providers/alchemy.d.ts",
-      "default": "./dist/providers/alchemy.js"
-    },
-    "./providers/infura": {
-      "types": "./dist/providers/infura.d.ts",
-      "default": "./dist/providers/infura.js"
-    },
-    "./providers/jsonRpc": {
-      "types": "./dist/providers/jsonRpc.d.ts",
-      "default": "./dist/providers/jsonRpc.js"
-    },
-    "./providers/public": {
-      "types": "./dist/providers/public.d.ts",
-      "default": "./dist/providers/public.js"
-    },
-    "./window": {
-      "types": "./dist/window.d.ts",
-      "default": "./dist/window.js"
-    },
-    "./package.json": "./package.json"
+  "scripts": {
+    "build": "pnpm run clean && pnpm run build:esm+types",
+    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo actions chains connectors query",
+    "test:build": "publint --strict",
+    "typecheck": "tsc --noEmit"
   },
-  "sideEffects": false,
   "files": [
+    "dist/**",
+    "!dist/**/*.tsbuildinfo",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/**/*.test-d.ts",
     "/actions",
     "/chains",
     "/connectors",
-    "/providers",
-    "/window",
-    "/dist"
+    "/query"
   ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/esm/exports/index.js",
+  "types": "./dist/types/exports/index.d.ts",
+  "typings": "./dist/types/exports/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/exports/index.d.ts",
+      "default": "./dist/esm/exports/index.js"
+    },
+    "./actions": {
+      "types": "./dist/types/exports/actions.d.ts",
+      "default": "./dist/esm/exports/actions.js"
+    },
+    "./chains": {
+      "types": "./dist/types/exports/chains.d.ts",
+      "default": "./dist/esm/exports/chains.js"
+    },
+    "./connectors": {
+      "types": "./dist/types/exports/connectors.d.ts",
+      "default": "./dist/esm/exports/connectors.js"
+    },
+    "./query": {
+      "types": "./dist/types/exports/query.d.ts",
+      "default": "./dist/esm/exports/query.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "actions": ["./dist/types/exports/actions.d.ts"],
+      "chains": ["./dist/types/exports/chains.d.ts"],
+      "connectors": ["./dist/types/exports/connectors.d.ts"],
+      "query": ["./dist/types/exports/query.d.ts"]
+    }
+  },
   "peerDependencies": {
+    "@tanstack/vue-query": ">=5.0.0",
     "@vue/composition-api": "^1.0.0-rc.1",
     "typescript": ">=5.0.4",
-    "viem": ">=0.3.35",
+    "viem": "2.0.0",
     "vue": "^2.0.0 || >=3.0.0"
   },
   "peerDependenciesMeta": {
-    "typescript": {
+    "@vue/composition-api": {
       "optional": true
     },
-    "@vue/composition-api": {
+    "typescript": {
       "optional": true
     }
   },
   "dependencies": {
-    "@tanstack/query-persist-client-core": "^4.29.11",
-    "@tanstack/query-sync-storage-persister": "^4.29.11",
-    "@tanstack/vue-query": "^4.29.11",
-    "@wagmi/core": "1.4.13",
-    "@wagmi/chains": "1.8.0",
-    "@wagmi/connectors": "3.1.11",
-    "eventemitter3": "^4.0.7",
-    "abitype": "0.8.7",
-    "vue-demi": "latest"
+    "@wagmi/connectors": "4.0.1",
+    "@wagmi/core": "2.0.1",
+    "vue": "3.3.8",
+    "vue-demi": "^0.14.6"
   },
   "devDependencies": {
-    "viem": "^1.0.0",
-    "vue": "^3.2.47"
+    "@tanstack/vue-query": "5.0.5"
   },
+  "contributors": ["Unic Ape <unicape.dev@gmail.com>"],
   "keywords": [
     "wagmi",
-    "viem",
     "vue",
     "hooks",
     "eth",
     "ethereum",
+    "dapps",
+    "wallet",
     "web3"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "DEV=true tsup"
-  }
+  ]
 }
