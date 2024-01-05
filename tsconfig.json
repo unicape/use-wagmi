@@ -1,44 +1,8 @@
 {
+  "extends": "./tsconfig.base.json",
+  "include": [".scripts/**/*.ts", "vitest.workspace.ts", "vitest.config.ts"],
+  "exclude": [],
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": ".",
-    "downlevelIteration": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "lib": ["es2021", "dom"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noImplicitAny": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "paths": {
-      "@wagmi/core": ["packages/vue/node_modules/@wagmi/core/dist"],
-      "@wagmi/chains": ["packages/vue/node_modules/@wagmi/chains/dist"],
-      "@wagmi/connectors": ["packages/vue/node_modules/@wagmi/connectors/dist"],
-      "eventemitter3": ["packages/vue/node_modules/eventemitter3"],
-      "use-wagmi": ["packages/vue/src"],
-      "use-wagmi/*": ["packages/vue/src/*"],
-      // TODO: Remove once issue is fixed
-      // https://github.com/microsoft/TypeScript/issues/48212
-      "abitype": ["packages/vue/node_modules/abitype/dist"],
-      "vue-demi": ["packages/vue/node_modules/vue-demi/lib"],
-      "viem": ["./node_modules/viem/dist/types"],
-      "viem/*": ["./node_modules/viem/dist/types/*"]
-    },
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "target": "es2021",
-    "types": ["node"]
-  },
-  "exclude": ["**/node_modules/**", "**/dist/**"],
-  "include": [
-    "examples/**/*",
-    "packages/**/*",
-    "scripts/**/*",
-    "**/vitest.config.ts"
-  ]
+    "types": ["bun-types"]
+  }
 }

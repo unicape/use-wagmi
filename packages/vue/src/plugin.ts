@@ -1,32 +1,38 @@
-import { VueQueryPlugin, type VueQueryPluginOptions } from '@tanstack/vue-query'
-import type { PublicClient, WebSocketPublicClient } from '@wagmi/core'
-import type { Ref } from 'vue-demi'
-import { inject, isVue2, markRaw, shallowRef, triggerRef } from 'vue-demi'
+import { type ResolvedRegister, type State, hydrate } from '@wagmi/core'
+import { ref, watchEffect, isVue2 } from 'vue-demi'
+import { createInjectionKey } from './utils/createInjectionKey.js'
 
-import type { Config } from './config'
+export const WagmiConfigInjectionKey =
+  createInjectionKey<ResolvedRegister['config']>('use-wagmi-config')
 
-const USE_WAGMI_KEY = 'USE_WAGMI' as const
+export type UseWagmiPluginOptions = {
+  config: ResolvedRegister['config']
+  initialState?: State | undefined
+  reconnectOnMount?: boolean | undefined
+}
 
 export const UseWagmiPlugin = {
-  install: (app: any, config: Config) => {
-    app.use(VueQueryPlugin, {
-      queryClient: config.queryClient,
-    } as VueQueryPluginOptions)
+  install: (app: any, options: UseWagmiPluginOptions) => {
+    const { config, initialState, reconnectOnMount = true } = options
 
-    const _config = shallowRef(markRaw(config))
-    const unsubscribe = config.subscribe(() => {
-      triggerRef(markRaw(_config))
+    const { onMount } = hydrate(config, {
+      initialState,
+      reconnectOnMount,
     })
 
-    if (app.onUnmount) {
-      app.onUnmount(unsubscribe)
-    } else {
-      const originalUnmount = app.unmount
-      app.unmount = function vueQueryUnmount() {
-        unsubscribe()
-        originalUnmount()
-      }
-    }
+    // Hydrate for non-SSR
+    if (!config._internal.ssr) onMount()
+
+    // Hydrate for SSR
+    const active = ref(true)
+    watchEffect((onCleanup) => {
+      if (!active.value) return
+      if (!config._internal.ssr) return
+      onMount()
+      onCleanup(() => {
+        active.value = false
+      })
+    })
 
     if (isVue2) {
       app.mixin({
@@ -40,28 +46,11 @@ export const UseWagmiPlugin = {
             })
           }
 
-          this._provided[USE_WAGMI_KEY] = _config
+          this._provided[WagmiConfigInjectionKey as unknown as string] = config
         },
       })
     } else {
-      app.provide(USE_WAGMI_KEY, _config)
+      app.provide(WagmiConfigInjectionKey, config)
     }
   },
-}
-
-export function useConfig<
-  TPublicClient extends PublicClient,
-  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
->() {
-  const config =
-    inject<Ref<Config<TPublicClient, TWebSocketPublicClient>>>(USE_WAGMI_KEY)
-  if (!config?.value)
-    throw new Error(
-      [
-        '`useConfig` must be used within `UseWagmiPlugin`.\n',
-        'Read more: https://github.com/unicape/use-wagmi',
-      ].join('\n'),
-    )
-
-  return config
 }
