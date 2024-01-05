@@ -34,5 +34,5 @@ jobs:
           publish: pnpm changeset:publish
           version: pnpm changeset:version
         env:
-          WAGMI_GITHUB_TOKEN: ${{ secrets.WAGMI_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WAGMI_GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
