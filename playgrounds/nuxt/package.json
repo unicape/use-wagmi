@@ -1,0 +1,23 @@
+{
+  "name": "nuxt",
+  "private": true,
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "start": "node .output/server/index.mjs"
+  },
+  "dependencies": {
+    "@tanstack/query-persist-client-core": "5.8.1",
+    "@tanstack/query-sync-storage-persister": "5.8.1",
+    "@tanstack/vue-query": "5.8.1",
+    "@use-wagmi/nuxt": "^2.0.0",
+    "use-wagmi": "^1.0.0",
+    "viem": "^2.0.0",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-inject": "^5.0.5",
+    "buffer": "^6.0.3",
+    "nuxt": "^3.5.2"
+  }
+}
