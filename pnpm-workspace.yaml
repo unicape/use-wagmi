@@ -4,3 +4,5 @@ packages:
   - 'packages/**/__fixtures__/*'
   - 'packages/register-tests/*'
   - 'playgrounds/*'
+  - '!playgrounds/vite-vue2.6'
+  - '!playgrounds/nuxt'
