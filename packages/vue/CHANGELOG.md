@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.0.1
+
+### Patch Changes
+
+- [#132](https://github.com/unicape/use-wagmi/pull/132) [`f6fdaf309941b679028612a201d479cd8cbe4a64`](https://github.com/unicape/use-wagmi/commit/f6fdaf309941b679028612a201d479cd8cbe4a64) Thanks [@unicape](https://github.com/unicape)! - useConnect error getting unset
+
 ## 1.0.0
 
 ### Major Changes
