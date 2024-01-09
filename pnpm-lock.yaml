@@ -76,11 +76,11 @@ importers:
   packages/vue:
     dependencies:
       '@wagmi/connectors':
-        specifier: 4.0.1
-        version: 4.0.1(@wagmi/core@2.0.1)(typescript@5.1.6)(viem@2.0.0-beta.15)
+        specifier: 4.0.2
+        version: 4.0.2(@wagmi/core@2.0.2)(typescript@5.1.6)(viem@2.0.0-beta.15)
       '@wagmi/core':
-        specifier: 2.0.1
-        version: 2.0.1(typescript@5.1.6)(viem@2.0.0-beta.15)
+        specifier: 2.0.2
+        version: 2.0.2(typescript@5.1.6)(viem@2.0.0-beta.15)
       vue:
         specifier: 3.3.8
         version: 3.3.8(typescript@5.1.6)
@@ -2858,10 +2858,10 @@ packages:
   /@vue/shared@3.3.8:
     resolution: {integrity: sha512-8PGwybFwM4x8pcfgqEQFy70NaQxASvOC5DJwLQfpArw1UDfUXrJkdxD3BhVTMS+0Lef/TU7YO0Jvr0jJY8T+mw==}
 
-  /@wagmi/connectors@4.0.1(@wagmi/core@2.0.1)(typescript@5.1.6)(viem@2.0.0-beta.15):
-    resolution: {integrity: sha512-1DK8e8URL5nQkuHL7kh+arXvyHgj8S70CgFc54HiTOTrmgNe79KI/GxCiAeZEwJb8XUGXDtHpMozx1v6YS0Zdw==}
+  /@wagmi/connectors@4.0.2(@wagmi/core@2.0.2)(typescript@5.1.6)(viem@2.0.0-beta.15):
+    resolution: {integrity: sha512-riR1oX5WeyAO8xKRPKZBWLKKid3/0qIOBHFJXR3kazd2huLEC2/OFVrriRAynWR121djPoBeDjZENQt7OdCSdg==}
     peerDependencies:
-      '@wagmi/core': 2.0.1
+      '@wagmi/core': 2.0.2
       typescript: '>=5.0.4'
       viem: 2.x
     peerDependenciesMeta:
@@ -2872,7 +2872,7 @@ packages:
       '@metamask/sdk': 0.14.1
       '@safe-global/safe-apps-provider': 0.18.1(typescript@5.1.6)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@wagmi/core': 2.0.1(typescript@5.1.6)(viem@2.0.0-beta.15)
+      '@wagmi/core': 2.0.2(typescript@5.1.6)(viem@2.0.0-beta.15)
       '@walletconnect/ethereum-provider': 2.11.0
       '@walletconnect/modal': 2.6.2
       typescript: 5.1.6
@@ -2902,8 +2902,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.0.1(typescript@5.1.6)(viem@2.0.0-beta.15):
-    resolution: {integrity: sha512-jByxGj9vxptany6dnIJRPLW0vKVKm2bG33yc8ZiP7BHXUWMYiCK4B8ZgZLeqnpn/kSpYU9uCccS5ogqusAaYLA==}
+  /@wagmi/core@2.0.2(typescript@5.1.6)(viem@2.0.0-beta.15):
+    resolution: {integrity: sha512-XprKBbLqBwtbGrfGfZBGt1buc0YiAdDc4tUsxUIhQlbiAZBguU/NbdfGHcTZf0xnk8DWuoEomuzF/DKWRclzBw==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
       typescript: '>=5.0.4'
