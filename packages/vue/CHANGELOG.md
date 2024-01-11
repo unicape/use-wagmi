@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.1.0
+
+### Minor Changes
+
+- [#135](https://github.com/unicape/use-wagmi/pull/135) [`bf08e85aa187608e713bfeaba21adc428f8d4c2d`](https://github.com/unicape/use-wagmi/commit/bf08e85aa187608e713bfeaba21adc428f8d4c2d) Thanks [@unicape](https://github.com/unicape)! - Added `useCall` hook.
+
 ## 1.0.1
 
 ### Patch Changes
