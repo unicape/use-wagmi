@@ -9,6 +9,7 @@ export const functions = [
   'useBlock',
   'useBlockNumber',
   'useBlockTransactionCount',
+  'useCall',
   'useChainId',
   'useClient',
   'useConfig',
