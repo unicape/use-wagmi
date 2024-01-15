@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.2.0
+
+### Minor Changes
+
+- [#140](https://github.com/unicape/use-wagmi/pull/140) [`6b4e24102f58f85dcd285bfd7146dd7c6b03427f`](https://github.com/unicape/use-wagmi/commit/6b4e24102f58f85dcd285bfd7146dd7c6b03427f) Thanks [@unicape](https://github.com/unicape)! - Added useBytecode useProof useStorageAt useTransactionReceipt
+
 ## 1.1.1
 
 ### Patch Changes
