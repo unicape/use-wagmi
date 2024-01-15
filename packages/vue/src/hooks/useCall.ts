@@ -33,7 +33,12 @@ export type UseCallParameters<
   Evaluate<
     CallOptions<config> &
       ConfigParameter<config> &
-      QueryParameter<CallQueryFnData, CallErrorType, selectData, CallQueryKey>
+      QueryParameter<
+        CallQueryFnData,
+        CallErrorType,
+        selectData,
+        CallQueryKey<config>
+      >
   >
 >
 

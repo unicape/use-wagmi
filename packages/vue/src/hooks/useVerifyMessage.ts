@@ -36,7 +36,7 @@ export type UseVerifyMessageParameters<
         VerifyMessageQueryFnData,
         VerifyMessageErrorType,
         selectData,
-        VerifyMessageQueryKey
+        VerifyMessageQueryKey<config>
       >
   >
 >
