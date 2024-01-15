@@ -1,7 +1,9 @@
 'use client'
 
 import {
+  type Config,
   type GetAccountReturnType,
+  type ResolvedRegister,
   getAccount,
   watchAccount,
 } from '@wagmi/core'
@@ -17,14 +19,18 @@ import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { updateState } from '../utils/updateState.js'
 import { useConfig } from './useConfig.js'
 
-export type UseAccountParameters = MaybeRefDeep<ConfigParameter>
+export type UseAccountParameters<config extends Config = Config> = MaybeRefDeep<
+  ConfigParameter<config>
+>
 
-export type UseAccountReturnType = ToRefs<DeepReadonly<GetAccountReturnType>>
+export type UseAccountReturnType<config extends Config = Config> = ToRefs<
+  DeepReadonly<GetAccountReturnType<config>>
+>
 
 /** https://wagmi.sh/react/api/hooks/useAccount */
-export function useAccount(
-  parameters: UseAccountParameters = {},
-): UseAccountReturnType {
+export function useAccount<config extends Config = ResolvedRegister['config']>(
+  parameters: UseAccountParameters<config> = {},
+): UseAccountReturnType<config> {
   const config = useConfig(parameters)
 
   const account = reactive(getAccount(config))
@@ -34,5 +40,5 @@ export function useAccount(
     },
   })
 
-  return toRefs(readonly(account))
+  return toRefs(readonly(account)) as UseAccountReturnType<config>
 }
