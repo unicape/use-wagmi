@@ -8,6 +8,10 @@ import Connections from './components/Connections.vue'
 import BlockNumber from './components/BlockNumber.vue'
 import Balance from './components/Balance.vue'
 import ConnectorClient from './components/ConnectorClient.vue'
+import SendTransaction from './components/SendTransaction.vue'
+import ReadContract from './components/ReadContract.vue'
+import ReadContracts from './components/ReadContracts.vue'
+import WriteContract from './components/WriteContract.vue'
 </script>
 
 <template>
@@ -20,4 +24,8 @@ import ConnectorClient from './components/ConnectorClient.vue'
 	<BlockNumber />
 	<Balance />
 	<ConnectorClient />
+	<SendTransaction />
+	<ReadContract />
+	<ReadContracts />
+	<WriteContract />
 </template>
