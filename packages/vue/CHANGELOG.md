@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.2.1
+
+### Patch Changes
+
+- [#144](https://github.com/unicape/use-wagmi/pull/144) [`9e2f5c78531da95aa1754ff60a7de7db01bab54e`](https://github.com/unicape/use-wagmi/commit/9e2f5c78531da95aa1754ff60a7de7db01bab54e) Thanks [@unicape](https://github.com/unicape)! - Fix useSwitchAccount bug & useProof type
+
 ## 1.2.0
 
 ### Minor Changes
