@@ -6,6 +6,8 @@ import App from './App.vue'
 import { vueQueryOptions } from './query'
 import { config } from './wagmi'
 
+import './index.css'
+
 // `@coinbase-wallet/sdk` uses `Buffer`
 globalThis.Buffer = Buffer
 
