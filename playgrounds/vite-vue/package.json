@@ -9,19 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/query-persist-client-core": "5.8.1",
     "@tanstack/query-sync-storage-persister": "5.8.1",
     "@tanstack/vue-query": "5.8.1",
-    "@tanstack/query-persist-client-core": "5.8.1",
-    "vue": "^3.3.4",
-    "viem": "^2.0.0",
-    "use-wagmi": "workspace:*"
+    "use-wagmi": "workspace:*",
+    "viem": "^2.1.0",
+    "vue": "^3.4.14"
   },
   "devDependencies": {
     "@tanstack/vue-query-devtools": "5.8.0",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "typescript": "^5.0.2",
+    "@vitejs/plugin-vue": "^4.6.2",
     "buffer": "^6.0.3",
-    "vite": "^4.4.5",
-    "vue-tsc": "^1.8.5"
+    "typescript": "^5.3.3",
+    "vite": "^4.5.1",
+    "vue-tsc": "^1.8.27"
   }
 }
