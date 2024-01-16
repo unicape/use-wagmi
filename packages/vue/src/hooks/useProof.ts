@@ -58,10 +58,9 @@ export function useProof<
   const chainId = useChainId()
 
   const queryOptions = computed(() => {
-    const _parameters =
-      cloneDeepUnref<DeepUnwrapRef<UseProofParameters<config, selectData>>>(
-        parameters,
-      )
+    const _parameters = cloneDeepUnref<
+      DeepUnwrapRef<UseProofParameters<config, selectData>>
+    >(parameters as any)
 
     const { address, storageKeys, query = {} } = _parameters
 
