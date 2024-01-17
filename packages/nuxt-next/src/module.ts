@@ -1,11 +1,9 @@
 import { addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
-import { camelCase } from 'scule'
-import { createConfig } from 'use-wagmi'
+import { type CreateConfigParameters } from 'use-wagmi'
 import { functions } from './functions.js'
+import { packageName, configKey } from './name.js'
 
-const packageName = 'use-wagmi' as const
-export const configKey = camelCase(packageName)
 
 export interface WagmiNuxtOptions {
   /**
@@ -19,7 +17,7 @@ export interface WagmiNuxtOptions {
   /**
    * Wagmi configuration object
    */
-  config?: Parameters<typeof createConfig>
+  config?: CreateConfigParameters
 }
 
 export default defineNuxtModule<WagmiNuxtOptions>({
@@ -70,7 +68,7 @@ export default defineNuxtModule<WagmiNuxtOptions>({
       const { resolve } = createResolver(import.meta.url)
 
       nuxt.options.runtimeConfig.public[configKey] = defu(
-        nuxt.options.runtimeConfig.public[configKey] as object,
+        nuxt.options.runtimeConfig.public[configKey],
         {
           config: options.config,
         },
