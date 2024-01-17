@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       transports: {
         [mainnet.id]: http(),
         [sepolia.id]: http(),
-      } as any,
+      },
     }
   },
   devtools: { enabled: true }
