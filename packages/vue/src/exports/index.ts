@@ -143,6 +143,12 @@ export {
 } from '../hooks/useEnsResolver.js'
 
 export {
+  type UseEnsTextParameters,
+  type UseEnsTextReturnType,
+  useEnsText,
+} from '../hooks/useEnsText.js'
+
+export {
   type UseEstimateFeesPerGasParameters,
   type UseEstimateFeesPerGasReturnType,
   useEstimateFeesPerGas,
@@ -181,6 +187,12 @@ export {
   /** @deprecated Use `useInfiniteReadContracts` instead */
   useInfiniteReadContracts as useContractInfiniteReads,
 } from '../hooks/useInfiniteReadContracts.js'
+
+export {
+  type UsePrepareTransactionRequestParameters,
+  type UsePrepareTransactionRequestReturnType,
+  usePrepareTransactionRequest,
+} from '../hooks/usePrepareTransactionRequest.js'
 
 export {
   type UseProofParameters,
@@ -270,6 +282,12 @@ export {
   type UseTransactionReturnType,
   useTransaction,
 } from '../hooks/useTransaction.js'
+
+export {
+  type UseTransactionConfirmationsParameters,
+  type UseTransactionConfirmationsReturnType,
+  useTransactionConfirmations,
+} from '../hooks/useTransactionConfirmations.js'
 
 export {
   type UseTransactionCountParameters,
