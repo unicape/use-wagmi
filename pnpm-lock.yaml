@@ -76,11 +76,11 @@ importers:
   packages/vue:
     dependencies:
       '@wagmi/connectors':
-        specifier: 4.1.4
-        version: 4.1.4(@wagmi/core@2.2.1)(typescript@5.1.6)(viem@2.1.0)
+        specifier: 4.1.8
+        version: 4.1.8(@wagmi/core@2.5.0)(typescript@5.1.6)(viem@2.1.0)
       '@wagmi/core':
-        specifier: 2.2.1
-        version: 2.2.1(typescript@5.1.6)(viem@2.1.0)
+        specifier: 2.5.0
+        version: 2.5.0(typescript@5.1.6)(viem@2.1.0)
       vue:
         specifier: 3.3.8
         version: 3.3.8(typescript@5.1.6)
@@ -1721,6 +1721,7 @@ packages:
 
   /@motionone/vue@10.16.4:
     resolution: {integrity: sha512-z10PF9JV6SbjFq+/rYabM+8CVlMokgl8RFGvieSGNTmrkQanfHn+15XBrhG3BgUfvmTeSeyShfOHpG0i9zEdcg==}
+    deprecated: Motion One for Vue is deprecated. Use Oku Motion instead https://oku-ui.com/motion
     dependencies:
       '@motionone/dom': 10.17.0
       tslib: 2.6.2
@@ -2307,7 +2308,7 @@ packages:
     resolution: {integrity: sha512-osvveYtyzdEVbt3OfwwXFr4P2iVBL5u1Q3q4ONBfDY/UpOuXmOlbgwc1xECEboY8wIays8Yt6onaWMUdUbfl0A==}
     dependencies:
       '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.1
+      '@noble/hashes': 1.3.3
       '@scure/base': 1.1.5
     dev: false
 
@@ -2921,10 +2922,10 @@ packages:
   /@vue/shared@3.4.14:
     resolution: {integrity: sha512-nmi3BtLpvqXAWoRZ6HQ+pFJOHBU4UnH3vD3opgmwXac7vhaHKA9nj1VeGjMggdB9eLtW83eHyPCmOU1qzdsC7Q==}
 
-  /@wagmi/connectors@4.1.4(@wagmi/core@2.2.1)(typescript@5.1.6)(viem@2.1.0):
-    resolution: {integrity: sha512-Mk/JnVs9pPd9cN/b5F+kHZMRU13yVf1zJwXNzSKpt7BOJQBqiFxJtmuZdRsNboEGEiPDFoEnzOzeAFi2xk3UGw==}
+  /@wagmi/connectors@4.1.8(@wagmi/core@2.5.0)(typescript@5.1.6)(viem@2.1.0):
+    resolution: {integrity: sha512-ODQUB1YGn0rofOcg7T5UCzHZNKSgai4Nri7harI4wao13J2gPcjIsPewiGwKWhCd8nePICUvZ2IL0b6gWq3cqA==}
     peerDependencies:
-      '@wagmi/core': 2.2.1
+      '@wagmi/core': 2.5.0
       typescript: '>=5.0.4'
       viem: 2.x
     peerDependenciesMeta:
@@ -2935,7 +2936,7 @@ packages:
       '@metamask/sdk': 0.14.1
       '@safe-global/safe-apps-provider': 0.18.1(typescript@5.1.6)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@wagmi/core': 2.2.1(typescript@5.1.6)(viem@2.1.0)
+      '@wagmi/core': 2.5.0(typescript@5.1.6)(viem@2.1.0)
       '@walletconnect/ethereum-provider': 2.11.0
       '@walletconnect/modal': 2.6.2
       typescript: 5.1.6
@@ -2965,8 +2966,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.2.1(typescript@5.1.6)(viem@2.1.0):
-    resolution: {integrity: sha512-eoTHG600lFpQyeofuo1nlAuTlI7rjduJK/yU4F8sLwjucROSE5RmD2OpQOkeEC3JGoXjrYxVPbY77PUD6ajzqw==}
+  /@wagmi/core@2.5.0(typescript@5.1.6)(viem@2.1.0):
+    resolution: {integrity: sha512-aWWxIctf76NXBDzbX+FPsBLB3lkGwf1wqbQZJqb+pyuzwwN2dR1NDwsYlPVMeP6SKliKsfxlYWFcKCkPqGuJqg==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
       typescript: '>=5.0.4'
