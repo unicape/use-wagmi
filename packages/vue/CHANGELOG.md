@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.3.0
+
+### Minor Changes
+
+- [#150](https://github.com/unicape/use-wagmi/pull/150) [`b3740c693651e3e73dfd257d7cddba4529eb97fa`](https://github.com/unicape/use-wagmi/commit/b3740c693651e3e73dfd257d7cddba4529eb97fa) Thanks [@unicape](https://github.com/unicape)! - add useEnsText & usePrepareTransactionRequest & useTransactionConfirmations
+
 ## 1.2.1
 
 ### Patch Changes
