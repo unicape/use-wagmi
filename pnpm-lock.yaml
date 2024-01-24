@@ -76,11 +76,11 @@ importers:
   packages/vue:
     dependencies:
       '@wagmi/connectors':
-        specifier: 4.1.8
-        version: 4.1.8(@wagmi/core@2.5.0)(typescript@5.1.6)(viem@2.1.0)
+        specifier: 4.1.9
+        version: 4.1.9(@wagmi/core@2.6.0)(typescript@5.1.6)(viem@2.1.0)
       '@wagmi/core':
-        specifier: 2.5.0
-        version: 2.5.0(typescript@5.1.6)(viem@2.1.0)
+        specifier: 2.6.0
+        version: 2.6.0(typescript@5.1.6)(viem@2.1.0)
       vue:
         specifier: 3.3.8
         version: 3.3.8(typescript@5.1.6)
@@ -269,6 +269,7 @@ packages:
   /@babel/highlight@7.23.4:
     resolution: {integrity: sha512-acGdbYSfp2WheJoJm/EBBBLh/ID8KDc64ISZ9DYtBmC8/Q204PZJLHyzeB5qMzJ5trcOkybd78M4x2KWsUq++A==}
     engines: {node: '>=6.9.0'}
+    requiresBuild: true
     dependencies:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
@@ -2922,10 +2923,10 @@ packages:
   /@vue/shared@3.4.14:
     resolution: {integrity: sha512-nmi3BtLpvqXAWoRZ6HQ+pFJOHBU4UnH3vD3opgmwXac7vhaHKA9nj1VeGjMggdB9eLtW83eHyPCmOU1qzdsC7Q==}
 
-  /@wagmi/connectors@4.1.8(@wagmi/core@2.5.0)(typescript@5.1.6)(viem@2.1.0):
-    resolution: {integrity: sha512-ODQUB1YGn0rofOcg7T5UCzHZNKSgai4Nri7harI4wao13J2gPcjIsPewiGwKWhCd8nePICUvZ2IL0b6gWq3cqA==}
+  /@wagmi/connectors@4.1.9(@wagmi/core@2.6.0)(typescript@5.1.6)(viem@2.1.0):
+    resolution: {integrity: sha512-4pz+oZemPW9JOmBmR0oq7pNJlR0oyLfaZMH4IfgATApumZ0uDlMLe6KY1JEbW202rHk0g+NNYYlJsSHYwhCCUg==}
     peerDependencies:
-      '@wagmi/core': 2.5.0
+      '@wagmi/core': 2.6.0
       typescript: '>=5.0.4'
       viem: 2.x
     peerDependenciesMeta:
@@ -2936,7 +2937,7 @@ packages:
       '@metamask/sdk': 0.14.1
       '@safe-global/safe-apps-provider': 0.18.1(typescript@5.1.6)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@wagmi/core': 2.5.0(typescript@5.1.6)(viem@2.1.0)
+      '@wagmi/core': 2.6.0(typescript@5.1.6)(viem@2.1.0)
       '@walletconnect/ethereum-provider': 2.11.0
       '@walletconnect/modal': 2.6.2
       typescript: 5.1.6
@@ -2966,8 +2967,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.5.0(typescript@5.1.6)(viem@2.1.0):
-    resolution: {integrity: sha512-aWWxIctf76NXBDzbX+FPsBLB3lkGwf1wqbQZJqb+pyuzwwN2dR1NDwsYlPVMeP6SKliKsfxlYWFcKCkPqGuJqg==}
+  /@wagmi/core@2.6.0(typescript@5.1.6)(viem@2.1.0):
+    resolution: {integrity: sha512-z/9lVFG+mCQnATtdS/rFsOLp/Kf3DlpBM5aiDAahwXG405BgXl5SdFt7HkLefFmEnVon7ZN8a1eExSPJGlaRlA==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
       typescript: '>=5.0.4'
