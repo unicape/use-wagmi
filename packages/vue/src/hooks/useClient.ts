@@ -16,26 +16,32 @@ import {
   readonly,
   shallowRef,
 } from 'vue-demi'
-import type { ConfigParameter, DeepUnwrapRef, MaybeRefDeep } from '../types.js'
+import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import { cloneDeepUnref } from '../utils/cloneDeepUnref.js'
 import { useConfig } from './useConfig.js'
 
 export type UseClientParameters<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 > = MaybeRefDeep<
   Evaluate<GetClientParameters<config, chainId> & ConfigParameter<config>>
 >
 
 export type UseClientReturnType<
   config extends Config = Config,
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 > = ShallowRef<DeepReadonly<GetClientReturnType<config, chainId>>>
 
 /** https://wagmi.sh/react/api/hooks/useClient */
 export function useClient<
   config extends Config = ResolvedRegister['config'],
-  chainId extends config['chains'][number]['id'] = config['chains'][number]['id'],
+  chainId extends config['chains'][number]['id'] | number | undefined =
+    | config['chains'][number]['id']
+    | undefined,
 >(
   parameters: UseClientParameters<config, chainId> = {},
 ): UseClientReturnType<config, chainId> {
@@ -43,9 +49,7 @@ export function useClient<
   const client = shallowRef(
     getClient(
       config,
-      cloneDeepUnref<DeepUnwrapRef<UseClientParameters<config, chainId>>>(
-        parameters as any,
-      ),
+      cloneDeepUnref<GetClientParameters<config, chainId>>(parameters as any),
     ),
   )
 
@@ -53,9 +57,7 @@ export function useClient<
     onChange() {
       client.value = getClient(
         config,
-        cloneDeepUnref<DeepUnwrapRef<UseClientParameters<config, chainId>>>(
-          parameters as any,
-        ),
+        cloneDeepUnref<GetClientParameters<config, chainId>>(parameters as any),
       )
     },
   })
