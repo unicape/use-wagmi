@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.3.2
+
+### Patch Changes
+
+- [#155](https://github.com/unicape/use-wagmi/pull/155) [`25ccaa809b5ab497f0faf653ae593d2336bf7761`](https://github.com/unicape/use-wagmi/commit/25ccaa809b5ab497f0faf653ae593d2336bf7761) Thanks [@unicape](https://github.com/unicape)! - getClient with unconfigured chainId
+
 ## 1.3.1
 
 ### Patch Changes
