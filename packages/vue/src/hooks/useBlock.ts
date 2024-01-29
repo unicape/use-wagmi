@@ -112,6 +112,7 @@ export function useBlock<
     const { query = {} } = _parameters
 
     const options = getBlockQueryOptions(config, {
+      ..._parameters,
       chainId: _parameters.chainId ?? chainId.value,
     })
     const enabled = Boolean(query.enabled ?? true)
