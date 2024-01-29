@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.3.3
+
+### Patch Changes
+
+- [#157](https://github.com/unicape/use-wagmi/pull/157) [`75cda444c608bc8576ce1926c8311f8dbf2bb40a`](https://github.com/unicape/use-wagmi/commit/75cda444c608bc8576ce1926c8311f8dbf2bb40a) Thanks [@unicape](https://github.com/unicape)! - useBlock parameters passthrough
+
 ## 1.3.2
 
 ### Patch Changes
