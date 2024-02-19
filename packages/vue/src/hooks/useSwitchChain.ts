@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/vue-query'
 import type {
   Config,
+  GetChainsReturnType,
   ResolvedRegister,
   SwitchChainErrorType,
 } from '@wagmi/core'
@@ -15,11 +16,13 @@ import {
   switchChainMutationOptions,
 } from '@wagmi/core/query'
 
+import type { Ref } from 'vue-demi'
 import type { ConfigParameter, MaybeRefDeep } from '../types.js'
 import type {
   UseMutationParameters,
   UseMutationReturnType,
 } from '../utils/query.js'
+import { useChains } from './useChains.js'
 import { useConfig } from './useConfig.js'
 
 export type UseSwitchChainParameters<
@@ -48,7 +51,7 @@ export type UseSwitchChainReturnType<
     SwitchChainVariables<config, config['chains'][number]['id']>,
     context
   > & {
-    chains: config['chains']
+    chains: Ref<Evaluate<GetChainsReturnType<config>>>
     switchChain: SwitchChainMutate<config, context>
     switchChainAsync: SwitchChainMutateAsync<config, context>
   }
@@ -73,7 +76,7 @@ export function useSwitchChain<
 
   return {
     ...result,
-    chains: config.chains,
+    chains: useChains({ config }),
     switchChain: mutate,
     switchChainAsync: mutateAsync,
   } as UseSwitchChainReturnType<config, context>
