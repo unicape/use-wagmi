@@ -76,11 +76,11 @@ importers:
   packages/vue:
     dependencies:
       '@wagmi/connectors':
-        specifier: 4.1.23
-        version: 4.1.23(@wagmi/core@2.6.14)(typescript@5.1.6)(viem@2.8.4)
+        specifier: 4.1.24
+        version: 4.1.24(@wagmi/core@2.6.15)(typescript@5.1.6)(viem@2.8.4)
       '@wagmi/core':
-        specifier: 2.6.14
-        version: 2.6.14(typescript@5.1.6)(viem@2.8.4)
+        specifier: 2.6.15
+        version: 2.6.15(typescript@5.1.6)(viem@2.8.4)
       vue:
         specifier: 3.3.8
         version: 3.3.8(typescript@5.1.6)
@@ -2922,10 +2922,10 @@ packages:
   /@vue/shared@3.4.14:
     resolution: {integrity: sha512-nmi3BtLpvqXAWoRZ6HQ+pFJOHBU4UnH3vD3opgmwXac7vhaHKA9nj1VeGjMggdB9eLtW83eHyPCmOU1qzdsC7Q==}
 
-  /@wagmi/connectors@4.1.23(@wagmi/core@2.6.14)(typescript@5.1.6)(viem@2.8.4):
-    resolution: {integrity: sha512-IgGCJvQfvCBI9Kq0TvudYPnz/HQSqTuXrNKPHT+SIQaaHebDmPdJYPvj4fgdEPtU3Z5fDtQsBszVpbfcYXgWKA==}
+  /@wagmi/connectors@4.1.24(@wagmi/core@2.6.15)(typescript@5.1.6)(viem@2.8.4):
+    resolution: {integrity: sha512-gFziI7E3m+ESJmEnsvlm/eMlboKwdfGqOOQIU068MoZ+ZcNxoLZe4gu8CqnrmG7ksdPtwG38prsMl96opZexIA==}
     peerDependencies:
-      '@wagmi/core': 2.6.14
+      '@wagmi/core': 2.6.15
       typescript: '>=5.0.4'
       viem: 2.x
     peerDependenciesMeta:
@@ -2936,7 +2936,7 @@ packages:
       '@metamask/sdk': 0.14.3
       '@safe-global/safe-apps-provider': 0.18.1(typescript@5.1.6)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@wagmi/core': 2.6.14(typescript@5.1.6)(viem@2.8.4)
+      '@wagmi/core': 2.6.15(typescript@5.1.6)(viem@2.8.4)
       '@walletconnect/ethereum-provider': 2.11.2
       '@walletconnect/modal': 2.6.2
       typescript: 5.1.6
@@ -2966,8 +2966,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.6.14(typescript@5.1.6)(viem@2.8.4):
-    resolution: {integrity: sha512-en2DN/Dt059ROJRyLh/M7xN/U8cxHHC+TFEQPpifIJbh4VzUJXdjF+Oqzg/FFqn6JO5wvibFZGT0j4uPclUE2A==}
+  /@wagmi/core@2.6.15(typescript@5.1.6)(viem@2.8.4):
+    resolution: {integrity: sha512-P3w7NIPBs6Pt3j8k5Tq9cVYjvUiyuEAk3WxZfUG5NyaveLqs3b6IC6Frl63zriSV3Bj0tdJJXhEVoIIeIUqMCA==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
       typescript: '>=5.0.4'
