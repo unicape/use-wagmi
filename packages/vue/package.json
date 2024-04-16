@@ -86,8 +86,8 @@
     }
   },
   "dependencies": {
-    "@wagmi/connectors": "4.1.25",
-    "@wagmi/core": "2.6.16",
+    "@wagmi/connectors": "4.1.26",
+    "@wagmi/core": "2.6.17",
     "vue": "3.3.8",
     "vue-demi": "^0.14.6"
   },
