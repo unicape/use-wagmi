@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.3.12
+
+### Patch Changes
+
+- [#184](https://github.com/unicape/use-wagmi/pull/184) [`db4027c1f9dd3b8db219d5f2573b81228f66b948`](https://github.com/unicape/use-wagmi/commit/db4027c1f9dd3b8db219d5f2573b81228f66b948) Thanks [@unicape](https://github.com/unicape)! - Update dependencies
+
 ## 1.3.11
 
 ### Patch Changes
