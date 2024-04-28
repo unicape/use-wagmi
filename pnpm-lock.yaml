@@ -76,11 +76,11 @@ importers:
   packages/vue:
     dependencies:
       '@wagmi/connectors':
-        specifier: 4.1.28
-        version: 4.1.28(@wagmi/core@2.6.19)(typescript@5.1.6)(viem@2.8.4)
+        specifier: 4.2.0
+        version: 4.2.0(@wagmi/core@2.7.0)(typescript@5.1.6)(viem@2.8.4)
       '@wagmi/core':
-        specifier: 2.6.19
-        version: 2.6.19(typescript@5.1.6)(viem@2.8.4)
+        specifier: 2.7.0
+        version: 2.7.0(typescript@5.1.6)(viem@2.8.4)
       vue:
         specifier: 3.3.8
         version: 3.3.8(typescript@5.1.6)
@@ -1366,20 +1366,9 @@ packages:
     resolution: {integrity: sha512-whiUMPlAOrVGmX8aKYVPvlKyG4CpQXiNNyt74vE1xb5sPvmx5oA7B/kOi/JdBvhGQq97U1/AVdXEdk2zkP8qyA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@metamask/json-rpc-engine': 7.3.1
+      '@metamask/json-rpc-engine': 7.3.3
       '@metamask/safe-event-emitter': 3.0.0
       '@metamask/utils': 5.0.2
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@metamask/json-rpc-engine@7.3.1:
-    resolution: {integrity: sha512-OVxccX/IFOjPzCzSFAEceccPIAf7A7IwnvjyWjyHCkLrO+LWV4e7Tpe79JNXiORywNulHxrg+q6QrmrnGEwssQ==}
-    engines: {node: '>=16.0.0'}
-    dependencies:
-      '@metamask/rpc-errors': 6.1.0
-      '@metamask/safe-event-emitter': 3.0.0
-      '@metamask/utils': 8.3.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -1437,16 +1426,6 @@ packages:
       is-stream: 2.0.1
       readable-stream: 3.6.2
       webextension-polyfill: 0.10.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@metamask/rpc-errors@6.1.0:
-    resolution: {integrity: sha512-JQElKxai26FpDyRKO/yH732wI+BV90i1u6pOuDOpdADSbppB2g1pPh3AGST1zkZqEE9eIKIUw8UdBQ4rp3VTSg==}
-    engines: {node: '>=16.0.0'}
-    dependencies:
-      '@metamask/utils': 8.3.0
-      fast-safe-stringify: 2.1.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -2813,10 +2792,10 @@ packages:
   /@vue/shared@3.4.14:
     resolution: {integrity: sha512-nmi3BtLpvqXAWoRZ6HQ+pFJOHBU4UnH3vD3opgmwXac7vhaHKA9nj1VeGjMggdB9eLtW83eHyPCmOU1qzdsC7Q==}
 
-  /@wagmi/connectors@4.1.28(@wagmi/core@2.6.19)(typescript@5.1.6)(viem@2.8.4):
-    resolution: {integrity: sha512-9jk/69t6YkNJgfIGpL8cumYoSZM5t/W8YZe5R3RIcJCNjp05A1nTs1ZoOa24oQwO7wPOpeWmMJkOb55TvASJDQ==}
+  /@wagmi/connectors@4.2.0(@wagmi/core@2.7.0)(typescript@5.1.6)(viem@2.8.4):
+    resolution: {integrity: sha512-wkA9/eVmkJuh+m35/xv+0Wh9RhoHm4/RbZnmKtvvllUamHLO8+l7TsjkAQFc8VSenlsptdUzaLhZnaWNosO/8Q==}
     peerDependencies:
-      '@wagmi/core': 2.6.19
+      '@wagmi/core': 2.7.0
       typescript: '>=5.0.4'
       viem: 2.x
     peerDependenciesMeta:
@@ -2827,7 +2806,7 @@ packages:
       '@metamask/sdk': 0.18.6
       '@safe-global/safe-apps-provider': 0.18.1(typescript@5.1.6)
       '@safe-global/safe-apps-sdk': 8.1.0(typescript@5.1.6)
-      '@wagmi/core': 2.6.19(typescript@5.1.6)(viem@2.8.4)
+      '@wagmi/core': 2.7.0(typescript@5.1.6)(viem@2.8.4)
       '@walletconnect/ethereum-provider': 2.11.2
       '@walletconnect/modal': 2.6.2
       typescript: 5.1.6
@@ -2858,8 +2837,8 @@ packages:
       - zod
     dev: false
 
-  /@wagmi/core@2.6.19(typescript@5.1.6)(viem@2.8.4):
-    resolution: {integrity: sha512-gvTERclvldk8KZWQNlL/q1tYOAHspQZCSPoSbXh5+vnySIT7maxz6FS+gPtFuk/JsrgMCnZ5B+UtvSVXGAp0pQ==}
+  /@wagmi/core@2.7.0(typescript@5.1.6)(viem@2.8.4):
+    resolution: {integrity: sha512-uhr9Wu59f7HwcV87KVvjDOYHiPUZFslw2a43ocuULdhjwu3MpwOlpNdUZ00TJ0h3oIg19+k9yQHP/KDg0sTIhw==}
     peerDependencies:
       '@tanstack/query-core': '>=5.0.0'
       typescript: '>=5.0.4'
