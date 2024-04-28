@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.4.0
+
+### Minor Changes
+
+- [#186](https://github.com/unicape/use-wagmi/pull/186) [`ee416009985efdeb903baed674e9f651f47b461e`](https://github.com/unicape/use-wagmi/commit/ee416009985efdeb903baed674e9f651f47b461e) Thanks [@unicape](https://github.com/unicape)! - Update dependencies
+
 ## 1.3.12
 
 ### Patch Changes
