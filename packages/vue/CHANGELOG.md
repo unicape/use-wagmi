@@ -1,5 +1,11 @@
 # use-wagmi
 
+## 1.5.0
+
+### Minor Changes
+
+- [#188](https://github.com/unicape/use-wagmi/pull/188) [`1cf5a4e61dc6057db2cc80b022d043995f94e3ed`](https://github.com/unicape/use-wagmi/commit/1cf5a4e61dc6057db2cc80b022d043995f94e3ed) Thanks [@unicape](https://github.com/unicape)! - Update dependencies
+
 ## 1.4.0
 
 ### Minor Changes
