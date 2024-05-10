@@ -1,5 +1,3 @@
-'use client'
-
 import { useMutation } from '@tanstack/vue-query'
 import { type Connector, type DisconnectErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
@@ -63,7 +61,9 @@ export function useDisconnect<context = unknown>(
   return {
     ...result,
     connectors: computed(() =>
-      useConnections({ config }).value.map((connection) => connection.connector),
+      useConnections({ config }).value.map(
+        (connection) => connection.connector,
+      ),
     ),
     disconnect: mutate,
     disconnectAsync: mutateAsync,

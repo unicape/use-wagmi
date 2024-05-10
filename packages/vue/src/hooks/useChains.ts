@@ -1,5 +1,3 @@
-'use client'
-
 import {
   type Config,
   type GetChainsReturnType,
@@ -27,9 +25,9 @@ export function useChains<config extends Config = ResolvedRegister['config']>(
   const chains = ref(getChains(config))
 
   watchChains(config, {
-    onChange () {
+    onChange() {
       chains.value = getChains(config)
-    }
+    },
   })
 
   return chains

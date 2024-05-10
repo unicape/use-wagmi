@@ -1,5 +1,3 @@
-'use client'
-
 import { type Config, type ResolvedRegister } from '@wagmi/core'
 import { inject, unref } from 'vue-demi'
 

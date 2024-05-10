@@ -1,5 +1,3 @@
-'use client'
-
 // Almost identical implementation to `useConnectorClient` (except for return type)
 // Should update both in tandem
 

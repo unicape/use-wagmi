@@ -1,5 +1,3 @@
-'use client'
-
 import { useMutation } from '@tanstack/vue-query'
 import {
   type Config,
@@ -77,7 +75,9 @@ export function useSwitchAccount<
   return {
     ...result,
     connectors: computed(() =>
-      useConnections({ config }).value.map((connection) => connection.connector),
+      useConnections({ config }).value.map(
+        (connection) => connection.connector,
+      ),
     ),
     switchAccount: mutate,
     switchAccountAsync: mutateAsync,

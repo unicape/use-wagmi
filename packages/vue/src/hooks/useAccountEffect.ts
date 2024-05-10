@@ -1,5 +1,3 @@
-'use client'
-
 import { type GetAccountReturnType, watchAccount } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
 import { unref, watchEffect } from 'vue-demi'

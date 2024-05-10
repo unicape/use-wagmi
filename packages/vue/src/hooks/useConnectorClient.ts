@@ -1,5 +1,3 @@
-'use client'
-
 import { useQueryClient } from '@tanstack/vue-query'
 import type {
   Config,

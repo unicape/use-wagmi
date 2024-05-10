@@ -1,5 +1,3 @@
-'use client'
-
 import { useMutation } from '@tanstack/vue-query'
 import {
   type Config,

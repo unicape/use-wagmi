@@ -1,5 +1,3 @@
-'use client'
-
 import { useMutation } from '@tanstack/vue-query'
 import type { SignTypedDataErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'

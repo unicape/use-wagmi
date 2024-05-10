@@ -1,5 +1,3 @@
-'use client'
-
 import { useMutation } from '@tanstack/vue-query'
 import { type Connector, type ReconnectErrorType } from '@wagmi/core'
 import type { Evaluate } from '@wagmi/core/internal'
